@@ -56,10 +56,11 @@ class mdlUsuario extends Conectar{
         if (isset($_POST["enviar"])){
             /* TODO: Recepcion de Parametros desde la Vista Login */
 
-           
-
             $correo = $_POST["ingresoEmail"];
             $pass = crypt($_POST["ingresoPassword"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
+
+            // var_dump($pass);
+            // exit;
 
             if (empty($correo) and empty($pass)){
                 exit();
