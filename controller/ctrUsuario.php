@@ -1,12 +1,12 @@
 <?php 
 /* TODO: Llamando clases */
-    require_once("../config/conexion.php");
-    require_once("../models/mdlUusuario.php");
+    require_once("./config/conexion.php");
+    require_once("./models/mdlUsuario.php");
 
 /* TODO: Inicializando clases */
     $usuario = new mdlUsuario();
 
-    switch($_GET["option"]){
+    switch($_GET["op"]){
         /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
         case "guardaryeditar":
             if(empty($_POST["token"])){

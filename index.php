@@ -1,8 +1,9 @@
 <?php
     require_once("config/conexion.php");
+    
     if(isset($_POST["enviar"]) and $_POST["enviar"] == "si"){
-        require_once("models/Usuario.php");
-       // $usuario = new Usuario();
+        require_once("models/mdlUsuario.php");
+        $usuario = new mdlUsuario();
         $usuario->login();
     }
 ?>
@@ -13,7 +14,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>AnderCode | Acceso </title>
+    <title>Taller | Acceso </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -84,15 +85,15 @@
                                     <div class="p-lg-5 p-4">
                                         <div>
                                             <h5 class="text-primary">Bienvenido !</h5>
-                                            <p class="text-muted">Acceder a AnderCode.</p>
+                                            <p class="text-muted">Acceder a Taller.</p>
                                         </div>
 
                                         <div class="mt-4">
                                             <form action="" method="post" id="login_form">
 
                                                 <div class="mb-3">
-                                                    <label for="usu_correo" class="form-label">Correo electronico</label>
-                                                    <input type="text" class="form-control" id="usu_correo" name="usu_correo" placeholder="Ingrese correo electronico">
+                                                    <label for="ingresoEmail" class="form-label">Correo electronico</label>
+                                                    <input type="text" class="form-control" id="ingresoEmail" name="ingresoEmail" placeholder="Ingrese correo electronico">
                                                 </div>
 
                                                 <div class="mb-3">
@@ -101,7 +102,7 @@
                                                     </div>
                                                     <label class="form-label" for="usu_pass">Contraseña</label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
-                                                        <input type="password" class="form-control pe-5" placeholder="Ingrese contraseña" id="usu_pass" name="usu_pass">
+                                                        <input type="password" class="form-control pe-5" placeholder="Ingrese contraseña" id="ingresoPassword" name="ingresoPassword">
                                                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                                     </div>
                                                 </div>
@@ -142,7 +143,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0">&copy;
-                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by E.
                             </p>
                         </div>
                     </div>
@@ -171,6 +172,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript" src="login.js"></script>
+
+
 </body>
 
 </html>
