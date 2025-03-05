@@ -59,9 +59,6 @@ class mdlUsuario extends Conectar{
             $correo = $_POST["ingresoEmail"];
             $pass = crypt($_POST["ingresoPassword"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
 
-            // var_dump($pass);
-            // exit;
-
             if (empty($correo) and empty($pass)){
                 exit();
             }else{
@@ -73,11 +70,14 @@ class mdlUsuario extends Conectar{
                 $resultado = $query->fetch();
                 if (is_array($resultado) and count($resultado)>0){
                     /* TODO:Generar variables de Session del Usuario */
-                    // $_SESSION["USU_ID"]=$resultado["USU_ID"];
+                    
+                    $_SESSION["id"]=$resultado["id"];
+                    $_SESSION["nombre"]=$resultado["nombre"];
 
                     header("Location:".Conectar::ruta()."view/home/");
                 }else{
-                    exit();
+                    header("Location:".Conectar::ruta()."/index.php");
+                     exit();
                 }
             }
         }else{
