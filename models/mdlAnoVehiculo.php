@@ -1,11 +1,13 @@
-<?php 
+<?php
 
-class mdlAnoVehiculo extends Conectar{
+class mdlAnoVehiculo extends Conectar
+{
 
     //Registrar
-    public function mdlRegistro($token,$ano){
-        $conectar=parent::Conexion();
-        $sql="insertarModelo ?,?";
+    public function mdlRegistro($token, $ano)
+    {
+        $conectar = parent::Conexion();
+        $sql = "insertarModelo ?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $ano);
@@ -14,17 +16,18 @@ class mdlAnoVehiculo extends Conectar{
     }
 
     //Consultar registros
-    public function mdlSeleccionarRegistros($tabla, $item, $valor){
+    public function mdlSeleccionarRegistros($tabla, $item, $valor)
+    {
         if ($item == null && $valor == null) {
-            $conectar=parent::Conexion();
-            $sql="seleccionarRegistros ?";
+            $conectar = parent::Conexion();
+            $sql = "seleccionarRegistros ?";
             $query = $conectar->prepare($sql);
             $query->bindValue(1, $tabla);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            $conectar=parent::Conexion();
-            $sql="seleccionarRegistro ?,?,?";
+            $conectar = parent::Conexion();
+            $sql = "seleccionarRegistro ?,?,?";
             $query = $conectar->prepare($sql);
             $query->bindValue(1, $tabla);
             $query->bindValue(2, $item);
@@ -33,17 +36,21 @@ class mdlAnoVehiculo extends Conectar{
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
     }
+
+
     //Eliminar registros
-     public function mdlEliminarRegistro($token){
-         $conectar=parent::Conexion();
-         $sql="eliminarVehiculo ?";
-         $query = $conectar->prepare($sql);
-         $query->bindValue(1, $token);
-         $query->execute();
-     }
+    public function mdlEliminarRegistro($token)
+    {
+        $conectar = parent::Conexion();
+        $sql = "eliminarVehiculo ?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $token);
+        $query->execute();
+    }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($ano,$nuevoToken,$token){
+    public function mdlActualizarRegistro($ano, $nuevoToken, $token)
+    {
         $conectar = parent::Conexion();
         $sql = "actualizarModelo ?,?,?";
         $query = $conectar->prepare($sql);
@@ -52,8 +59,4 @@ class mdlAnoVehiculo extends Conectar{
         $query->bindValue(3, $token);
         $query->execute();
     }
-
 }
-
-
-?>

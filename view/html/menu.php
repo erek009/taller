@@ -82,7 +82,7 @@
 
                 <li class="menu-title"><span data-key="t-menu">Servicio</span></li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntAno/">
+                        <a class="nav-link menu-link" href="../MntServicio/">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Servicio</span>
                         </a>
                 </li>
@@ -104,7 +104,7 @@
 
                 <li class="menu-title"><span data-key="t-menu">Inventario</span></li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntAno/">
+                        <a class="nav-link menu-link" href="../MntInventario/">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Inventario</span>
                         </a>
                 </li>

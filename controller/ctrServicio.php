@@ -6,7 +6,7 @@
 /* TODO: Inicializando clases */
     $servicio = new mdlServicio();
 
-    switch($_GET["option"]){
+    switch($_GET["op"]){
         /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
         case "guardaryeditar":
             if(empty($_POST["token"])){
@@ -35,17 +35,15 @@
         /*TODO: Listado de registros formato JSON para Datatable JS*/
         case "listar":
             $tabla = "servicio";
-            $item = "token";
-            $valor = $_POST["token"];
-            $datos=$servicio->mdlSeleccionarRegistros($tabla,$item,$valor);
-            $data=Array();
+            $datos=$servicio->mdlSeleccionarRegistros($tabla, null, null);
+            $data = array();
             foreach($datos as $row){
                 $sub_array = array();
                 $sub_array[] = $row["nombreservicio"];
                 $sub_array[] = $row["costomobra"];
                 $sub_array[] = $row["descripcion"];
-                $sub_array[] = '<button type="button" onClick="editar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
                 $data[] = $sub_array;
             }
             $results = array(

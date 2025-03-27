@@ -1,6 +1,5 @@
 // console.log("test");
 
-
 $(document).ready(function () {
     /* TODO: Listar informacion en el datatable js */
     $("#table_data").DataTable({
@@ -9,7 +8,7 @@ $(document).ready(function () {
       dom: "Bfrtip",
       buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
       ajax: {
-        url: "../../controller/ctrMarca.php?op=listar",
+        url: "../../controller/ctrCliente.php?op=listar",
         type: "post",
         data: { token : 1},
       },
@@ -50,7 +49,6 @@ $(document).ready(function () {
 
 
   function eliminar(token) {
-
     swal
       .fire({
         title: "Eliminar!",
@@ -63,7 +61,7 @@ $(document).ready(function () {
       .then((result) => {
         if (result.value) {
           $.post(
-            "../../controller/ctrMarca.php?op=eliminar",
+            "../../controller/ctrCliente.php?op=eliminar",
             { token: token },
             function (data) {
               console.log(data);

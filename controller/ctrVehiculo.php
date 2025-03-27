@@ -6,7 +6,7 @@
 /* TODO: Inicializando clases */
     $vehiculo = new mdlVehiculo();
 
-    switch($_GET["option"]){
+    switch($_GET["op"]){
         /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
         case "guardaryeditar":
             if(empty($_POST["token"])){
@@ -46,20 +46,20 @@
             $tabla = "vehiculo";
             $item = "token";
             $valor = $_POST["token"];
-            $datos=$vehiculo->mdlSeleccionarRegistros($tabla,$item,$valor);
+            $datos=$vehiculo->mdlSeleccionarRegistros($tabla, null, null);
             $data=Array();
             foreach($datos as $row){
                 $sub_array = array();
                 $sub_array[] = $row["tipo"];
                 $sub_array[] = $row["placa"];
-                $sub_array[] = $row["marca"];
-                $sub_array[] = $row["ano"];
+                $sub_array[] = $row["idmarca"];
+                $sub_array[] = $row["idano"];
                 $sub_array[] = $row["vin"];
                 $sub_array[] = $row["color"];
-                $sub_array[] = $row["cliente"];
+                $sub_array[] = $row["idcliente"];
                 $sub_array[] = $row["model"];
-                $sub_array[] = '<button type="button" onClick="editar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
                 $data[] = $sub_array;
             }
             $results = array(

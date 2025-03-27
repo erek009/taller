@@ -9,7 +9,7 @@ $(document).ready(function () {
       dom: "Bfrtip",
       buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
       ajax: {
-        url: "../../controller/ctrMarca.php?op=listar",
+        url: "../../controller/ctrServicio.php?op=listar",
         type: "post",
         data: { token : 1},
       },
@@ -50,7 +50,6 @@ $(document).ready(function () {
 
 
   function eliminar(token) {
-
     swal
       .fire({
         title: "Eliminar!",
@@ -61,23 +60,8 @@ $(document).ready(function () {
         cancelButtonText: "No",
       })
       .then((result) => {
-        if (result.value) {
-          $.post(
-            "../../controller/ctrMarca.php?op=eliminar",
-            { token: token },
-            function (data) {
-              console.log(data);
-            }
-          );
-  
-          $("#table_data").DataTable().ajax.reload();
-  
-          swal.fire({
-            title: "Año vehiculo",
-            text: "Registro Eliminado",
-            icon: "success",
-          });
-        }
+        
+        console.log(token);
       });
   }
   

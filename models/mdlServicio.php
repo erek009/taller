@@ -15,15 +15,26 @@ class mdlServicio extends Conectar{
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Consultar registros
-    public function mdlSeleccionarRegistros($tabla){
-        $conectar=parent::Conexion();
-        $sql="seleccionarRegistro ?";
-        $query = $conectar->prepare($sql);
-        $query->bindValue(1, $tabla);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+        //Consultar registros
+        public function mdlSeleccionarRegistros($tabla, $item, $valor){
+            if ($item == null && $valor == null) {
+                $conectar=parent::Conexion();
+                $sql="seleccionarRegistros ?";
+                $query = $conectar->prepare($sql);
+                $query->bindValue(1, $tabla);
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $conectar=parent::Conexion();
+                $sql="seleccionarRegistro ?,?,?";
+                $query = $conectar->prepare($sql);
+                $query->bindValue(1, $tabla);
+                $query->bindValue(2, $item);
+                $query->bindValue(3, $valor);
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
+            }
+        }
 
     //Eliminar registros
      public function mdlEliminarRegistro($token){

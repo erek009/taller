@@ -55,7 +55,6 @@ require_once("../../config/conexion.php");
                                         <thead>
                                             <tr>
                                                 <th>Año</th>
-                                                <!-- <th>FechaCreacion</th> -->
                                                 <th></th>
                                                 <th></th>
                                             </tr>

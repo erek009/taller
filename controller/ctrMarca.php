@@ -4,33 +4,33 @@
     require_once("../models/mdlMarca.php");
 
 /* TODO: Inicializando clases */
-    $Marca = new mdlMarca();
+    $marca = new mdlMarca();
 
-    switch($_GET["option"]){
+    switch($_GET["op"]){
         /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
         case "guardaryeditar":
             if(empty($_POST["token"])){
                 
                 $token = md5($_POST["marca"] . "+" . $_POST["marca"]);
-                $Marca->mdlRegistro($token, $_POST["marca"]);
+                $marca->mdlRegistro($token, $_POST["marca"]);
             }else{
                 $nuevoToken = md5($_POST["marca"] . "+" . $_POST["marca"]);
-                $Marca->mdlActualizarRegistro($_POST["token"], $nuevoToken, $_POST["marca"]);
+                $marca->mdlActualizarRegistro($_POST["token"], $nuevoToken, $_POST["marca"]);
             }
             break;
 
         /*TODO: Listado de registros formato JSON para Datatable JS*/
         case "listar":
             $tabla = "marca";
-            $item = "token";
-            $valor = $_POST["token"];
-            $datos=$Marca->mdlSeleccionarRegistros($tabla,$item,$valor);
+            // $item = "token";
+            // $valor = $_POST["token"];
+            $datos=$marca->mdlSeleccionarRegistros($tabla, null, null);
             $data=Array();
             foreach($datos as $row){
                 $sub_array = array();
                 $sub_array[] = $row["marca"];
-                $sub_array[] = '<button type="button" onClick="editar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
                 $data[] = $sub_array;
             }
             $results = array(
@@ -43,7 +43,7 @@
         
         /*TODO: Eliminar (cambia estado a 0 del registro)*/
         case "eliminar":
-                $Marca->mdlEliminarRegistro($_POST["token"]);
+                $marca->mdlEliminarRegistro($_POST["token"]);
             break;
     }
 

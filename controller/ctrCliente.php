@@ -6,7 +6,7 @@
 /* TODO: Inicializando clases */
     $cliente = new mdlCliente();
 
-    switch($_GET["option"]){
+    switch($_GET["op"]){
         /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
         case "guardaryeditar":
             if(empty($_POST["token"])){
@@ -38,11 +38,11 @@
 
         /*TODO: Listado de registros formato JSON para Datatable JS*/
         case "listar":
-            $tabla = "cliente";
-            $item = "token";
-            $valor = $_POST["token"];
-            $datos=$cliente->mdlSeleccionarRegistros($tabla,$item,$valor);
-            $data=Array();
+            $tabla = "clientes";
+            // $item = "token";
+            // $valor = $_POST["token"];
+            $datos=$cliente->mdlSeleccionarRegistros($tabla, null, null);
+            $data = array();
             foreach($datos as $row){
                 $sub_array = array();
                 $sub_array[] = $row["nombre"];
@@ -50,8 +50,8 @@
                 $sub_array[] = $row["telefono"];
                 $sub_array[] = $row["localidad"];
                 $sub_array[] = $row["observaciones"];
-                $sub_array[] = '<button type="button" onClick="editar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["TOKEN"].')" id="'.$row["TOKEN"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
                 $data[] = $sub_array;
             }
             $results = array(

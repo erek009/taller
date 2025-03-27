@@ -1,6 +1,5 @@
 // console.log("test");
 
-
 $(document).ready(function () {
     /* TODO: Listar informacion en el datatable js */
     $("#table_data").DataTable({
@@ -50,10 +49,6 @@ $(document).ready(function () {
 
 
   function eliminar(token) {
-
-    console.log(token);
-    exit;
-
     swal
       .fire({
         title: "Eliminar!",
