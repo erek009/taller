@@ -7,23 +7,25 @@ require_once("../models/mdlAnoVehiculo.php");
 $anoovehiculo = new mdlAnoVehiculo();
 
 switch ($_GET["op"]) {
+    
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "guardaryeditar":
         if (empty($_POST["token"])) {
 
-            $token = md5($_POST["ano"] . "+" . $_POST["ano"]);
-
+            // echo json_encode("registro");
+            $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
             $anoovehiculo->mdlRegistro(
                 $token,
                 $_POST["AnoVehiculo"]
             );
         } else {
-            $nuevoToken = md5($_POST["ano"] . "+" . $_POST["ano"]);
 
+            // echo json_encode("actualizar");
+            $nuevoToken = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
             $anoovehiculo->mdlActualizarRegistro(
-                $_POST["token"],
+                $_POST["AnoVehiculo"],
                 $nuevoToken,
-                $_POST["ano"]
+                $_POST["token"]              
             );
         }
         break;
@@ -31,15 +33,13 @@ switch ($_GET["op"]) {
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
         $tabla = "ano";
-        // $item = "token";
-        // $valor = $_POST["token"];
         $datos = $anoovehiculo->mdlSeleccionarRegistros($tabla, null, null);
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
             $sub_array[] = $row["ano"];
-            $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-            $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="editar(\''.$row["token"].'\')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="eliminar(\''.$row["token"].'\')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
         }
         $results = array(
@@ -51,8 +51,26 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
+
+    /*TODO: Mostrar informacion de registro por ID*/
+    case "mostrar":
+        $tabla = "ano";
+        $item = "token";
+        $valor = $_POST["token"];
+        $datos=$anoovehiculo->mdlSeleccionarRegistros($tabla,$item,$valor);
+        if (is_array($datos) == true and count($datos) > 0) {
+            foreach ($datos as $row) {
+                $output["token"] = $row["token"];
+                $output["ano"] = $row["ano"];
+            }
+            echo json_encode($output);
+        }
+        break;
+
+
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
         $anoovehiculo->mdlEliminarRegistro($_POST["token"]);
+        // echo json_encode($_POST["token"]);
         break;
 }

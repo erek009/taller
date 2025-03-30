@@ -12,7 +12,7 @@ class mdlAnoVehiculo extends Conectar
         $query->bindValue(1, $token);
         $query->bindValue(2, $ano);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        //  return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Consultar registros
@@ -42,7 +42,7 @@ class mdlAnoVehiculo extends Conectar
     public function mdlEliminarRegistro($token)
     {
         $conectar = parent::Conexion();
-        $sql = "eliminarVehiculo ?";
+        $sql = "eliminarAnoVehiculo ?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->execute();

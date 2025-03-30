@@ -49,6 +49,8 @@ $(document).ready(function () {
   });
 
 
+
+
   function eliminar(token) {
     swal
       .fire({
@@ -60,8 +62,24 @@ $(document).ready(function () {
         cancelButtonText: "No",
       })
       .then((result) => {
-        
-        console.log(token);
+        if (result.value) {
+          $.post(
+            "../../controller/ctrCliente.php?op=eliminar",
+            { token: token },
+            function (data) {
+              console.log(data);
+            }
+          );
+  
+          $("#table_data").DataTable().ajax.reload();
+  
+          swal.fire({
+            title: "Servicio vehiculo",
+            text: "Registro Eliminado",
+            icon: "success",
+          });
+        }
       });
   }
+  
   

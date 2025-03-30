@@ -67,11 +67,9 @@ $(document).ready(function () {
               console.log(data);
             }
           );
-  
           $("#table_data").DataTable().ajax.reload();
-  
           swal.fire({
-            title: "Año vehiculo",
+            title: "Cliente",
             text: "Registro Eliminado",
             icon: "success",
           });

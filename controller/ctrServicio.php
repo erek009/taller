@@ -12,7 +12,6 @@
             if(empty($_POST["token"])){
                 
                 $token = md5($_POST["servicio"] . "+" . $_POST["servicio"]);
-                
                 $servicio->mdlRegistro(
                     $token, 
                     $_POST["nombreservicio"],
@@ -43,7 +42,9 @@
                 $sub_array[] = $row["costomobra"];
                 $sub_array[] = $row["descripcion"];
                 $sub_array[] = '<button type="button" onClick="editar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["token"].')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                $token = htmlspecialchars($row["token"], ENT_QUOTES, 'UTF-8');
+                $sub_array[] = '<button type="button" onClick="eliminar('.$token.')" id="'.$token.'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+                
                 $data[] = $sub_array;
             }
             $results = array(
