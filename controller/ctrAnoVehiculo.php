@@ -14,9 +14,9 @@ switch ($_GET["op"]) {
             // echo json_encode("registro");
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
 
-			// if ($validarAno) {
-			// 	echo json_encode("error-anoexiste");
-			// }
+			if ($validarAno) {
+				echo json_encode("error-anoexiste");
+			}
 
             $anoovehiculo->mdlRegistro(
                 $token,
