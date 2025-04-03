@@ -14,6 +14,8 @@ switch ($_GET["op"]) {
             // echo json_encode("registro");
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
 
+            ///aqui
+            $validarAno = self::ctrSeleccionarRegistros('ano', $ano);
 			if ($validarAno) {
 				echo json_encode("error-anoexiste");
 			}
