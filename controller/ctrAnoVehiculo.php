@@ -7,11 +7,10 @@ require_once("../models/mdlAnoVehiculo.php");
 $anoovehiculo = new mdlAnoVehiculo();
 
 switch ($_GET["op"]) {
-    
+
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "guardaryeditar":
         if (empty($_POST["token"])) {
-
             // echo json_encode("registro");
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
             $anoovehiculo->mdlRegistro(
@@ -19,13 +18,12 @@ switch ($_GET["op"]) {
                 $_POST["AnoVehiculo"]
             );
         } else {
-
             // echo json_encode("actualizar");
             $nuevoToken = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
             $anoovehiculo->mdlActualizarRegistro(
                 $_POST["AnoVehiculo"],
                 $nuevoToken,
-                $_POST["token"]              
+                $_POST["token"]
             );
         }
         break;
@@ -38,8 +36,8 @@ switch ($_GET["op"]) {
         foreach ($datos as $row) {
             $sub_array = array();
             $sub_array[] = $row["ano"];
-            $sub_array[] = '<button type="button" onClick="editar(\''.$row["token"].'\')" id="'.$row["token"].'" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
-            $sub_array[] = '<button type="button" onClick="eliminar(\''.$row["token"].'\')" id="'.$row["token"].'" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
         }
         $results = array(
@@ -57,7 +55,7 @@ switch ($_GET["op"]) {
         $tabla = "ano";
         $item = "token";
         $valor = $_POST["token"];
-        $datos=$anoovehiculo->mdlSeleccionarRegistros($tabla,$item,$valor);
+        $datos = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
             foreach ($datos as $row) {
                 $output["token"] = $row["token"];

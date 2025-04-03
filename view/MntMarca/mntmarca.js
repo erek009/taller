@@ -1,4 +1,8 @@
-// console.log("test");
+function init() {
+  $("#mantenimiento_form").on("submit", function (e) {
+    guardaryeditar(e);
+  });
+}
 
 
 $(document).ready(function () {
@@ -80,4 +84,31 @@ $(document).ready(function () {
         }
       });
   }
+
+  function editar(token) {
+    $.post(
+      "../../controller/ctrMarca.php?op=mostrar",
+      { token: token },
+      function (data) {
+        data = JSON.parse(data);
+        $("#token").val(data.token);
+        $("#marca").val(data.marca);
+      }
+    );
+    $("#lbltitulo").html("Editar Registro");
+    /* TODO: Mostrar Modal */
+    $("#modalmantenimiento").modal("show");
+  }
+
+  
+  $(document).on("click", "#btnnuevo", function () {
+    /* TODO: Limpiar informacion */
+    $("#marca").val("");
+    $("#lbltitulo").html("Nuevo Registro");
+    $("#mantenimiento_form")[0].reset();
+    /* TODO: Mostrar Modal */
+    $("#modalmantenimiento").modal("show");
+  });
+  
+  init();
   

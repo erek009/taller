@@ -7,12 +7,11 @@ class mdlAnoVehiculo extends Conectar
     public function mdlRegistro($token, $ano)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarModelo ?,?";
+        $sql = "insertarAno ?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $ano);
         $query->execute();
-        //  return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Consultar registros
@@ -52,7 +51,7 @@ class mdlAnoVehiculo extends Conectar
     public function mdlActualizarRegistro($ano, $nuevoToken, $token)
     {
         $conectar = parent::Conexion();
-        $sql = "actualizarModelo ?,?,?";
+        $sql = "actualizarAno ?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $ano);
         $query->bindValue(2, $nuevoToken);

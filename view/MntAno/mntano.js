@@ -1,3 +1,12 @@
+//nuevo usuario
+let ano = $("#AnoVehiculo");//
+let anohelper = $("#anohelp");//
+
+/* VALIDACIONES REGISTRO */
+ano.on("keyup change blur", (e) => {//
+  ValidarAno(ano, anohelper);//
+});//
+
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
     guardaryeditar(e);
@@ -7,25 +16,35 @@ function init() {
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
-  /* TODO: Guardar Informacion */
-  $.ajax({
-    url: "../../controller/ctrAnoVehiculo.php?op=guardaryeditar",
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function (data) {
-      // console.log("llega");
-      $("#table_data").DataTable().ajax.reload();
-      $("#modalmantenimiento").modal("hide");
-      /* TODO: Mensaje de sweetalert */
-      swal.fire({
-        title: "Año",
-        text: "Registro Confirmado",
-        icon: "success",
-      });
-    },
-  });
+
+  // Validaciones
+  let isValidAno = ValidarAno(ano, anohelper); //
+  let formIsValid = isValidAno; //
+
+  console.log(formIsValid);
+
+  if (formIsValid) {//
+
+    /* TODO: Guardar Informacion */
+    $.ajax({
+      url: "../../controller/ctrAnoVehiculo.php?op=guardaryeditar",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        // console.log("llega");
+        $("#table_data").DataTable().ajax.reload();
+        $("#modalmantenimiento").modal("hide");
+        /* TODO: Mensaje de sweetalert */
+        swal.fire({
+          title: "Año",
+          text: "Registro Confirmado",
+          icon: "success",
+        });
+      },
+    });
+  } 
 }
 
 $(document).ready(function () {
@@ -121,6 +140,7 @@ function editar(token) {
   $("#modalmantenimiento").modal("show");
 }
 
+
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   $("#AnoVehiculo").val("");
@@ -131,3 +151,37 @@ $(document).on("click", "#btnnuevo", function () {
 });
 
 init();
+
+// VALIDACION Año
+
+function ValidarAno(Control, Helper) {
+
+  console.log(Control);
+
+  if (Control.val() === "") {
+    Helper.text("El año es requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (Control.val() < 1940 || Control.val() > 2040) {
+    Helper.text("El año es invalido");
+    Helper.show();
+    return false;
+  }
+
+  if (Control.val().length < 4 || Control.val().length > 4) {
+    Helper.text("El año del vehiculo es incorrecto");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[0-9]+$/)) {
+    Helper.text("Direccion no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
