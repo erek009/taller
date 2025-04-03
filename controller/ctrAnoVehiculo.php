@@ -13,6 +13,11 @@ switch ($_GET["op"]) {
         if (empty($_POST["token"])) {
             // echo json_encode("registro");
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
+
+			if ($validarAno) {
+				echo json_encode("error-anoexiste");
+			}
+
             $anoovehiculo->mdlRegistro(
                 $token,
                 $_POST["AnoVehiculo"]

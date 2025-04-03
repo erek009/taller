@@ -21,8 +21,6 @@ function guardaryeditar(e) {
   let isValidAno = ValidarAno(ano, anohelper); //
   let formIsValid = isValidAno; //
 
-  console.log(formIsValid);
-
   if (formIsValid) {//
 
     /* TODO: Guardar Informacion */
@@ -33,6 +31,13 @@ function guardaryeditar(e) {
       contentType: false,
       processData: false,
       success: function (data) {
+
+        
+        if (data === "error-anoexiste") {
+          // Mostrar el error si el año ya existe
+          alert("El año del vehículo ya existe en el sistema.");
+      } else {
+
         // console.log("llega");
         $("#table_data").DataTable().ajax.reload();
         $("#modalmantenimiento").modal("hide");
@@ -42,7 +47,8 @@ function guardaryeditar(e) {
           text: "Registro Confirmado",
           icon: "success",
         });
-      },
+      }
+    }
     });
   } 
 }
@@ -155,8 +161,6 @@ init();
 // VALIDACION Año
 
 function ValidarAno(Control, Helper) {
-
-  console.log(Control);
 
   if (Control.val() === "") {
     Helper.text("El año es requerido");
