@@ -1,11 +1,12 @@
 //nuevo usuario
-let ano = $("#AnoVehiculo");//
-let anohelper = $("#anohelp");//
+let ano = $("#AnoVehiculo"); //
+let anohelper = $("#anohelp"); //
 
 /* VALIDACIONES REGISTRO */
-ano.on("keyup change blur", (e) => {//
-  ValidarAno(ano, anohelper);//
-});//
+ano.on("keyup change blur", (e) => {
+  //
+  ValidarAno(ano, anohelper); //
+}); //
 
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
@@ -16,6 +17,7 @@ function init() {
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
+  formData.append("ano", ano.val());//
 
   // Validaciones
   let isValidAno = ValidarAno(ano, anohelper); //
@@ -31,26 +33,23 @@ function guardaryeditar(e) {
       contentType: false,
       processData: false,
       success: function (data) {
-
-        
         if (data === "error-anoexiste") {
           // Mostrar el error si el año ya existe
           alert("El año del vehículo ya existe en el sistema.");
-      } else {
-
-        // console.log("llega");
-        $("#table_data").DataTable().ajax.reload();
-        $("#modalmantenimiento").modal("hide");
-        /* TODO: Mensaje de sweetalert */
-        swal.fire({
-          title: "Año",
-          text: "Registro Confirmado",
-          icon: "success",
-        });
-      }
-    }
+        } else {
+          // console.log("llega");
+          $("#table_data").DataTable().ajax.reload();
+          $("#modalmantenimiento").modal("hide");
+          /* TODO: Mensaje de sweetalert */
+          swal.fire({
+            title: "Año",
+            text: "Registro Confirmado",
+            icon: "success",
+          });
+        }
+      },
     });
-  } 
+  }
 }
 
 $(document).ready(function () {
@@ -146,7 +145,6 @@ function editar(token) {
   $("#modalmantenimiento").modal("show");
 }
 
-
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   $("#AnoVehiculo").val("");
@@ -159,9 +157,7 @@ $(document).on("click", "#btnnuevo", function () {
 init();
 
 // VALIDACION Año
-
 function ValidarAno(Control, Helper) {
-
   if (Control.val() === "") {
     Helper.text("El año es requerido");
     Helper.show();
@@ -189,3 +185,19 @@ function ValidarAno(Control, Helper) {
   Helper.hide();
   return true;
 }
+
+//FUNCIONES OCULTAN HELPERS / BORRA DATOS EN INPUT
+
+function OcultarHelpers() {
+  anohelper.hide();
+}
+
+function LimpiarFormularios() {
+  ano.val("");
+}
+
+// Borra helpers
+$("#modalmantenimiento").on("hidden.bs.modal", function () {
+  OcultarHelpers();
+  LimpiarFormularios();
+});
