@@ -34,10 +34,13 @@ function guardaryeditar(e) {
       processData: false,
       success: function (data) {
         if (data === "error-anoexiste") {
-          // Mostrar el error si el año ya existe
-          alert("El año del vehículo ya existe en el sistema.");
+          // Si el año ya existe en la base de datos, mostrar un mensaje de error
+          swal.fire({
+            title: "Error",
+            text: "El año del vehículo ya existe en el sistema.",
+            icon: "error",
+          });
         } else {
-          // console.log("llega");
           $("#table_data").DataTable().ajax.reload();
           $("#modalmantenimiento").modal("hide");
           /* TODO: Mensaje de sweetalert */
@@ -148,6 +151,7 @@ function editar(token) {
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   $("#AnoVehiculo").val("");
+  $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

@@ -11,26 +11,41 @@ switch ($_GET["op"]) {
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "guardaryeditar":
         if (empty($_POST["token"])) {
-            
+
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
 
-            ///aqui
-           /* $validarAno = self::ctrSeleccionarRegistros('ano', $ano);
-			if ($validarAno) {
-				echo json_encode("error-anoexiste");
-			}*/
+            ///Verificando si año existe en BD
+            $tabla = "ano";
+            $item = "ano";
+            $valor = $_POST["AnoVehiculo"];
+            $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarAno) {
+                echo "error-anoexiste";
+                exit;
+            }
 
             $anoovehiculo->mdlRegistro(
                 $token,
                 $_POST["AnoVehiculo"]
             );
         } else {
-            // echo json_encode("actualizar");
+            //EDITAR
             $nuevoToken = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
+
+            ///Verificando si año existe en BD
+            $tabla = "ano";
+            $item = "ano";
+            $valor = $_POST["AnoVehiculo"];
+            $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarAno) {
+                echo "error-anoexiste";
+                exit;
+            }
+
             $anoovehiculo->mdlActualizarRegistro(
-                $_POST["token"],
                 $_POST["AnoVehiculo"],
-                $nuevoToken
+                $nuevoToken,
+                $_POST["token"]
             );
         }
         break;
