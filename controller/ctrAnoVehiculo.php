@@ -11,7 +11,6 @@ switch ($_GET["op"]) {
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "guardaryeditar":
         if (empty($_POST["token"])) {
-
             $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
 
             ///Verificando si año existe en BD

@@ -44,9 +44,9 @@ class mdlMarca extends Conectar{
      }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($marca,$nuevoToken,$token){
+    public function mdlActualizarRegistro($marca, $nuevoToken, $token){
         $conectar = parent::Conexion();
-        $sql = "actualizarTelefono ?,?,?";
+        $sql = "actualizarMarca ?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $marca);
         $query->bindValue(2, $nuevoToken);

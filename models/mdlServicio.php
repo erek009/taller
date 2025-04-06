@@ -3,7 +3,7 @@
 class mdlServicio extends Conectar{
 
     //Registrar servicio
-    public function mdlRegistro($token,$nombreservicio,$costomobra,$descripcion){
+    public function mdlRegistro($token, $nombreservicio, $costomobra, $descripcion){
         $conectar=parent::Conexion();
         $sql="insertarServicio ?,?,?,?";
         $query = $conectar->prepare($sql);
@@ -46,9 +46,9 @@ class mdlServicio extends Conectar{
      }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($nombreservicio,$costomobra,$descripcion,$nuevoToken,$token){
+    public function mdlActualizarRegistro($nombreservicio, $costomobra, $descripcion, $nuevoToken, $token){
         $conectar = parent::Conexion();
-        $sql = "actualizarTelefono ?,?,?,?,?";
+        $sql = "actualizarServicio ?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $nombreservicio);
         $query->bindValue(2, $costomobra);

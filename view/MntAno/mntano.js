@@ -1,11 +1,10 @@
 //nuevo usuario
-let ano = $("#AnoVehiculo"); //
-let anohelper = $("#anohelp"); //
+let ano = $("#AnoVehiculo");
+let anohelper = $("#anohelp");
 
 /* VALIDACIONES REGISTRO */
 ano.on("keyup change blur", (e) => {
-  //
-  ValidarAno(ano, anohelper); //
+  ValidarAno(ano, anohelper);
 }); //
 
 function init() {

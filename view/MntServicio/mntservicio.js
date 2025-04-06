@@ -1,5 +1,72 @@
-// console.log("test");
+let servicio = $("#servicio");
+let serviciohelper = $("#serviciohelp");
+let costo = $("#costo");
+let costohelper = $("#costohelp");
+let descripcion = $("#descripcion");
+let descripcionhelper = $("#descripcionhelp");
 
+/* VALIDACIONES */
+servicio.on("keyup change blur", (e) => {
+  ValidarServicio(servicio, serviciohelper);
+});
+
+costo.on("keyup change blur", (e) => {
+  ValidarCosto(costo, costohelper);
+ });
+
+descripcion.on("keyup change blur", (e) => {
+ ValidarDescripcion(descripcion, descripcionhelper);
+  });
+
+function init() {
+  $("#mantenimiento_form").on("submit", function (e) {
+    guardaryeditar(e);
+  });
+}
+
+function guardaryeditar(e) {
+  e.preventDefault();
+  var formData = new FormData($("#mantenimiento_form")[0]);
+  formData.append("servicio", servicio.val());//
+
+  // Validaciones
+  let isValidServicio = ValidarServicio(servicio, serviciohelper);
+    let isValidCosto = ValidarCosto(costo, costohelper);
+    let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
+
+  let formIsValid = isValidServicio && isValidCosto && isValidDescripcion;
+
+  if (formIsValid) {//
+
+    /* TODO: Guardar Informacion */
+    $.ajax({
+      url: "../../controller/ctrServicio.php?op=guardaryeditar",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        if (data === "error-servicioexiste") {
+          // Si el año ya existe en la base de datos, mostrar un mensaje de error
+          swal.fire({
+            title: "Error",
+            text: "El servicio ya existe en el sistema.",
+            icon: "error",
+          });
+        } else {
+          $("#table_data").DataTable().ajax.reload();
+          $("#modalmantenimiento").modal("hide");
+          /* TODO: Mensaje de sweetalert */
+          swal.fire({
+            title: "Servicio",
+            text: "Registro Confirmado",
+            icon: "success",
+          });
+        }
+      },
+    });
+  }
+}
 
 $(document).ready(function () {
     /* TODO: Listar informacion en el datatable js */
@@ -48,9 +115,6 @@ $(document).ready(function () {
     });
   });
 
-
-
-
   function eliminar(token) {
     swal
       .fire({
@@ -64,7 +128,7 @@ $(document).ready(function () {
       .then((result) => {
         if (result.value) {
           $.post(
-            "../../controller/ctrCliente.php?op=eliminar",
+            "../../controller/ctrServicio.php?op=eliminar",
             { token: token },
             function (data) {
               console.log(data);
@@ -74,12 +138,99 @@ $(document).ready(function () {
           $("#table_data").DataTable().ajax.reload();
   
           swal.fire({
-            title: "Servicio vehiculo",
+            title: "Servicio",
             text: "Registro Eliminado",
             icon: "success",
           });
         }
       });
   }
+
+  function editar(token) {
+    $.post(
+      "../../controller/ctrServicio.php?op=mostrar",
+      { token: token },
+      function (data) {
+        data = JSON.parse(data);
+        $("#token").val(data.token);
+        $("#servicio").val(data.nombreservicio);
+        $("#costo").val(data.costomobra);
+        $("#descripcion").val(data.descripcion);
+      }
+    );
+    $("#lbltitulo").html("Editar Registro");
+    /* TODO: Mostrar Modal */
+    $("#modalmantenimiento").modal("show");
+  }
   
+  $(document).on("click", "#btnnuevo", function () {
+    /* TODO: Limpiar informacion */
+    $("#servicio").val("");
+    $("#costo").val("");
+    $("#descripcion").val("");
+    $("#token").val("");
+    $("#lbltitulo").html("Nuevo Registro");
+    $("#mantenimiento_form")[0].reset();
+    /* TODO: Mostrar Modal */
+    $("#modalmantenimiento").modal("show");
+  });
   
+  init();
+
+
+        // VALIDACIONES //
+
+    // valida servicio
+function ValidarServicio(Control, Helper) {
+  if (Control.val() == "" || Control.val().length <= 0) {
+    Helper.text("Nombre del servicio requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Nombre servicio no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+
+  // valida costo
+function ValidarCosto(Control, Helper) {
+  if (Control.val() == "" || Control.val().length <= 0) {
+    Helper.text("Costo del servicio requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[0-9 ]+$/)) {
+    Helper.text("Descripcion no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+  // valida descripcion
+function ValidarDescripcion(Control, Helper) {
+  if (Control.val() == "" || Control.val().length <= 0) {
+      Helper.text("Descripcion requerida");
+      Helper.show();
+      return false;
+      }
+
+      if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+        Helper.text("Descripcion no puede contener caracteres especiales");
+        Helper.show();
+        return false;
+      }
+    
+      Helper.hide();
+      return true;
+    }

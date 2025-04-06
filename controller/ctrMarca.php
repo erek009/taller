@@ -11,15 +11,39 @@ switch ($_GET["op"]) {
     case "guardaryeditar":
         if (empty($_POST["token"])) {
             $token = md5($_POST["marca"] . "+" . $_POST["marca"]);
+
+            //Verificando si marca existe en BD
+            $tabla = "marca";
+            $item = "marca";
+            $valor = $_POST["marca"];
+            $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarMarca) {
+                echo "error-marcaexiste";
+                exit;
+            }
+            
             $marca->mdlRegistro(
-                $token, 
-                $_POST["marca"]);
+                $token,
+                $_POST["marca"]
+            );
         } else {
             $nuevoToken = md5($_POST["marca"] . "+" . $_POST["marca"]);
+
+            //Verificando si marca existe en BD
+            $tabla = "marca";
+            $item = "marca";
+            $valor = $_POST["marca"];
+            $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarMarca) {
+                echo "error-marcaexiste";
+                exit;
+            }
+
             $marca->mdlActualizarRegistro(
-                $_POST["token"], 
-                $nuevoToken, 
-                $_POST["marca"]);
+                $_POST["marca"],
+                $nuevoToken,
+                $_POST["token"]    
+            );
         }
         break;
 
@@ -44,7 +68,7 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
-    /*TODO: Mostrar informacion de registro por ID*/
+    /*TODO: Mostrar informacion EDITAR egistro por token*/
     case "mostrar":
         $tabla = "marca";
         $item = "token";
