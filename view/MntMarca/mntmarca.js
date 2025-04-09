@@ -162,7 +162,7 @@ init();
 
 // VALIDACIONES //
 function ValidarMarca(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim() == "") {
     Helper.text("La marca es requerida");
     Helper.show();
     return false;

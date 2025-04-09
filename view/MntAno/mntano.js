@@ -161,7 +161,7 @@ init();
 
 // VALIDACION Año
 function ValidarAno(Control, Helper) {
-  if (Control.val() === "") {
+  if (Control.val().trim() == "") {
     Helper.text("El año es requerido");
     Helper.show();
     return false;
@@ -190,7 +190,6 @@ function ValidarAno(Control, Helper) {
 }
 
 //FUNCIONES OCULTAN HELPERS / BORRA DATOS EN INPUT
-
 function OcultarHelpers() {
   anohelper.hide();
 }

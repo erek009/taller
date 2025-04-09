@@ -12,11 +12,11 @@ servicio.on("keyup change blur", (e) => {
 
 costo.on("keyup change blur", (e) => {
   ValidarCosto(costo, costohelper);
- });
+});
 
 descripcion.on("keyup change blur", (e) => {
- ValidarDescripcion(descripcion, descripcionhelper);
-  });
+  ValidarDescripcion(descripcion, descripcionhelper);
+});
 
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
@@ -27,16 +27,16 @@ function init() {
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
-  formData.append("servicio", servicio.val());//
 
   // Validaciones
   let isValidServicio = ValidarServicio(servicio, serviciohelper);
-    let isValidCosto = ValidarCosto(costo, costohelper);
-    let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
+  let isValidCosto = ValidarCosto(costo, costohelper);
+  let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
 
   let formIsValid = isValidServicio && isValidCosto && isValidDescripcion;
 
-  if (formIsValid) {//
+  if (formIsValid) {
+    //
 
     /* TODO: Guardar Informacion */
     $.ajax({
@@ -69,118 +69,117 @@ function guardaryeditar(e) {
 }
 
 $(document).ready(function () {
-    /* TODO: Listar informacion en el datatable js */
-    $("#table_data").DataTable({
-      aProcessing: true,
-      aServerSide: true,
-      dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
-      ajax: {
-        url: "../../controller/ctrServicio.php?op=listar",
-        type: "post",
-        data: { token : 1},
+  /* TODO: Listar informacion en el datatable js */
+  $("#table_data").DataTable({
+    aProcessing: true,
+    aServerSide: true,
+    dom: "Bfrtip",
+    buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
+    ajax: {
+      url: "../../controller/ctrServicio.php?op=listar",
+      type: "post",
+      data: { token: 1 },
+    },
+    bDestroy: true,
+    responsive: true,
+    bInfo: true,
+    iDisplayLength: 10,
+    order: [[0, "desc"]],
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo:
+        "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior",
       },
-      bDestroy: true,
-      responsive: true,
-      bInfo: true,
-      iDisplayLength: 10,
-      order: [[0, "desc"]],
-      language: {
-        sProcessing: "Procesando...",
-        sLengthMenu: "Mostrar _MENU_ registros",
-        sZeroRecords: "No se encontraron resultados",
-        sEmptyTable: "Ningún dato disponible en esta tabla",
-        sInfo:
-          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-        sInfoPostFix: "",
-        sSearch: "Buscar:",
-        sUrl: "",
-        sInfoThousands: ",",
-        sLoadingRecords: "Cargando...",
-        oPaginate: {
-          sFirst: "Primero",
-          sLast: "Último",
-          sNext: "Siguiente",
-          sPrevious: "Anterior",
-        },
-        oAria: {
-          sSortAscending:
-            ": Activar para ordenar la columna de manera ascendente",
-          sSortDescending:
-            ": Activar para ordenar la columna de manera descendente",
-        },
+      oAria: {
+        sSortAscending:
+          ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending:
+          ": Activar para ordenar la columna de manera descendente",
       },
-    });
+    },
   });
+});
 
-  function eliminar(token) {
-    swal
-      .fire({
-        title: "Eliminar!",
-        text: "Desea Eliminar el Registro?",
-        icon: "error",
-        confirmButtonText: "Si",
-        showCancelButton: true,
-        cancelButtonText: "No",
-      })
-      .then((result) => {
-        if (result.value) {
-          $.post(
-            "../../controller/ctrServicio.php?op=eliminar",
-            { token: token },
-            function (data) {
-              console.log(data);
-            }
-          );
-  
-          $("#table_data").DataTable().ajax.reload();
-  
-          swal.fire({
-            title: "Servicio",
-            text: "Registro Eliminado",
-            icon: "success",
-          });
-        }
-      });
-  }
+function eliminar(token) {
+  swal
+    .fire({
+      title: "Eliminar!",
+      text: "Desea Eliminar el Registro?",
+      icon: "error",
+      confirmButtonText: "Si",
+      showCancelButton: true,
+      cancelButtonText: "No",
+    })
+    .then((result) => {
+      if (result.value) {
+        $.post(
+          "../../controller/ctrServicio.php?op=eliminar",
+          { token: token },
+          function (data) {
+            console.log(data);
+          }
+        );
 
-  function editar(token) {
-    $.post(
-      "../../controller/ctrServicio.php?op=mostrar",
-      { token: token },
-      function (data) {
-        data = JSON.parse(data);
-        $("#token").val(data.token);
-        $("#servicio").val(data.nombreservicio);
-        $("#costo").val(data.costomobra);
-        $("#descripcion").val(data.descripcion);
+        $("#table_data").DataTable().ajax.reload();
+
+        swal.fire({
+          title: "Servicio",
+          text: "Registro Eliminado",
+          icon: "success",
+        });
       }
-    );
-    $("#lbltitulo").html("Editar Registro");
-    /* TODO: Mostrar Modal */
-    $("#modalmantenimiento").modal("show");
-  }
-  
-  $(document).on("click", "#btnnuevo", function () {
-    /* TODO: Limpiar informacion */
-    $("#servicio").val("");
-    $("#costo").val("");
-    $("#descripcion").val("");
-    $("#token").val("");
-    $("#lbltitulo").html("Nuevo Registro");
-    $("#mantenimiento_form")[0].reset();
-    /* TODO: Mostrar Modal */
-    $("#modalmantenimiento").modal("show");
-  });
-  
-  init();
+    });
+}
 
+function editar(token) {
+  $.post(
+    "../../controller/ctrServicio.php?op=mostrar",
+    { token: token },
+    function (data) {
+      data = JSON.parse(data);
+      $("#token").val(data.token);
+      $("#servicio").val(data.nombreservicio);
+      $("#costo").val(data.costomobra);
+      $("#descripcion").val(data.descripcion);
+    }
+  );
+  $("#lbltitulo").html("Editar Registro");
+  /* TODO: Mostrar Modal */
+  $("#modalmantenimiento").modal("show");
+}
 
-        // VALIDACIONES //
+$(document).on("click", "#btnnuevo", function () {
+  /* TODO: Limpiar informacion */
+  $("#servicio").val("");
+  $("#costo").val("");
+  $("#descripcion").val("");
+  $("#token").val("");
+  $("#lbltitulo").html("Nuevo Registro");
+  $("#mantenimiento_form")[0].reset();
+  /* TODO: Mostrar Modal */
+  $("#modalmantenimiento").modal("show");
+});
 
-    // valida servicio
+init();
+
+// VALIDACIONES //
+
+// valida servicio
 function ValidarServicio(Control, Helper) {
   if (Control.val() == "" || Control.val().length <= 0) {
     Helper.text("Nombre del servicio requerido");
@@ -198,8 +197,7 @@ function ValidarServicio(Control, Helper) {
   return true;
 }
 
-
-  // valida costo
+// valida costo
 function ValidarCosto(Control, Helper) {
   if (Control.val() == "" || Control.val().length <= 0) {
     Helper.text("Costo del servicio requerido");
@@ -217,20 +215,38 @@ function ValidarCosto(Control, Helper) {
   return true;
 }
 
-  // valida descripcion
+// valida descripcion
 function ValidarDescripcion(Control, Helper) {
   if (Control.val() == "" || Control.val().length <= 0) {
-      Helper.text("Descripcion requerida");
-      Helper.show();
-      return false;
-      }
+    Helper.text("Descripcion requerida");
+    Helper.show();
+    return false;
+  }
 
-      if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
-        Helper.text("Descripcion no puede contener caracteres especiales");
-        Helper.show();
-        return false;
-      }
-    
-      Helper.hide();
-      return true;
-    }
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Descripcion no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+function OcultarHelpers() {
+  serviciohelper.hide();
+  costohelper.hide();
+  descripcionhelper.hide();
+}
+
+function LimpiarFormularios() {
+  servicio.val("");
+  costo.val("");
+  descripcion.val("");
+}
+
+// Borra helpers
+$("#modalmantenimiento").on("hidden.bs.modal", function () {
+  OcultarHelpers();
+  LimpiarFormularios();
+});

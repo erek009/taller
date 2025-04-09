@@ -65,7 +65,6 @@ switch ($_GET["op"]) {
             $sub_array[] = $row["descripcion"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
             $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
-
             $data[] = $sub_array;
         }
         $results = array(
@@ -77,7 +76,7 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
-    /*TODO: Mostrar informacion EDITAR egistro por token*/
+    /*TODO: Mostrar informacion EDITAR registro por token*/
     case "mostrar":
         $tabla = "servicio";
         $item = "token";

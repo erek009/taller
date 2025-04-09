@@ -31,13 +31,13 @@ switch ($_GET["op"]) {
 
             //Verificando si marca existe en BD
             $tabla = "marca";
-            $item = "marca";
-            $valor = $_POST["marca"];
+            $item = "token";
+            $valor = $_POST["token"];
             $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarMarca) {
                 echo "error-marcaexiste";
                 exit;
-            }
+        }
 
             $marca->mdlActualizarRegistro(
                 $_POST["marca"],

@@ -48,7 +48,7 @@ class mdlCliente extends Conectar{
      }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($nombre,$direccion,$telefono,$localidad,$observaciones,$nuevotoken,$token){
+    public function mdlActualizarRegistro($nombre, $direccion, $telefono, $localidad, $observaciones,$nuevotoken,$token){
         $conectar = parent::Conexion();
         $sql = "actualizarCliente ?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
