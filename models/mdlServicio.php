@@ -12,7 +12,6 @@ class mdlServicio extends Conectar{
         $query->bindValue(3, $costomobra);
         $query->bindValue(4, $descripcion);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
         //Consultar registros

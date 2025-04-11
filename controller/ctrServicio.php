@@ -31,6 +31,8 @@ switch ($_GET["op"]) {
         } else {
             $nuevoToken = md5($_POST["servicio"] . "+" . $_POST["servicio"]);
 
+
+            //FALTA VALIDACION SI EXISTE CLIENTE/////////////////
             //Verificando si servicio existe en BD
             $tabla = "servicio";
             $item = "nombreservicio";

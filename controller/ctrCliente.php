@@ -34,6 +34,8 @@ switch ($_GET["op"]) {
         } else {
             $nuevoToken = md5($_POST["nombre"] . "+" . $_POST["telefono"]);
 
+            //FALTA VALIDACION SI EXISTE CLIENTE/////////////////
+
             $cliente->mdlActualizarRegistro(
                 $_POST["nombre"],
                 $_POST["direccion"],

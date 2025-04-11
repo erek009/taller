@@ -4,7 +4,7 @@ class mdlVehiculo extends Conectar
 {
 
     //Registrar vehiculo
-    public function mdlRegistro($token, $tipo, $placa, $marca, $ano, $vin, $color, $cliente, $model)
+    public function mdlRegistro($token, $tipo, $placa, $marca, $modelo, $ano, $vin, $color, $cliente)
     {
         $conectar = parent::Conexion();
         $sql = "insertarVehiculo ?,?,?,?,?,?,?,?,?";
@@ -13,13 +13,12 @@ class mdlVehiculo extends Conectar
         $query->bindValue(2, $tipo);
         $query->bindValue(3, $placa);
         $query->bindValue(4, $marca);
-        $query->bindValue(5, $ano);
-        $query->bindValue(6, $vin);
-        $query->bindValue(7, $color);
-        $query->bindValue(8, $cliente);
-        $query->bindValue(9, $model);
+        $query->bindValue(5, $modelo);
+        $query->bindValue(6, $ano);
+        $query->bindValue(7, $vin);
+        $query->bindValue(8, $color);
+        $query->bindValue(9, $cliente);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Consultar registros
@@ -55,7 +54,7 @@ class mdlVehiculo extends Conectar
     }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($tipo, $placa, $marca, $ano, $vin, $color, $cliente, $model, $nuevoToken, $token)
+    public function mdlActualizarRegistro($tipo, $placa, $marca, $modelo, $ano, $vin, $color, $cliente, $nuevoToken, $token)
     {
         $conectar = parent::Conexion();
         $sql = "actualizarVehiculo ?,?,?,?,?,?,?,?,?,?";
@@ -63,11 +62,11 @@ class mdlVehiculo extends Conectar
         $query->bindValue(1, $tipo);
         $query->bindValue(2, $placa);
         $query->bindValue(3, $marca);
-        $query->bindValue(4, $ano);
-        $query->bindValue(5, $vin);
-        $query->bindValue(6, $color);
-        $query->bindValue(7, $cliente);
-        $query->bindValue(8, $model);
+        $query->bindValue(4, $modelo);
+        $query->bindValue(5, $ano);
+        $query->bindValue(6, $vin);
+        $query->bindValue(7, $color);
+        $query->bindValue(8, $cliente);
         $query->bindValue(9, $nuevoToken);
         $query->bindValue(10, $token);
         $query->execute();
@@ -77,11 +76,12 @@ class mdlVehiculo extends Conectar
     public function mdlSeleccionarRegistrosVehiculo($tabla, $item, $valor)
     {
         $conectar = parent::Conexion();
-        $sql = "seleccionarRegistroVehiculo ?";
+        $sql = "seleccionarRegistroVehiculo";
         $query = $conectar->prepare($sql);
-        $query->bindValue(1, $tabla);
-        $query->bindValue(1, $item);
-        $query->bindValue(1, $valor);
+        // $query->bindValue(1, $tabla);
+        // $query->bindValue(1, $item);
+        // $query->bindValue(1, $valor);
         $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }

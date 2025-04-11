@@ -33,12 +33,12 @@ switch ($_GET["op"]) {
 
             ///Verificando si año existe en BD
             $tabla = "ano";
-            $item = "token";
-            $valor = $_POST["token"];
+            $item = "ano";
+            $valor = $_POST["AnoVehiculo"];
             $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarAno) {
-                if ($validarAno['token'] != $nuevoToken) {
-                echo json_encode("error-anoexiste");
+                if ($validarAno != $_POST["token"]) {
+                echo "error-anoexiste";
                 exit;
             }
         }

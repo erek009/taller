@@ -12,7 +12,6 @@ class mdlUsuario extends Conectar{
         $query->bindValue(3, $correo);
         $query->bindValue(4, $password);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
         //Consultar registros

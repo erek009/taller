@@ -10,7 +10,6 @@ class mdlMarca extends Conectar{
         $query->bindValue(1, $token);
         $query->bindValue(2, $marca);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Consultar registros
