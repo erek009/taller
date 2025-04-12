@@ -12,6 +12,27 @@ switch ($_GET["op"]) {
         if (empty($_POST["token"])) {
 
             $token = md5($_POST["placa"] . "+" . $_POST["vin"]);
+
+            //Verificando si servicio existe en BD
+            $tabla = "vehiculo";
+            $item = "placa";
+            $valor = $_POST["placa"];
+            $validarPlaca = $vehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarPlaca) {
+                echo "error-vehiculoexiste";
+                exit;
+            }
+
+            //Verificando si servicio existe en BD
+            $tabla = "vehiculo";
+            $item = "vin";
+            $valor = $_POST["vin"];
+            $validarVin = $vehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarVin) {
+                echo "error-vehiculoexiste";
+                exit;
+            }
+
             $vehiculo->mdlRegistro(
                 $token,
                 $_POST["tipo"],

@@ -22,9 +22,9 @@
                                     <?php
                                     echo ' 
                                             <option value="" disabled selected>Seleccione tipo vehiculo </option> 
-                                        <option>Automovil</option>
-                                        <option>Camioneta</option>
-                                        <option>Tractor</option>';
+                                        <option value="automovil">Automovil</option>
+                                        <option value="camioneta">Camioneta</option>
+                                        <option value="tractor">Tractor</option>';
                                     ?>
                                 </select>
                                 <span class="text-danger" id="tipohelp"> </span>
@@ -61,12 +61,12 @@
                                     $datos = $marca->mdlSeleccionarRegistros($tabla, null, null);
                                     ?>
 
-                                        <?php foreach ($datos as $value): ?>
-                                            <option value="<?= $value['id'] ?>"><?= $value['marca'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['id'] ?>"><?= $value['marca'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
 
-                                    <span class="text-danger" id="marcahelp"> </span>
+                                <span class="text-danger" id="marcahelp"> </span>
                             </div>
                         </div>
                     </div>
@@ -101,13 +101,13 @@
                                     ?>
 
                                     <!-- <select> -->
-                                        <?php foreach ($datos as $value): ?>
-                                            <option value="<?= $value['id'] ?>"><?= $value['ano'] ?></option>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['id'] ?>"><?= $value['ano'] ?></option>
+                                    <?php endforeach; ?>
                                     <!-- </select> -->
-                                    </select>
+                                </select>
 
-                                    <span class="text-danger" id="anohelp"> </span>
+                                <span class="text-danger" id="anohelp"> </span>
                             </div>
                         </div>
                     </div>
@@ -138,9 +138,9 @@
                                 <label for="valueInput" class="form-label">Cliente</label>
                                 <select id="cliente" class="form-control" name="cliente">
                                     <?php
-                                     echo ' 
+                                    echo ' 
                                      <option value="" disabled selected> Seleccione cliente </option> ';
- 
+
                                     include '../../models/mdlCliente.php';
 
                                     // Crear instancia del modelo
@@ -152,13 +152,13 @@
                                     ?>
 
                                     <!-- <select> -->
-                                        <?php foreach ($datos as $value): ?>
-                                            <option value="<?= $value['id'] ?>"><?= $value['nombre'] ?></option>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['id'] ?>"><?= $value['nombre'] ?></option>
+                                    <?php endforeach; ?>
                                     <!-- </select> -->
-                                    </select>
+                                </select>
 
-                                    <span class="text-danger" id="clientehelp"> </span>
+                                <span class="text-danger" id="clientehelp"> </span>
                             </div>
                         </div>
                     </div>
