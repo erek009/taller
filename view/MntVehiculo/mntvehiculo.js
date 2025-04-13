@@ -77,7 +77,6 @@ function guardaryeditar(e) {
   let isValidColor = ValidarColor(color, colorhelper);
   let isValidCliente = ValidarCliente(cliente, clientehelp);
 
-
   let formIsValid =
     isValidTipo &&
     isValidPlaca &&
@@ -99,7 +98,6 @@ function guardaryeditar(e) {
       processData: false,
       success: function (data) {
         if (data === "error-vehiculoexiste") {
-          // Si el año ya existe en la base de datos, mostrar un mensaje de error
           swal.fire({
             title: "Error",
             text: "El placa o VIN ya esta registrado.",
@@ -224,12 +222,12 @@ $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   $("#tipo").val("");
   $("#placa").val("");
-  $("#idmarca").val("");
+  $("#marca").val("");
   $("#model").val("");
-  $("#idano").val("");
+  $("#ano").val("");
   $("#vin").val("");
   $("#color").val("");
-  $("#idcliente").val("");
+  $("#cliente").val("");
   $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
@@ -239,15 +237,15 @@ $(document).on("click", "#btnnuevo", function () {
 
 init();
 
-// VALIDACIONES //
 
+// VALIDACIONES //
 function ValidarTipo(Control, Helper) {
   const valor = Control.val();
-    if (!valor || valor === "") {
-        Helper.text("Seleccione tipo");
-        Helper.show();
-        return false;
-    }
+  if (!valor || valor === "") {
+    Helper.text("Seleccione tipo");
+    Helper.show();
+    return false;
+  }
 
   Helper.hide();
   return true;
@@ -255,7 +253,7 @@ function ValidarTipo(Control, Helper) {
 
 // valida PLACA
 function ValidarPlaca(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim()== "" || Control.val().length <= 0) {
     Helper.text("El numero de placa es requerido");
     Helper.show();
     return false;
@@ -268,11 +266,11 @@ function ValidarPlaca(Control, Helper) {
 // valida MARCA
 function ValidarMarca(Control, Helper) {
   const valor = Control.val();
-    if (!valor || valor === "") {
-        Helper.text("La marca es requerida");
-        Helper.show();
-        return false;
-    }
+  if (!valor || valor === "") {
+    Helper.text("La marca es requerida");
+    Helper.show();
+    return false;
+  }
   Helper.hide();
   return true;
 }
@@ -280,11 +278,11 @@ function ValidarMarca(Control, Helper) {
 // valida modelo
 function ValidarAno(Control, Helper) {
   const valor = Control.val();
-    if (!valor || valor === "") {
-        Helper.text("Seleccione año");
-        Helper.show();
-        return false;
-    }
+  if (!valor || valor === "") {
+    Helper.text("Seleccione año");
+    Helper.show();
+    return false;
+  }
 
   Helper.hide();
   return true;
@@ -292,7 +290,7 @@ function ValidarAno(Control, Helper) {
 
 // valida VIN
 function ValidarVin(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim() == "" || Control.val().length <= 0) {
     Helper.text("El numero VIN es requerido");
     Helper.show();
     return false;
@@ -310,7 +308,7 @@ function ValidarVin(Control, Helper) {
 
 // valida COLOR
 function ValidarColor(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim() == "" || Control.val().length <= 0) {
     Helper.text("El color es requerido");
     Helper.show();
     return false;
@@ -323,11 +321,11 @@ function ValidarColor(Control, Helper) {
 // valida CLIENTE
 function ValidarCliente(Control, Helper) {
   const valor = Control.val();
-    if (!valor || valor === "") {
-        Helper.text("Seleccione cliente");
-        Helper.show();
-        return false;
-    }
+  if (!valor || valor === "") {
+    Helper.text("Seleccione cliente");
+    Helper.show();
+    return false;
+  }
 
   Helper.hide();
   return true;
@@ -335,7 +333,7 @@ function ValidarCliente(Control, Helper) {
 
 // valida OBSERVACIONES
 function ValidarModelo(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim() == "" || Control.val().length <= 0) {
     Helper.text("Modelo de vehiculo requerida");
     Helper.show();
     return false;
@@ -344,3 +342,34 @@ function ValidarModelo(Control, Helper) {
   Helper.hide();
   return true;
 }
+
+//OCULTA MENSAJES HELPER
+function OcultarHelpers() {
+  tipohelper.hide();
+  placahelper.hide();
+  marcahelper.hide();
+  modelohelper.hide();
+  anohelper.hide();
+  vinhelper.hide();
+  colorhelper.hide();
+  clientehelp.hide();
+}
+
+  //LIMPIA MENSAJES HELPER
+  function LimpiarFormularios() {
+    tipo.val("");
+    placa.val("");
+    marca.val("");
+    modelo.val("");
+    ano.val("");
+    vin.val("");
+    color.val("");
+    cliente.val("");
+  }
+
+  // Borra helpers
+  $("#modalmantenimiento").on("hidden.bs.modal", function () {
+    OcultarHelpers();
+    LimpiarFormularios();
+  });
+

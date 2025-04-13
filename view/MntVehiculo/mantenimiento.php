@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <div id="modalmantenimiento" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,9 +18,9 @@
                                     <?php
                                     echo ' 
                                             <option value="" disabled selected>Seleccione tipo vehiculo </option> 
-                                        <option value="automovil">Automovil</option>
-                                        <option value="camioneta">Camioneta</option>
-                                        <option value="tractor">Tractor</option>';
+                                        <option>Automovil</option>
+                                        <option>Camioneta</option>
+                                        <option>Tractor</option>';
                                     ?>
                                 </select>
                                 <span class="text-danger" id="tipohelp"> </span>
