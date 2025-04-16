@@ -100,7 +100,7 @@ function guardaryeditar(e) {
         if (data === "error-vehiculoexiste") {
           swal.fire({
             title: "Error",
-            text: "El placa o VIN ya esta registrado.",
+            text: "La placa o VIN ya esta registrado.",
             icon: "error",
           });
         } else {
@@ -240,8 +240,7 @@ init();
 
 // VALIDACIONES //
 function ValidarTipo(Control, Helper) {
-  const valor = Control.val();
-  if (!valor || valor === "") {
+  if (!Control || Control.find(":selected").index() === 0) {
     Helper.text("Seleccione tipo");
     Helper.show();
     return false;
@@ -259,14 +258,19 @@ function ValidarPlaca(Control, Helper) {
     return false;
   }
 
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("La placa no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
   Helper.hide();
   return true;
 }
 
 // valida MARCA
 function ValidarMarca(Control, Helper) {
-  const valor = Control.val();
-  if (!valor || valor === "") {
+  if (!Control || Control.find(":selected").index() === 0) {
     Helper.text("La marca es requerida");
     Helper.show();
     return false;
@@ -275,10 +279,27 @@ function ValidarMarca(Control, Helper) {
   return true;
 }
 
-// valida modelo
+// valida Modelo
+function ValidarModelo(Control, Helper) {
+  if (Control.val().trim() == "" || Control.val().length <= 0) {
+    Helper.text("Modelo de vehiculo requerida");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("El modelo no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+// valida año
 function ValidarAno(Control, Helper) {
-  const valor = Control.val();
-  if (!valor || valor === "") {
+  if (!Control || Control.find(":selected").index() === 0) {
     Helper.text("Seleccione año");
     Helper.show();
     return false;
@@ -314,15 +335,8 @@ function ValidarColor(Control, Helper) {
     return false;
   }
 
-  Helper.hide();
-  return true;
-}
-
-// valida CLIENTE
-function ValidarCliente(Control, Helper) {
-  const valor = Control.val();
-  if (!valor || valor === "") {
-    Helper.text("Seleccione cliente");
+  if (!Control.val().match(/^[a-zA-Z0-9-ZñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Color no puede contener caracteres especiales");
     Helper.show();
     return false;
   }
@@ -331,10 +345,10 @@ function ValidarCliente(Control, Helper) {
   return true;
 }
 
-// valida OBSERVACIONES
-function ValidarModelo(Control, Helper) {
-  if (Control.val().trim() == "" || Control.val().length <= 0) {
-    Helper.text("Modelo de vehiculo requerida");
+// valida CLIENTE
+function ValidarCliente(Control, Helper) {
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("Seleccione cliente");
     Helper.show();
     return false;
   }
