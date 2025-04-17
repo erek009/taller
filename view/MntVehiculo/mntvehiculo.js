@@ -203,14 +203,14 @@ function editar(token) {
     function (data) {
       data = JSON.parse(data);
       $("#token").val(data.token);
-      $("#tipo").val(data.tipo);
-      $("#placa").val(data.placa);
-      $("#marca").val(data.idmarca);
-      $("#modelo").val(data.model);
-      $("#ano").val(data.idano);
-      $("#vin").val(data.vin);
-      $("#color").val(data.color);
-      $("#cliente").val(data.idcliente);
+      tipo.val(data.tipo);
+      placa.val(data.placa);
+      marca.val(data.idmarca);
+      modelo.val(data.model);
+      ano.val(data.idano);
+      vin.val(data.vin);
+      color.val(data.color);
+      cliente.val(data.idcliente);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -220,14 +220,14 @@ function editar(token) {
 
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
-  $("#tipo").val("");
-  $("#placa").val("");
-  $("#marca").val("");
-  $("#model").val("");
-  $("#ano").val("");
-  $("#vin").val("");
-  $("#color").val("");
-  $("#cliente").val("");
+  tipo.val("");
+  placa.val("");
+  marca.val("");
+  modelo.val("");
+  ano.val("");
+  vin.val("");
+  color.val("");
+  cliente.val("");
   $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();

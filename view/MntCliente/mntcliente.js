@@ -170,11 +170,11 @@ function editar(token) {
     function (data) {
       data = JSON.parse(data);
       $("#token").val(data.token);
-      $("#nombre").val(data.nombre);
-      $("#direccion").val(data.direccion);
-      $("#telefono").val(data.telefono);
-      $("#localidad").val(data.localidad);
-      $("#observaciones").val(data.observaciones);
+      nombre.val(data.nombre);
+      direccion.val(data.direccion);
+      telefono.val(data.telefono);
+      localidad.val(data.localidad);
+      observaciones.val(data.observaciones);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -184,11 +184,11 @@ function editar(token) {
 
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
-  $("#nombre").val("");
-  $("#direccion").val("");
-  $("#telefono").val("");
-  $("#localidad").val("");
-  $("#observaciones").val("");
+  nombre.val("");
+  direccion.val("");
+  telefono.val("");
+  localidad.val("");
+  observaciones.val("");
   $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();

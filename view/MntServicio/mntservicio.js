@@ -153,9 +153,9 @@ function editar(token) {
     function (data) {
       data = JSON.parse(data);
       $("#token").val(data.token);
-      $("#servicio").val(data.nombreservicio);
-      $("#costo").val(data.costomobra);
-      $("#descripcion").val(data.descripcion);
+      servicio.val(data.nombreservicio);
+      costo.val(data.costomobra);
+      descripcion.val(data.descripcion);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -165,9 +165,9 @@ function editar(token) {
 
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
-  $("#servicio").val("");
-  $("#costo").val("");
-  $("#descripcion").val("");
+  servicio.val("");
+  costo.val("");
+  descripcion.val("");
   $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();

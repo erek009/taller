@@ -140,7 +140,7 @@ function editar(token) {
     function (data) {
       data = JSON.parse(data);
       $("#token").val(data.token);
-      $("#marca").val(data.marca);
+      marca.val(data.marca);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -150,7 +150,7 @@ function editar(token) {
 
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
-  $("#marca").val("");
+  marca.val("");
   $("#token").val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();

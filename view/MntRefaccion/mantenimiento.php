@@ -8,7 +8,7 @@
             <!-- TODO:Formulario de Mantenimiento -->
             <form method="post" id="mantenimiento_form">
                 <div class="modal-body">
-                    <input type="hidden" name="token" id="token" />
+                    <input type="hidden" name="token" id="token"/>
 
                     <div class="row gy-2">
                         <div class="col-md-12">

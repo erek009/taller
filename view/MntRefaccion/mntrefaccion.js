@@ -26,6 +26,8 @@ let ventahelper = $("#ventahelp");
 let descripcion = $("#descripcion");
 let descripcionhelper = $("#descripcionhelp");
 
+let token = $("#token");
+
 /*VALIDACIONES REGISTRO*/
     codigo.on("keyup change blur", (e) => {
       ValidarCodigo(codigo, codigohelper);
@@ -212,15 +214,17 @@ $(document).ready(function () {
       function (data) {
         data = JSON.parse(data);
         $("#token").val(data.token);
-        $("#codigo").prop("disabled", true);
-        $("#nombreproducto").val(data.nombre);
-        $("#unidadmedida").val(data.unidadmedida);
-        $("#marca").val(data.marca);
-        $("#stock").prop("disabled", true);
-        $("#proveedor").val(data.proveedor);
-        $("#preciocompra").val(data.preciocompra);
-        $("#precioventa").val(data.precioventa);
-        $("#descripcion").val(data.descripcion);
+        codigo.prop("disabled", true);
+        codigo.val(data.codigo);
+        nombre.val(data.nombre);
+        unidad.val(data.unidadmedida);
+        marca.val(data.marca);
+        stock.prop("disabled", true);
+        stock.val(data.stock);
+        proveedor.val(data.proveedor);
+        compra.val(data.preciocompra);
+        venta.val(data.precioventa);
+        descripcion.val(data.descripcion);
       }
     );
     $("#lbltitulo").html("Editar Registro");
@@ -229,16 +233,18 @@ $(document).ready(function () {
   }
 
   $(document).on("click", "#btnnuevo", function () {
+    codigo.prop("disabled", false);
+    stock.prop("disabled", false);
     /* TODO: Limpiar informacion */
-    $("#codigo").val("");
-    $("#nombreproducto").val("");
-    $("#unidad").val("");
-    $("#marca").val("");
-    $("#stock").val("");
-    $("#proveedor").val("");
-    $("#preciocompra").val("");
-    $("#precioventa").val("");
-    $("#descripcion").val("");
+    codigo.val("");
+    nombre.val("");
+    unidad.val("");
+    marca.val("");
+    stock.val("");
+    proveedor.val("");
+    compra.val("");
+    venta.val("");
+    descripcion.val("");
     $("#token").val("");
     $("#lbltitulo").html("Nuevo Registro");
     $("#mantenimiento_form")[0].reset();
