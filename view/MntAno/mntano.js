@@ -1,6 +1,7 @@
 //nuevo usuario
 let ano = $("#AnoVehiculo");
 let anohelper = $("#anohelp");
+let token = $("#token");
 
 /* VALIDACIONES REGISTRO */
 ano.on("keyup change blur", (e) => {
@@ -132,13 +133,13 @@ function eliminar(token) {
     });
 }
 
-function editar(token) {
+function editar(partoken) {
   $.post(
     "../../controller/ctrAnoVehiculo.php?op=mostrar",
-    { token: token },
+    { token: partoken },
     function (data) {
       data = JSON.parse(data);
-      $("#token").val(data.token);
+      token.val(data.token);
       ano.val(data.ano);
     }
   );
@@ -150,7 +151,7 @@ function editar(token) {
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   ano.val("");
-  $("#token").val("");
+  token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

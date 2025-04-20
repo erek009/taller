@@ -10,6 +10,8 @@ let localidadhelper = $("#localidadhelp");
 let observaciones = $("#observaciones");
 let observacionhelper = $("#observacioneshelp");
 
+let token = $("#token");
+
 /*    VALIDACIONES     */
 nombre.on("keyup change blur", (e) => {
   ValidarNombre(nombre, nombrehelper);
@@ -163,13 +165,13 @@ function eliminar(token) {
     });
 }
 
-function editar(token) {
+function editar(partoken) {
   $.post(
     "../../controller/ctrCliente.php?op=mostrar",
-    { token: token },
+    { token: partoken },
     function (data) {
       data = JSON.parse(data);
-      $("#token").val(data.token);
+      token.val(data.token);
       nombre.val(data.nombre);
       direccion.val(data.direccion);
       telefono.val(data.telefono);
@@ -189,7 +191,7 @@ $(document).on("click", "#btnnuevo", function () {
   telefono.val("");
   localidad.val("");
   observaciones.val("");
-  $("#token").val("");
+  token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

@@ -61,7 +61,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Stock</label>
-                                <input type="text" class="form-control" id="stock" name="stock" required />
+                                <input type="number" class="form-control" id="stock" name="stock" required />
                                 <span class="text-danger" id="stockhelp"> </span>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Precio compra</label>
-                                <input type="text" class="form-control" id="preciocompra" name="preciocompra" required />
+                                <input type="number" class="form-control" id="preciocompra" name="preciocompra" required />
                                 <span class="text-danger" id="comprahelp"> </span>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Precio venta</label>
-                                <input type="text" class="form-control" id="precioventa" name="precioventa" required />
+                                <input type="number" class="form-control" id="precioventa" name="precioventa" required />
                                 <span class="text-danger" id="ventahelp"> </span>
                             </div>
                         </div>

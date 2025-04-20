@@ -13,6 +13,26 @@ switch ($_GET["op"]) {
 
             $token = md5($_POST["codigo"] . "+" . $_POST["codigo"]);
 
+            //Verificando si servicio existe en BD
+            $tabla = "refacciones";
+            $item = "codigo";
+            $valor = $_POST["codigo"];
+            $validarProducto = $refaccion->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarProducto) {
+                echo 'error-productoexiste';
+                exit;
+            }
+
+            //Verificando si servicio existe en BD
+            $tabla = "refacciones";
+            $item = "nombre";
+            $valor = $_POST["nombreproducto"];
+            $validarNombre = $refaccion->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarNombre) {
+                echo 'error-productoexiste';
+                exit;
+            }
+
             $refaccion->mdlRegistro(
                 $token,
                 $_POST["codigo"],
@@ -26,18 +46,15 @@ switch ($_GET["op"]) {
                 $_POST["descripcion"]
             );
         } else {
-           // $nuevoToken = md5($_POST["codigo"] . "+" . $_POST["codigo"]);
+
             $refaccion->mdlActualizarRegistro(
-              //  $_POST["codigo"],
                 $_POST["nombreproducto"],
                 $_POST["unidadmedida"],
                 $_POST["marca"],
-               // $_POST["stock"],
                 $_POST["proveedor"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
                 $_POST["descripcion"],
-               // $nuevoToken,
                 $_POST["token"]
             );
         }

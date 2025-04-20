@@ -23,8 +23,9 @@ let colorhelper = $("#colorhelp");
 let cliente = $("#cliente");
 let clientehelp = $("#clientehelp");
 
-/* VALIDACIONES REGISTRO    */
+let token = $("#token");
 
+/* VALIDACIONES REGISTRO    */
 tipo.on("keyup change blur", (e) => {
   ValidarTipo(tipo, tipohelper);
 });
@@ -117,7 +118,7 @@ function guardaryeditar(e) {
     });
   }
 }
-//}
+
 $(document).ready(function () {
   /* TODO: Listar informacion en el datatable js */
   $("#table_data").DataTable({
@@ -196,13 +197,13 @@ function eliminar(token) {
     });
 }
 
-function editar(token) {
+function editar(partoken) {
   $.post(
     "../../controller/ctrVehiculo.php?op=mostrar",
-    { token: token },
+    { token: partoken },
     function (data) {
       data = JSON.parse(data);
-      $("#token").val(data.token);
+      token.val(data.token);
       tipo.val(data.tipo);
       placa.val(data.placa);
       marca.val(data.idmarca);
@@ -228,7 +229,7 @@ $(document).on("click", "#btnnuevo", function () {
   vin.val("");
   color.val("");
   cliente.val("");
-  $("#token").val("");
+  token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

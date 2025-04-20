@@ -2,6 +2,8 @@
 let marca = $("#marca");
 let marcahelper = $("#marcahelp");
 
+let token = $("#token");
+
 /* VALIDACIONES */
     marca.on("keyup change blur", (e) => {
       ValidarMarca(marca, marcahelper);
@@ -133,13 +135,13 @@ function eliminar(token) {
     });
 }
 
-function editar(token) {
+function editar(partoken) {
   $.post(
     "../../controller/ctrMarca.php?op=mostrar",
-    { token: token },
+    { token: partoken },
     function (data) {
       data = JSON.parse(data);
-      $("#token").val(data.token);
+      token.val(data.token);
       marca.val(data.marca);
     }
   );
@@ -151,7 +153,7 @@ function editar(token) {
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   marca.val("");
-  $("#token").val("");
+  token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

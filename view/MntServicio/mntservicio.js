@@ -5,6 +5,8 @@ let costohelper = $("#costohelp");
 let descripcion = $("#descripcion");
 let descripcionhelper = $("#descripcionhelp");
 
+let token = $("#token");
+
 /* VALIDACIONES */
 servicio.on("keyup change blur", (e) => {
   ValidarServicio(servicio, serviciohelper);
@@ -146,13 +148,13 @@ function eliminar(token) {
     });
 }
 
-function editar(token) {
+function editar(partoken) {
   $.post(
     "../../controller/ctrServicio.php?op=mostrar",
-    { token: token },
+    { token: partoken },
     function (data) {
       data = JSON.parse(data);
-      $("#token").val(data.token);
+      token.val(data.token);
       servicio.val(data.nombreservicio);
       costo.val(data.costomobra);
       descripcion.val(data.descripcion);
@@ -168,7 +170,7 @@ $(document).on("click", "#btnnuevo", function () {
   servicio.val("");
   costo.val("");
   descripcion.val("");
-  $("#token").val("");
+  token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */

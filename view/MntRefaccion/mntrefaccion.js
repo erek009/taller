@@ -107,10 +107,10 @@ function guardaryeditar(e) {
       contentType: false,
       processData: false,
       success: function (data) {
-        if (data === "error-vehiculoexiste") {
+        if (data === "error-productoexiste") {
           swal.fire({
             title: "Error",
-            text: "La placa o VIN ya esta registrado.",
+            text: "El producto ya esta registrado.",
             icon: "error",
           });
         } else {
@@ -207,13 +207,13 @@ $(document).ready(function () {
       });
   }
 
-  function editar(token) {
+  function editar(partoken) {
     $.post(
       "../../controller/ctrRefacciones.php?op=mostrar",
-      { token: token },
+      { token: partoken },
       function (data) {
         data = JSON.parse(data);
-        $("#token").val(data.token);
+        token.val(data.token);
         codigo.prop("disabled", true);
         codigo.val(data.codigo);
         nombre.val(data.nombre);
@@ -245,7 +245,7 @@ $(document).ready(function () {
     compra.val("");
     venta.val("");
     descripcion.val("");
-    $("#token").val("");
+    token.val("");
     $("#lbltitulo").html("Nuevo Registro");
     $("#mantenimiento_form")[0].reset();
     /* TODO: Mostrar Modal */
