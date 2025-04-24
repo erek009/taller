@@ -24,7 +24,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Correo</label>
-                                <input type="text" class="form-control" id="correo" name="correo" required />
+                                <input type="email" class="form-control" id="correo" name="correo" required />
                                 <span class="text-danger" id="correohelp"> </span>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Contraseña</label>
-                                <input type="text" class="form-control" id="password" name="password" required />
+                                <input type="password" class="form-control" id="password" name="password" required />
                                 <span class="text-danger" id="passhelp"> </span>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Confirmar password</label>
-                                <input type="text" class="form-control" id="confirmpass" name="confirmpass" required />
+                                <input type="password" class="form-control" id="confirmpass" name="confirmpass" required />
                                 <span class="text-danger" id="confirmpasshelp"> </span>
                             </div>
                         </div>

@@ -13,6 +13,24 @@ switch ($_GET["op"]) {
             $pass = crypt($_POST["password"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
             $token = md5($_POST["nombre"] . "+" . $_POST["correo"]);
 
+            //Verificando si servicio existe en BD
+            $tabla = "usuarios";
+            $item = "correo";
+            $valor = $_POST["correo"];
+            $validarEmail = $usuario->mdlSeleccionarRegistros($tabla, $item, $valor);
+			if ($validarEmail) {
+				echo 'error-correoexiste';
+                exit;
+			}
+
+            $tabla = "usuarios";
+            $item = "nombre";
+            $valor = $_POST["nombre"];
+            $validarNombre = $usuario->mdlSeleccionarRegistros($tabla, $item, $valor);
+			if ($validarNombre) {
+				echo 'error-nombreexiste';
+                exit;
+			}
 
             $usuario->mdlRegistro(
                 $token,
@@ -22,8 +40,13 @@ switch ($_GET["op"]) {
             );
         } else {
             $nuevoToken = md5($_POST["nombre"] . "+" . $_POST["correo"]);
-            $pass = crypt($_POST["password"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
 
+            $tabla = "usuarios";
+            $item = "token";
+            $valor = $_POST["token"];
+            $validapass = $usuario->mdlSeleccionarRegistros($tabla, $item, $valor);
+            $pass = empty($pass) ? $validapass['password'] : crypt($_POST["password"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
+            
             $usuario->mdlActualizarRegistro(
                 $_POST["nombre"],
                 $_POST["correo"],
@@ -37,8 +60,6 @@ switch ($_GET["op"]) {
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
         $tabla = "usuarios";
-        // $item = "token";
-        // $valor = $_POST["token"];
         $datos = $usuario->mdlSeleccionarRegistros($tabla, null, null);
         $data = array();
         foreach ($datos as $row) {
@@ -69,7 +90,7 @@ switch ($_GET["op"]) {
                 $output["token"] = $row["token"];
                 $output["nombre"] = $row["nombre"];
                 $output["correo"] = $row["correo"];
-                $output["password"] = $row["password"];
+                // $output["password"] = $row["password"];
             }
             echo json_encode($output);
         }
