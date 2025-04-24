@@ -19,9 +19,15 @@ correo.on("keyup change blur", (e) => {
 });
 
 // manda a validar password
-password.on("keyup change blur", (e) => {
-  ValidarPass(password, passhelper);
-});
+password.on("keyup change blur"), e =>{
+  if(token.val() == ""){
+    ValidarPass();
+  } else {
+      if(password.val() != ""){
+        ValidarPass();
+      }
+  }
+}
 
 //confirma contra
 confirmpass.on("keyup change blur", (e) => {
@@ -47,6 +53,12 @@ function guardaryeditar(e) {
     password,
     confirmpasshelper
   );
+
+  if (token.val() == "") {
+    isValidarPass = ValidarPass();
+  } else {
+    isValidarPass = password.val() == "" ? true : ValidarPass();
+  }
 
   let formIsValid =
     isValidNombre && isValidEmail && isValidarPass && isValidarConfirmpass;

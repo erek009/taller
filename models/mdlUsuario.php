@@ -64,8 +64,6 @@ class mdlUsuario extends Conectar
     }
 
 
-
-
     /* TODO:Acceso al Sistema */
     public function login()
     {
