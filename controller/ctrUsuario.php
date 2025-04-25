@@ -45,7 +45,7 @@ switch ($_GET["op"]) {
             $item = "token";
             $valor = $_POST["token"];
             $validapass = $usuario->mdlSeleccionarRegistros($tabla, $item, $valor);
-            $pass = empty($pass) ? $validapass['password'] : crypt($_POST["password"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
+            $pass = empty($pass) ? $validapass["password"] : crypt($_POST["password"], '$2a$07$Plu590nEp1uS9Pr0hA55elBAd$');
             
             $usuario->mdlActualizarRegistro(
                 $_POST["nombre"],

@@ -19,15 +19,9 @@ correo.on("keyup change blur", (e) => {
 });
 
 // manda a validar password
-password.on("keyup change blur"), e =>{
-  if(token.val() == ""){
-    ValidarPass();
-  } else {
-      if(password.val() != ""){
-        ValidarPass();
-      }
-  }
-}
+password.on("keyup change blur", (e) => {
+  ValidarPass(password, passhelper);
+});
 
 //confirma contra
 confirmpass.on("keyup change blur", (e) => {
@@ -54,11 +48,19 @@ function guardaryeditar(e) {
     confirmpasshelper
   );
 
-  if (token.val() == "") {
-    isValidarPass = ValidarPass();
-  } else {
-    isValidarPass = password.val() == "" ? true : ValidarPass();
-  }
+
+
+  
+  // Solo validar la contraseña si el token está vacío
+if (token.val() == "") {
+  isValidarPass = ValidarPass(); // o el valor que ya hayas calculado
+  isValidarConfirmpass = ValidarConfirmpass(); // o como se llame tu función
+} else {
+  // Si hay token, no se requiere validación de contraseña
+  isValidarPass = true;
+  isValidarConfirmpass = true;
+}
+
 
   let formIsValid =
     isValidNombre && isValidEmail && isValidarPass && isValidarConfirmpass;
