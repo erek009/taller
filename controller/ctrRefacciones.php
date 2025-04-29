@@ -47,6 +47,17 @@ switch ($_GET["op"]) {
             );
         } else {
 
+            //Verificando si servicio existe en BD
+            $tabla = "refacciones";
+            $item = "nombre";
+            $valor = $_POST["nombreproducto"];
+            $validarNombre = $refaccion->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarNombre) {
+                if ($validarNombre['codigo'] != $_POST["token"]) {
+                    echo 'error-productoexiste';
+                    exit;
+                }
+            }
             $refaccion->mdlActualizarRegistro(
                 $_POST["nombreproducto"],
                 $_POST["unidadmedida"],
@@ -96,18 +107,18 @@ switch ($_GET["op"]) {
         $valor = $_POST["token"];
         $datos = $refaccion->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
-            foreach ($datos as $row) {
-                $output["token"] = $row["token"];
-                $output["codigo"] = $row["codigo"];
-                $output["nombre"] = $row["nombre"];
-                $output["unidadmedida"] = $row["unidadmedida"];
-                $output["marca"] = $row["marca"];
-                $output["stock"] = $row["stock"];
-                $output["proveedor"] = $row["proveedor"];
-                $output["preciocompra"] = $row["preciocompra"];
-                $output["precioventa"] = $row["precioventa"];
-                $output["descripcion"] = $row["descripcion"];
-            }
+            // foreach ($datos as $row) {
+            $output["token"] = $datos["token"];
+            $output["codigo"] = $datos["codigo"];
+            $output["nombre"] = $datos["nombre"];
+            $output["unidadmedida"] = $datos["unidadmedida"];
+            $output["marca"] = $datos["marca"];
+            $output["stock"] = $datos["stock"];
+            $output["proveedor"] = $datos["proveedor"];
+            $output["preciocompra"] = $datos["preciocompra"];
+            $output["precioventa"] = $datos["precioventa"];
+            $output["descripcion"] = $datos["descripcion"];
+            // }
             echo json_encode($output);
         }
         break;

@@ -31,7 +31,7 @@ class mdlServicio extends Conectar{
                 $query->bindValue(2, $item);
                 $query->bindValue(3, $valor);
                 $query->execute();
-                return $query->fetchAll(PDO::FETCH_ASSOC);
+                return $query->fetch(PDO::FETCH_ASSOC);
             }
         }
 

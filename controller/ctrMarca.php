@@ -32,8 +32,8 @@ switch ($_GET["op"]) {
             //FALTA VALIDACION SI EXISTE CLIENTE/////////////////
             //Verificando si marca existe en BD
             $tabla = "marca";
-            $item = "token";
-            $valor = $_POST["token"];
+            $item = "marca";
+            $valor = $_POST["marca"];
             $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarMarca) {
                 if ($validarMarca['token'] != $token) {
@@ -79,12 +79,12 @@ switch ($_GET["op"]) {
         $valor = $_POST["token"];
         $datos = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
-            foreach ($datos as $row) {
-                $output["token"] = $row["token"];
-                $output["marca"] = $row["marca"];
+           // foreach ($datos as $row) {
+                $output["token"] = $datos["token"];
+                $output["marca"] = $datos["marca"];
             }
             echo json_encode($output);
-        }
+        // }
         break;
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/

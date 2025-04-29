@@ -37,7 +37,7 @@ switch ($_GET["op"]) {
             $valor = $_POST["AnoVehiculo"];
             $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarAno) {
-                if ($validarAno != $_POST["token"]) {
+                if ($validarAno['token'] != $_POST["token"]) {
                 echo "error-anoexiste";
                 exit;
             }
@@ -80,10 +80,10 @@ switch ($_GET["op"]) {
         $valor = $_POST["token"];
         $datos = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
-            foreach ($datos as $row) {
-                $output["token"] = $row["token"];
-                $output["ano"] = $row["ano"];
-            }
+            // foreach ($datos as $row) {
+                $output["token"] = $datos["token"];
+                $output["ano"] = $datos["ano"];
+            // }
             echo json_encode($output);
         }
         break;

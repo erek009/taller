@@ -41,26 +41,37 @@ function guardaryeditar(e) {
   // Validaciones
   let isValidNombre = ValidarName(nombre, nombrehelper);
   let isValidEmail = ValidarEmail(correo, correohelper);
-  let isValidarPass = ValidarPass(password, passhelper);
-  let isValidarConfirmpass = ValidarConfirmpass(
-    confirmpass,
-    password,
-    confirmpasshelper
-  );
+  // let isValidarPass = ValidarPass(password, passhelper);
+  // let isValidarConfirmpass = ValidarConfirmpass(
+  //  confirmpass,
+  //  password,
+  //  confirmpasshelper
+  // );
 
+  let isValidarPass;
+  let isValidarConfirmpass;
 
-
-  
   // Solo validar la contraseña si el token está vacío
-if (token.val() == "") {
-  isValidarPass = ValidarPass(); // o el valor que ya hayas calculado
-  isValidarConfirmpass = ValidarConfirmpass(); // o como se llame tu función
-} else {
-  // Si hay token, no se requiere validación de contraseña
-  isValidarPass = true;
-  isValidarConfirmpass = true;
-}
-
+  if (token.val() == "") {
+    isValidarPass = ValidarPass(password, passhelper);
+    isValidarConfirmpass = ValidarConfirmpass(
+      confirmpass,
+      password,
+      confirmpasshelper
+    );
+  } else {
+    if (password.val() != "") {
+      isValidarPass = ValidarPass(password, passhelper);
+      isValidarConfirmpass = ValidarConfirmpass(
+        confirmpass,
+        password,
+        confirmpasshelper
+      );
+    } else {
+      isValidarPass = true;
+      isValidarConfirmpass = true;
+    }
+  }
 
   let formIsValid =
     isValidNombre && isValidEmail && isValidarPass && isValidarConfirmpass;
@@ -149,35 +160,38 @@ $(document).ready(function () {
 });
 
 function eliminar(token) {
-  swal
-    .fire({
-      title: "Eliminar!",
-      text: "Desea Eliminar el Registro?",
-      icon: "error",
-      confirmButtonText: "Si",
-      showCancelButton: true,
-      cancelButtonText: "No",
-    })
-    .then((result) => {
-      if (result.value) {
-        $.post(
-          "../../controller/ctrUsuario.php?op=eliminar",
-          { token: token },
-          function (data) {
-            console.log(data);
+  Swal.fire({
+    title: "Eliminar!",
+    text: "¿Desea eliminar el registro?",
+    icon: "warning",
+    confirmButtonText: "Sí",
+    showCancelButton: true,
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../controller/ctrUsuario.php?op=eliminar",
+        type: "POST",
+        data: { token: token },
+        dataType: "json",
+        success: function (response) {
+          if (response.status === "error") {
+            Swal.fire("Atención", response.message, "warning");
+          } else if (response.status === "ok") {
+            Swal.fire("Eliminado", response.message, "success").then(() => {
+              $("#table_data").DataTable().ajax.reload();
+            });
           }
-        );
-
-        $("#table_data").DataTable().ajax.reload();
-
-        swal.fire({
-          title: "Año vehiculo",
-          text: "Registro Eliminado",
-          icon: "success",
-        });
-      }
-    });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error en la petición AJAX:", error);
+          Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
+        }
+      });
+    }
+  });
 }
+
 
 function editar(partoken) {
   $.post(

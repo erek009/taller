@@ -31,17 +31,15 @@ switch ($_GET["op"]) {
         } else {
             $nuevoToken = md5($_POST["servicio"] . "+" . $_POST["servicio"]);
 
-
-            //FALTA VALIDACION SI EXISTE CLIENTE/////////////////
             //Verificando si servicio existe en BD
             $tabla = "servicio";
             $item = "nombreservicio";
             $valor = $_POST["servicio"];
             $validarServicio = $servicio->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarServicio) {
-                if ($validarServicio['token'] != $token) {
-                echo "error-servicioexiste";
-                exit;
+                if ($validarServicio['token'] != $_POST["token"]) {
+                    echo "error-servicioexiste";
+                    exit;
                 }
             }
 
@@ -85,12 +83,12 @@ switch ($_GET["op"]) {
         $valor = $_POST["token"];
         $datos = $servicio->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
-            foreach ($datos as $row) {
-                $output["token"] = $row["token"];
-                $output["nombreservicio"] = $row["nombreservicio"];
-                $output["costomobra"] = $row["costomobra"];
-                $output["descripcion"] = $row["descripcion"];
-            }
+            // foreach ($datos as $row) {
+                $output["token"] = $datos["token"];
+                $output["nombreservicio"] = $datos["nombreservicio"];
+                $output["costomobra"] = $datos["costomobra"];
+                $output["descripcion"] = $datos["descripcion"];
+            // }
             echo json_encode($output);
         }
         break;

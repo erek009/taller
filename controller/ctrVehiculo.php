@@ -47,6 +47,31 @@ switch ($_GET["op"]) {
         } else {
             $nuevoToken = md5($_POST["placa"] . "+" . $_POST["vin"]);
 
+
+            //Verificando si servicio existe en BD
+            $tabla = "vehiculo";
+            $item = "placa";
+            $valor = $_POST["placa"];
+            $validarPlaca = $vehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarPlaca) {
+                if ($validarPlaca['token'] != $_POST["token"]) {
+                echo "error-vehiculoexiste";
+                exit;
+            }
+        }
+        
+            //Verificando si servicio existe en BD
+            $tabla = "vehiculo";
+            $item = "vin";
+            $valor = $_POST["vin"];
+            $validarVin = $vehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarVin) {
+                if ($validarVin['token'] != $_POST["token"]) {
+                echo "error-vehiculoexiste";
+                exit;
+            }
+        }
+
             $vehiculo->mdlActualizarRegistro(
                 $_POST["tipo"],
                 $_POST["placa"],
@@ -99,17 +124,17 @@ switch ($_GET["op"]) {
         $valor = $_POST["token"];
         $datos = $vehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
-            foreach ($datos as $row) {
-                $output["token"] = $row["token"];
-                $output["tipo"] = $row["tipo"];
-                $output["placa"] = $row["placa"];
-                $output["idmarca"] = $row["idmarca"];
-                $output["model"] = $row["model"];
-                $output["idano"] = $row["idano"];
-                $output["vin"] = $row["vin"];
-                $output["color"] = $row["color"];
-                $output["idcliente"] = $row["idcliente"];
-            }
+            // foreach ($datos as $row) {
+                $output["token"] = $datos["token"];
+                $output["tipo"] = $datos["tipo"];
+                $output["placa"] = $datos["placa"];
+                $output["idmarca"] = $datos["idmarca"];
+                $output["model"] = $datos["model"];
+                $output["idano"] = $datos["idano"];
+                $output["vin"] = $datos["vin"];
+                $output["color"] = $datos["color"];
+                $output["idcliente"] = $datos["idcliente"];
+            // }
             echo json_encode($output);
         }
         break;
