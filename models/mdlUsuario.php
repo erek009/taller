@@ -91,11 +91,15 @@ class mdlUsuario extends Conectar
 
                     header("Location:" . Conectar::ruta() . "view/home/");
                 } else {
-                    header("Location:" . Conectar::ruta() . "/index.php");
+                    // header("Location:" . Conectar::ruta() . "/index.php");
+                        echo "<script>
+                            alert('Usuario o contraseña incorrectos.');
+                            window.location.href = '" . Conectar::ruta() . "/index.php';
+                            </script>";
                     exit();
+                    }
                 }
-            }
-        } else {
+             } else {
             exit();
         }
     }

@@ -1,5 +1,6 @@
 <?php 
 require_once("../../config/conexion.php");
+if(isset($_SESSION["id"])){
 ?>
 
 <!doctype html>
@@ -47,9 +48,13 @@ require_once("../../config/conexion.php");
 
     </div>
 
-
-
     <?php require_once("../html/js.php"); ?>
 </body>
 
 </html>
+
+<?php
+ }else{
+     header("Location:".Conectar::ruta()."view/404/");
+ }
+?>
