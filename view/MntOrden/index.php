@@ -54,7 +54,13 @@ require_once("../../config/conexion.php");
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Orden</th>
+                                                <th>#</th>
+                                                <th>Placa</th>
+                                                <th>Concepto</th>
+                                                <th>Combustible</th>
+                                                <th>Kilometros</th>
+                                                <th>Tecnico</th>
+                                                <th>Servicio</th>
                                                 <!-- <th>FechaCreacion</th> -->
                                                 <th></th>
                                                 <th></th>
@@ -81,7 +87,7 @@ require_once("../../config/conexion.php");
     <?php require_once("mantenimiento.php"); ?>
 
     <?php require_once("../html/js.php"); ?>
-    <script type="text/javascript" src="mntmarca.js"></script>
+    <script type="text/javascript" src="mntorden.js"></script>
 </body>
 
 </html>
