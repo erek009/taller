@@ -29,14 +29,13 @@ switch ($_GET["op"]) {
         } else {
             $nuevoToken = md5($_POST["marca"] . "+" . $_POST["marca"]);
 
-            //FALTA VALIDACION SI EXISTE CLIENTE/////////////////
             //Verificando si marca existe en BD
             $tabla = "marca";
             $item = "marca";
             $valor = $_POST["marca"];
             $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarMarca) {
-                if ($validarMarca['token'] != $token) {
+                if ($validarMarca['token'] != $_POST["token"]) {
                 echo "error-marcaexiste";
                 exit;
                 }
