@@ -227,7 +227,7 @@ init();
 
 // valida nombre
 function ValidarName(Control, Helper) {
-  if (Control.val() == "" || Control.val().length <= 0) {
+  if (Control.val().trim() == "") {
     Helper.text("El Nombre requerido");
     Helper.show();
     return false;
@@ -251,7 +251,7 @@ function ValidarName(Control, Helper) {
 
 // valida email
 function ValidarEmail(Control, Helper) {
-  if (Control.val() == "") {
+  if (Control.val().trim() == "") {
     Helper.text("El correo es requerido");
     Helper.show();
     return false;
@@ -272,7 +272,7 @@ function ValidarEmail(Control, Helper) {
 
 // valida password
 function ValidarPass(Control, Helper) {
-  if (Control.val() == "") {
+  if (Control.val().trim() == "") {
     Helper.text("La contraseña es requerida");
     Helper.show();
     return false;
@@ -294,7 +294,7 @@ function ValidarPass(Control, Helper) {
 
 // NUEVA valida password
 function ValidarConfirmpass(Control, Control1, Helper) {
-  if (Control.val() == "") {
+  if (Control.val().trim() == "") {
     Helper.text("La confirmacion es requerida");
     Helper.show();
     return false;

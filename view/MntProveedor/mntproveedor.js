@@ -9,6 +9,23 @@ let emailhelp = $("#emailhelper");
 
 let token = $("#token");
 
+// Manda validar razonsocial
+razonsocial.on("keyup change blur", (e) => {
+  ValidarRazonSocial(razonsocial, razonhelp);
+});
+
+rfc.on("keyup change blur", (e) => {
+  ValidarRFC(rfc, rfchelp);
+});
+
+telefono.on("keyup change blur", (e) => {
+  ValidarTelefono(telefono, telefonohelp);
+});
+
+email.on("keyup change blur", (e) => {
+  ValidarEmail(email, emailhelp);
+});
+
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
     guardaryeditar(e);
@@ -20,10 +37,14 @@ function guardaryeditar(e) {
   var formData = new FormData($("#mantenimiento_form")[0]);
 
   // Validaciones
-//   let isValidAno = ValidarAno(ano, anohelper); //
-//   let formIsValid = isValidAno; //
+  let isValidRsocial = ValidarRazonSocial(razonsocial, razonhelp); //
+  let isValidRfc = ValidarRFC(rfc, rfchelp);
+  let isTelefono = ValidarTelefono(telefono, telefonohelp);
+  let isEmail = ValidarEmail(email, emailhelp);
 
-//   if (formIsValid) {
+  let formIsValid = isValidRsocial && isValidRfc && isTelefono && isEmail;
+
+  if (formIsValid) {
     //
 
     /* TODO: Guardar Informacion */
@@ -54,7 +75,7 @@ function guardaryeditar(e) {
       },
     });
   }
-// }
+}
 
 $(document).ready(function () {
   /* TODO: Listar informacion en el datatable js */
@@ -166,3 +187,103 @@ $(document).on("click", "#btnnuevo", function () {
 });
 
 init();
+
+// valida razonsocial
+function ValidarRazonSocial(Control, Helper) {
+  if (Control.val().trim() == "") {
+    Helper.text("El Nombre requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Nombre no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+// valida RFC
+function ValidarRFC(Control, Helper) {
+  if (Control.val().trim() == "") {
+    Helper.text("El RFC requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Nombre no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+// valida TELEFONO
+function ValidarTelefono(Control, Helper) {
+  if (Control.val().trim() == "") {
+    Helper.text("Numero de telefono es requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (!Control.val().match(/^[0-9]+$/)) {
+    Helper.text("El telefono solo debe contener numeros");
+    Helper.show();
+    return;
+  }
+
+  if (Control.val().length < 10 || Control.val().length > 10) {
+    Helper.text("El telefono debe ser de 10 digitos");
+    Helper.show();
+    return false;
+  }
+  Helper.hide();
+  return true;
+}
+
+// valida email
+function ValidarEmail(Control, Helper) {
+  if (Control.val().trim() == "") {
+    Helper.text("El correo es requerido");
+    Helper.show();
+    return false;
+  }
+
+  if (
+    !Control.val().match(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    )
+  ) {
+    Helper.text("El correo debe contener correo@correo.com");
+    Helper.show();
+    return false;
+  }
+  Helper.hide();
+  return true;
+}
+
+function OcultarHelpers() {
+  razonhelp.hide();
+  rfchelp.hide();
+  telefonohelp.hide();
+  emailhelp.hide();
+}
+
+function LimpiarFormularios() {
+  razonsocial.val("");
+  rfc.val("");
+  telefono.val("");
+  email.val("");
+}
+
+// Borra helpers
+$("#modalmantenimiento").on("hidden.bs.modal", function () {
+  OcultarHelpers();
+  LimpiarFormularios();
+});
