@@ -33,6 +33,16 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
+                                <label for="valueInput" class="form-label">Direccion</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" required />
+                                <span class="text-danger" id="direccionhelper"> </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
                                 <label for="valueInput" class="form-label">Telefono</label>
                                 <input type="number" class="form-control" id="telefono" name="telefono" required />
                                 <span class="text-danger" id="telefonohelper"> </span>

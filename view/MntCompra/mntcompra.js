@@ -1,50 +1,50 @@
-var emp_id = $('#EMP_IDx').val();
-var suc_id = $('#SUC_IDx').val();
-var usu_id = $('#USU_IDx').val();
+// var emp_id = $('#EMP_IDx').val();
+// var suc_id = $('#SUC_IDx').val();
+// var usu_id = $('#USU_IDx').val();
 
 $(document).ready(function(){
 
-    $.post("../../controller/compra.php?op=registrar",{suc_id:suc_id,usu_id:usu_id},function(data){
-        data=JSON.parse(data);
-        $('#compr_id').val(data.COMPR_ID);
+    // $.post("../../controller/compra.php?op=registrar",{suc_id:suc_id,usu_id:usu_id},function(data){
+    //     data=JSON.parse(data);
+    //     $('#compr_id').val(data.COMPR_ID);
+    // });
+
+  $('#token').select2();
+
+    // $('#cat_id').select2();
+
+    // $('#prod_id').select2();
+
+    // $('#pag_id').select2();
+
+    // $('#mon_id').select2();
+
+    // $('#doc_id').select2();
+
+    // $.post("../../controller/documento.php?op=combo",{doc_tipo:"Compra"},function(data){
+    //     $("#doc_id").html(data);
+    // });
+
+    $.post("../../controller/proveedor.php?op=combo",{id:id},function(data){
+        $("#token").html(data);
     });
 
-    $('#prov_id').select2();
+    // $.post("../../controller/categoria.php?op=combo",{suc_id:suc_id},function(data){
+    //     $("#cat_id").html(data);
+    // });
 
-    $('#cat_id').select2();
+    // $.post("../../controller/pago.php?op=combo",function(data){
+    //     $("#pag_id").html(data);
+    // });
 
-    $('#prod_id').select2();
-
-    $('#pag_id').select2();
-
-    $('#mon_id').select2();
-
-    $('#doc_id').select2();
-
-    $.post("../../controller/documento.php?op=combo",{doc_tipo:"Compra"},function(data){
-        $("#doc_id").html(data);
-    });
-
-    $.post("../../controller/proveedor.php?op=combo",{emp_id:emp_id},function(data){
-        $("#prov_id").html(data);
-    });
-
-    $.post("../../controller/categoria.php?op=combo",{suc_id:suc_id},function(data){
-        $("#cat_id").html(data);
-    });
-
-    $.post("../../controller/pago.php?op=combo",function(data){
-        $("#pag_id").html(data);
-    });
-
-    $.post("../../controller/moneda.php?op=combo",{suc_id:suc_id},function(data){
-        $("#mon_id").html(data);
-    });
+    // $.post("../../controller/moneda.php?op=combo",{suc_id:suc_id},function(data){
+    //     $("#mon_id").html(data);
+    // });
 
     $("#prov_id").change(function(){
         $("#prov_id").each(function(){
             prov_id = $(this).val();
-            $.post("../../controller/proveedor.php?op=mostrar",{prov_id:prov_id},function(data){
+            $.post("../../controller/ctrProveedor.php?op=mostrar",{prov_id:prov_id},function(data){
                 data=JSON.parse(data);
                 $('#prov_ruc').val(data.PROV_RUC);
                 $('#prov_direcc').val(data.PROV_DIRECC);
@@ -54,30 +54,30 @@ $(document).ready(function(){
         });
     });
 
-    $("#cat_id").change(function(){
-        $("#cat_id").each(function(){
-            cat_id = $(this).val();
+    // $("#cat_id").change(function(){
+    //     $("#cat_id").each(function(){
+    //         cat_id = $(this).val();
 
-            $.post("../../controller/producto.php?op=combo",{cat_id:cat_id},function(data){
-                $("#prod_id").html(data);
-            });
+    //         $.post("../../controller/producto.php?op=combo",{cat_id:cat_id},function(data){
+    //             $("#prod_id").html(data);
+    //         });
 
-        });
-    });
+    //     });
+    // });
 
-    $("#prod_id").change(function(){
-        $("#prod_id").each(function(){
-            prod_id = $(this).val();
+    // $("#prod_id").change(function(){
+    //     $("#prod_id").each(function(){
+    //         prod_id = $(this).val();
 
-            $.post("../../controller/producto.php?op=mostrar",{prod_id:prod_id},function(data){
-                data=JSON.parse(data);
-                $('#prod_pcompra').val(data.PROD_PCOMPRA);
-                $('#prod_stock').val(data.PROD_STOCK);
-                $('#und_nom').val(data.UND_NOM);
-            });
+    //         $.post("../../controller/producto.php?op=mostrar",{prod_id:prod_id},function(data){
+    //             data=JSON.parse(data);
+    //             $('#prod_pcompra').val(data.PROD_PCOMPRA);
+    //             $('#prod_stock').val(data.PROD_STOCK);
+    //             $('#und_nom').val(data.UND_NOM);
+    //         });
 
-        });
-    });
+    //     });
+    // });
 
 });
 

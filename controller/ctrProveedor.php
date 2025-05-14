@@ -35,6 +35,7 @@ switch ($_GET["op"]) {
                 $token,
                 $_POST["razonsocial"],
                 $_POST["rfc"],
+                $_POST["direccion"],
                 $_POST["telefono"],
                 $_POST["email"]
             );
@@ -69,6 +70,7 @@ switch ($_GET["op"]) {
             $proveedor->mdlActualizarRegistro(
                 $_POST["razonsocial"],
                 $_POST["rfc"],
+                $_POST["direccion"],
                 $_POST["telefono"],
                 $_POST["email"],
                 $nuevoToken,
@@ -86,6 +88,7 @@ switch ($_GET["op"]) {
             $sub_array = array();
             $sub_array[] = $row["razonsocial"];
             $sub_array[] = $row["rfc"];
+            $sub_array[] = $row["direccion"];
             $sub_array[] = $row["telefono"];
             $sub_array[] = $row["email"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
@@ -113,6 +116,7 @@ switch ($_GET["op"]) {
             $output["token"] = $datos["token"];
             $output["razonsocial"] = $datos["razonsocial"];
             $output["rfc"] = $datos["rfc"];
+            $output["direccion"] = $datos["direccion"];
             $output["telefono"] = $datos["telefono"];
             $output["email"] = $datos["email"];
             // }
@@ -125,4 +129,20 @@ switch ($_GET["op"]) {
     case "eliminar":
         $proveedor->mdlEliminarRegistro($_POST["token"]);
         break;
+
+      /* TODO: Listado de Proveedor combobox */
+    // case "combo";
+    //     $tabla = "proveedores";
+    //     $item = "token";
+    //     $valor = $_POST["token"];
+    //     $datos = $proveedor->mdlSeleccionarRegistros($tabla, $item, $valor);
+    //     if (is_array($datos) == true and count($datos) > 0) {
+    //         $html = "";
+    //         $html .= "<option value='0' selected>Seleccionar</option>";
+    //         foreach ($datos as $row) {
+    //             $html .= "<option value='" . $row["id"] . "'>" . $row["id"] . "</option>";
+    //         }
+    //         echo $html;
+    //     }
+    //     break;
 }

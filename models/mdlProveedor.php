@@ -4,16 +4,17 @@ class mdlProveedor extends Conectar
 {
 
     //Registrar
-    public function mdlRegistro($token, $razonsocial, $rfc, $telefono, $email)
+    public function mdlRegistro($token, $razonsocial, $rfc, $direccion, $telefono, $email)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarProveedor ?,?,?,?,?";
+        $sql = "insertarProveedor ?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $razonsocial);
         $query->bindValue(3, $rfc);
-        $query->bindValue(4, $telefono);
-        $query->bindValue(5, $email);
+        $query->bindValue(4, $direccion);
+        $query->bindValue(5, $telefono);
+        $query->bindValue(6, $email);
         $query->execute();
     }
 
@@ -51,17 +52,19 @@ class mdlProveedor extends Conectar
     }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($razonsocial, $rfc, $telefono, $email, $nuevoToken, $token)
+    public function mdlActualizarRegistro($razonsocial, $rfc, $direccion, $telefono, $email, $nuevoToken, $token)
     {
         $conectar = parent::Conexion();
-        $sql = "actualizarProveedor ?,?,?,?,?,?";
+        $sql = "actualizarProveedor ?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $razonsocial);
         $query->bindValue(2, $rfc);
-        $query->bindValue(3, $telefono);
-        $query->bindValue(4, $email);
-        $query->bindValue(5, $nuevoToken);
-        $query->bindValue(6, $token);
+        $query->bindValue(3, $direccion);
+        $query->bindValue(4, $telefono);
+        $query->bindValue(5, $email);
+        $query->bindValue(6, $nuevoToken);
+        $query->bindValue(7, $token);
         $query->execute();
     }
 }
+

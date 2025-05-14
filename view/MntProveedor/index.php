@@ -56,6 +56,7 @@ require_once("../../config/conexion.php");
                                             <tr>
                                                 <th>Nombre/Razon social</th>
                                                 <th>RFC</th>
+                                                <th>Direccion</th>
                                                 <th>Telefono</th>
                                                 <th>Email</th>
                                                 <th></th>

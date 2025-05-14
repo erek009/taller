@@ -2,6 +2,8 @@ let razonsocial = $("#razonsocial");
 let razonhelp = $("#razonsocialhelper");
 let rfc = $("#rfc");
 let rfchelp = $("#rfchelper");
+let direccion = $("#direccion");
+let direchelp = $("#direccionhelper");
 let telefono = $("#telefono");
 let telefonohelp = $("#telefonohelper");
 let email = $("#email");
@@ -16,6 +18,10 @@ razonsocial.on("keyup change blur", (e) => {
 
 rfc.on("keyup change blur", (e) => {
   ValidarRFC(rfc, rfchelp);
+});
+
+direccion.on("keyup change blur", (e) => {
+  ValidarDireccion(direccion, direchelp);
 });
 
 telefono.on("keyup change blur", (e) => {
@@ -39,10 +45,11 @@ function guardaryeditar(e) {
   // Validaciones
   let isValidRsocial = ValidarRazonSocial(razonsocial, razonhelp); //
   let isValidRfc = ValidarRFC(rfc, rfchelp);
+  let isValidDireccion = ValidarDireccion(direccion, direchelp);
   let isTelefono = ValidarTelefono(telefono, telefonohelp);
   let isEmail = ValidarEmail(email, emailhelp);
 
-  let formIsValid = isValidRsocial && isValidRfc && isTelefono && isEmail;
+  let formIsValid = isValidRsocial && isValidRfc &&isValidDireccion && isTelefono && isEmail;
 
   if (formIsValid) {
     //
@@ -164,6 +171,7 @@ function editar(partoken) {
       token.val(data.token);
       razonsocial.val(data.razonsocial);
       rfc.val(data.rfc);
+      direccion.val(data.direccion);
       telefono.val(data.telefono);
       email.val(data.email);
     }
@@ -177,6 +185,7 @@ $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   razonsocial.val("");
   rfc.val("");
+  direccion.val("");
   telefono.val("");
   email.val("");
   token.val("");
@@ -216,6 +225,26 @@ function ValidarRFC(Control, Helper) {
 
   if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
     Helper.text("Nombre no puede contener caracteres especiales");
+    Helper.show();
+    return false;
+  }
+
+  Helper.hide();
+  return true;
+}
+
+// valida DIRECCION
+function ValidarDireccion(Control, Helper) {
+  // Verificar si el campo está vacío o contiene solo espacios
+  if (Control.val().trim() == "") {
+    Helper.text("La dirección es requerida");
+    Helper.show();
+    return false;
+  }
+
+  // Verificar si la dirección contiene caracteres no permitidos
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("La dirección no puede contener caracteres especiales");
     Helper.show();
     return false;
   }
@@ -287,3 +316,4 @@ $("#modalmantenimiento").on("hidden.bs.modal", function () {
   OcultarHelpers();
   LimpiarFormularios();
 });
+
