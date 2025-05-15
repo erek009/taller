@@ -80,7 +80,7 @@ if (isset($_SESSION["id"])) {
                                                         ?>
 
                                                         <?php foreach ($datos as $value): ?>
-                                                            <option value="<?= $value['id'] ?>"><?= $value['razonsocial'] ?></option>
+                                                            <option value="<?= $value['token'] ?>"><?= $value['razonsocial'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
 
