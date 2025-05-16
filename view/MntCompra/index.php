@@ -43,28 +43,45 @@ if (isset($_SESSION["id"])) {
                             </div>
                         </div>
 
-                        <!-- TODO: Id de compra -->
-                        <input type="hidden" name="compr_id" id="compr_id">
-
-
-                        <!-- TODO:Datos Proveedor -->
+                       
+                        <!-- TODO:Datos del Producto -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Datos del Proveedor</h4>
+                                        <h4 class="card-title mb-0 flex-grow-1">Agregar Producto</h4>
                                     </div>
-
-
-
-
 
                                     <div class="card-body">
                                         <div class="live-preview">
                                             <div class="row align-items-center g-3">
-                                                <div class="col-lg-4">
-                                                    <label for="prov_id" class="form-label">Proveedor</label>
-                                                    <select id="prov_id" name="prov_id" class="form-control form-select" aria-label="Seleccione">
+                                                <div class="col-lg-3">
+                                                    <label for="producto" class="form-label">Producto</label>
+                                                       <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
+                                                        <?php
+                                                        echo ' 
+                                                        <option value="" disabled selected> Seleccione producto </option> ';
+
+                                                        include '../../models/mdlRefaccion.php';
+
+                                                        // Crear instancia del modelo
+                                                        $producto = new mdlRefaccion();
+
+                                                        // Llamar al método
+                                                        $tabla = "refacciones";
+                                                        $datos = $producto->mdlSeleccionarRegistros($tabla, null, null);
+                                                        ?>
+
+                                                        <?php foreach ($datos as $value): ?>
+                                                            <option value="<?= $value['token'] ?>"><?= $value['nombre'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-lg-3">
+                                                    <label for="provedor" class="form-label">Proveedor</label>
+                                                    <select id="provedor" name="provedor" class="form-control form-select" aria-label="Seleccione">
                                                         <?php
                                                         echo ' 
                                                         <option value="" disabled selected> Seleccione proveedor </option> ';
@@ -83,70 +100,22 @@ if (isset($_SESSION["id"])) {
                                                             <option value="<?= $value['token'] ?>"><?= $value['razonsocial'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
-
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label for="prov_ruc" class="form-label">RFC</label>
-                                                    <input type="text" class="form-control" id="prov_ruc" name="prov_ruc" placeholder="RFC" readonly />
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label for="prov_direcc" class="form-label">Dirección</label>
-                                                    <input type="text" class="form-control" id="prov_direcc" name="prov_direcc" placeholder="Dirección" readonly />
                                                 </div>
 
-                                                <div class="col-lg-6">
-                                                    <label for="prov_correo" class="form-label">Correo</label>
-                                                    <input type="text" class="form-control" id="prov_correo" name="prov_correo" placeholder="Correo Electronico" readonly />
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label for="prov_telf" class="form-label">Telefono</label>
-                                                    <input type="text" class="form-control" id="prov_telf" name="prov_telf" placeholder="Telefono" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TODO:Datos del Producto -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Agregar Producto</h4>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <div class="live-preview">
-                                            <div class="row align-items-center g-3">
-                                                <div class="col-lg-3">
-                                                    <label for="cat_id" class="form-label">Categoria</label>
-                                                    <select id="cat_id" name="cat_id" class="form-control form-select" aria-label="Seleccione">
-                                                        <option value='0' selected>Seleccione</option>
-
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="cad_id" class="form-label">Proveedor</label>
-                                                    <select id="prod_id" name="prod_id" class="form-control form-select" aria-label="Seleccione">
-                                                        <option value='0' selected>Seleccione</option>
-
-                                                    </select>
-                                                </div>
+                                                
                                                 <div class="col-lg-1">
-                                                    <label for="prod_pcompra" class="form-label">Precio</label>
-                                                    <input type="number" class="form-control" id="prod_pcompra" name="prod_pcompra" placeholder="Precio" />
+                                                    <label for="precio_compra" class="form-label">Precio</label>
+                                                    <input type="number" class="form-control" id="precio_compra" name="precio_compra" placeholder="Precio" />
                                                 </div>
 
                                                 <div class="col-lg-1">
-                                                    <label for="prod_stock" class="form-label">Stock</label>
-                                                    <input type="text" class="form-control" id="prod_stock" name="prod_stock" placeholder="Stock" readonly />
+                                                    <label for="stock" class="form-label">Stock</label>
+                                                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" readonly />
                                                 </div>
 
                                                 <div class="col-lg-2">
                                                     <label for="und_nom" class="form-label">UndMedida</label>
-                                                    <input type="text" class="form-control" id="und_nom" name="und_nom" placeholder="Und.Medida" readonly />
+                                                    <input type="text" class="form-control" id="und_medida" name="und_medida" placeholder="Und.Medida" readonly />
                                                 </div>
 
                                                 <div class="col-lg-1">
@@ -179,9 +148,8 @@ if (isset($_SESSION["id"])) {
                                         <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
-                                                    <th>Categoria</th>
                                                     <th>Producto</th>
+                                                    <th>Proveedor</th>
                                                     <th>Und. Medida</th>
                                                     <th>P. Compra</th>
                                                     <th>Cantidad</th>
@@ -203,7 +171,7 @@ if (isset($_SESSION["id"])) {
                                                 </tr>
                                                 <tr>
                                                     <td>IVA(16%)</td>
-                                                    <td class="text-end" id="txtigv">0</td>
+                                                    <td class="text-end" id="txtiva">0</td>
                                                 </tr>
                                                 <tr class="border-top border-top-dashed fs-15">
                                                     <th scope="row">Total</th>
@@ -213,8 +181,8 @@ if (isset($_SESSION["id"])) {
                                         </table>
 
                                         <div class="mt-4">
-                                            <label for="compr_coment" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
-                                            <textarea class="form-control alert alert-info" id="compr_coment" name="compr_coment" placeholder="Comentario" rows="4" required=""></textarea>
+                                            <label for="comentario" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
+                                            <textarea class="form-control alert alert-info" id="comentario" name="comentario" placeholder="Comentario" rows="4" required=""></textarea>
                                         </div>
 
                                         <div class="hstack gap-2 left-content-end d-print-none mt-4">
