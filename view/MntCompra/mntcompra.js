@@ -2,109 +2,65 @@
 var producto = $("#producto");
 var stock = $("#stock");
 var undmedida = $("#und_medida");
+var proveedor = $("#razonsocial");
+var preciocompra = $("#precio_compra");
 
 $(document).ready(function(){
-
-    
  
 });
 
 $(document).on("click","#btnagregar",function(){
     var refaccion = $("#producto").val();
+    var proveedor = $("#provedor").val();
     var preciocompra = $("#precio_compra").val();
+    var unidadmedida = $("#und_medida").val();
     var cantidad = $("#detc_cant").val();
 
 
         $.post("../../controller/ctrCompra.php?op=registrardetalle",{
             refaccion:refaccion,
+            proveedor:proveedor,
+            unidadmedida:unidadmedida,
             preciocompra:preciocompra,
             cantidad:cantidad
         },function(data){
             console.log(data);
+
+            listar(refaccion);
         });
 
 });
 
-function eliminar(detc_id,compr_id){
+function eliminar(id) {
+  swal
+    .fire({
+      title: "Eliminar!",
+      text: "Desea Eliminar el Registro?",
+      icon: "error",
+      confirmButtonText: "Si",
+      showCancelButton: true,
+      cancelButtonText: "No",
+    })
+    .then((result) => {
+      if (result.value) {
+        $.post(
+          "../../controller/ctrCompra.php?op=eliminar",
+          { id: id },
+          function (data) {
+            console.log(data);
+          }
+        );
 
-    swal.fire({
-        title:"Eliminar!",
-        text:"Desea Eliminar el Registro?",
-        icon: "error",
-        confirmButtonText : "Si",
-        showCancelButton : true,
-        cancelButtonText: "No",
-    }).then((result)=>{
-        if (result.value){
-            $.post("../../controller/compra.php?op=eliminardetalle",{detc_id:detc_id},function(data){
-                console.log(data);
-            });
+        $("#table_data").DataTable().ajax.reload();
 
-            $.post("../../controller/compra.php?op=calculo",{compr_id:compr_id},function(data){
-                data=JSON.parse(data);
-                $('#txtsubtotal').html(data.COMPR_SUBTOTAL);
-                $('#txtigv').html(data.COMPR_IGV);
-                $('#txttotal').html(data.COMPR_TOTAL);
-            });
-
-            listar(compr_id);
-
-            swal.fire({
-                title:'Compra',
-                text: 'Registro Eliminado',
-                icon: 'success'
-            });
-        }
+        swal.fire({
+          title: "Orden",
+          text: "Registro Eliminado",
+          icon: "success",
+        });
+      }
     });
-
 }
-
-// function listar(compr_id){
-//     $('#table_data').DataTable({
-//         "aProcessing": true,
-//         "aServerSide": true,
-//         dom: 'Bfrtip',
-//         buttons: [
-//             'copyHtml5',
-//             'excelHtml5',
-//             'csvHtml5',
-//         ],
-//         "ajax":{
-//             url:"../../controller/compra.php?op=listardetalle",
-//             type:"post",
-//             data:{compr_id:compr_id}
-//         },
-//         "bDestroy": true,
-//         "responsive": true,
-//         "bInfo":true,
-//         "iDisplayLength": 10,
-//         "order": [[ 0, "desc" ]],
-//         "language": {
-//             "sProcessing":     "Procesando...",
-//             "sLengthMenu":     "Mostrar _MENU_ registros",
-//             "sZeroRecords":    "No se encontraron resultados",
-//             "sEmptyTable":     "Ningún dato disponible en esta tabla",
-//             "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-//             "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-//             "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-//             "sInfoPostFix":    "",
-//             "sSearch":         "Buscar:",
-//             "sUrl":            "",
-//             "sInfoThousands":  ",",
-//             "sLoadingRecords": "Cargando...",
-//             "oPaginate": {
-//                 "sFirst":    "Primero",
-//                 "sLast":     "Último",
-//                 "sNext":     "Siguiente",
-//                 "sPrevious": "Anterior"
-//             },
-//             "oAria": {
-//                 "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-//                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-//             }
-//         },
-//     });
-// }
 
 $(document).on("click","#btnguardar",function(){
     var compr_id = $("#compr_id").val();
@@ -182,6 +138,7 @@ $(producto).on("change", function(){
         success: function (response) {
           stock.val(response["stock"]);
           undmedida.val(response["unidadmedida"]);
+          preciocompra.val(response["preciocompra"]);
         },
         error: function (xhr, status, error) {
           console.error("Error en la petición AJAX:", error);
@@ -191,19 +148,49 @@ $(producto).on("change", function(){
 });
 
 
-//     $.ajax({
-//         url: "../../controller/ctrProveedor.php?op=mostrar",
-//         type: "POST",
-//         data: { token: proveedor.val() },
-//         dataType: "json",
-//         success: function (response) {
-//           rfc.val(response["rfc"]);
-//           telefono.val(response["telefono"]);
-//           correo.val(response["email"]);
-//         },
-//         error: function (xhr, status, error) {
-//           console.error("Error en la petición AJAX:", error);
-//           Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
-//         }
-//     });
-// });
+function listar(refaccion){
+/* TODO: Listar informacion en el datatable js */
+  $("#table_data").DataTable({
+    aProcessing: true,
+    aServerSide: true,
+    dom: "Bfrtip",
+    buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
+    ajax: {
+      url: "../../controller/ctrCompra.php?op=listar",
+      type: "post",
+      data: { token: refaccion },
+    },
+    bDestroy: true,
+    responsive: true,
+    bInfo: true,
+    iDisplayLength: 10,
+    order: [[0, "desc"]],
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo:
+        "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior",
+      },
+      oAria: {
+        sSortAscending:
+          ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending:
+          ": Activar para ordenar la columna de manera descendente",
+      },
+    },
+  });
+}

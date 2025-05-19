@@ -53,7 +53,7 @@ switch ($_GET["op"]) {
             $valor = $_POST["nombreproducto"];
             $validarNombre = $refaccion->mdlSeleccionarRegistros($tabla, $item, $valor);
             if ($validarNombre) {
-                if ($validarNombre['codigo'] != $_POST["token"]) {
+                if ($validarNombre['token'] != $_POST["token"]) {
                     echo 'error-productoexiste';
                     exit;
                 }
