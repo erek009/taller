@@ -1,9 +1,15 @@
+var proveedor = $("#proveedor");
+var rfc = $("#rfc");
+var direccion = $("#prov_direccion");
+var correo = $("#prov_correo");
+var telefono = $("#prov_telefono");
+
 
 var producto = $("#producto");
 var stock = $("#stock");
 var undmedida = $("#und_medida");
-var proveedor = $("#razonsocial");
 var preciocompra = $("#precio_compra");
+
 
 $(document).ready(function(){
  
@@ -127,7 +133,7 @@ $(document).on("click","#btnlimpiar",function(){
     location.reload();
 });
 
-
+//muestra datos del producto
 $(producto).on("change", function(){
 
     $.ajax({
@@ -147,6 +153,26 @@ $(producto).on("change", function(){
     });
 });
 
+
+//muestra datos del proveedor
+$(proveedor).on("change", function(){
+    $.ajax({
+        url: "../../controller/ctrProveedor.php?op=mostrar",
+        type: "POST",
+        data: { token: proveedor.val() },
+        dataType: "json",
+        success: function (response) {
+          rfc.val(response["rfc"]);
+          direccion.val(response["direccion"]);
+          correo.val(response["email"]);
+          telefono.val(response["telefono"]);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error en la petición AJAX:", error);
+          Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
+        }
+    });
+});
 
 function listar(refaccion){
 /* TODO: Listar informacion en el datatable js */

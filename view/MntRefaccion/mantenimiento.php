@@ -23,6 +23,34 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
+                                <label for="valueInput" class="form-label">Categoria</label>
+                                <select id="categoria" class="form-control" name="categoria">
+                                    <?php
+                                    echo ' 
+                                    <option value="" disabled selected> Seleccione categoria </option> ';
+
+                                    include '../../models/mdlCategoria.php';
+
+                                    // Crear instancia del modelo
+                                    $categoria = new mdlCategoria();
+
+                                    // Llamar al método
+                                    $tabla = "categoria";
+                                    $datos = $categoria->mdlSeleccionarRegistros($tabla, null, null);
+                                    ?>
+
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['token'] ?>"><?= $value['categoria'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <span class="text-danger" id="categoriahelp"> </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
                                 <label for="valueInput" class="form-label">Nombre producto</label>
                                 <input type="text" class="form-control" id="nombreproducto" name="nombreproducto" required />
                                 <span class="text-danger" id="nombrehelp"> </span>
@@ -71,7 +99,25 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Proveedor</label>
-                                <input type="text" class="form-control" id="proveedor" name="proveedor" required />
+                                <select id="proveedor" class="form-control" name="proveedor">
+                                    <?php
+                                    echo ' 
+                                    <option value="" disabled selected> Seleccione proveedor </option> ';
+
+                                    include '../../models/mdlProveedor.php';
+
+                                    // Crear instancia del modelo
+                                    $proveedor = new mdlProveedor();
+
+                                    // Llamar al método
+                                    $tabla = "proveedores";
+                                    $datos = $proveedor->mdlSeleccionarRegistros($tabla, null, null);
+                                    ?>
+
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['token'] ?>"><?= $value['razonsocial'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                                 <span class="text-danger" id="proveedorhelp"> </span>
                             </div>
                         </div>

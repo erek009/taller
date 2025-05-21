@@ -50,54 +50,60 @@
                 <li class="menu-title"><span data-key="t-menu">Usuarios</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntUsuario/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Usuarios</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Usuarios</span>
                         </a>
                 </li>
 
                 <li class="menu-title"><span data-key="t-menu">Vehiculos</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntVehiculo/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Vehiculos</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Vehiculos</span>
                         </a>
                 </li>
 
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntAno/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Año</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Año</span>
                         </a>
                 </li>
 
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntMarca/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Marcas</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Marcas</span>
                         </a>
                 </li>
 
                 <li class="menu-title"><span data-key="t-menu">Ordenes</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntOrden/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Ordenes</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Ordenes</span>
                         </a>
                 </li>
 
                 <li class="menu-title"><span data-key="t-menu">Servicio</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntServicio/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Servicio</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Servicio</span>
                         </a>
                 </li>
 
                 <li class="menu-title"><span data-key="t-menu">Clientes</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntCliente/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Clientes</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Clientes</span>
                         </a>
                 </li>
 
                 <li class="menu-title"><span data-key="t-menu">Refacciones</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntRefaccion/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Refacciones</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Refacciones</span>
+                        </a>
+                </li>
+
+                <li class="nav-item">
+                        <a class="nav-link menu-link" href="../MntCategoria">
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Categoria</span>
                         </a>
                 </li>
 
@@ -105,7 +111,7 @@
                 <li class="menu-title"><span data-key="t-menu">Proveedor</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../MntProveedor/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Mnt.Proveedor</span>
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Proveedor</span>
                         </a>
                 </li>
 

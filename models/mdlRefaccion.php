@@ -3,20 +3,21 @@
 class mdlRefaccion extends Conectar{
 
     //Registrar refaccion
-    public function mdlRegistro($token, $codigo, $nombre, $unidad, $marca, $stock, $proveedor, $compra, $venta, $descripcion){
+    public function mdlRegistro($token, $codigo, $categoria, $nombre, $unidad, $marca, $stock, $proveedor, $compra, $venta, $descripcion){
         $conectar=parent::Conexion();
-        $sql="insertarRefaccion ?,?,?,?,?,?,?,?,?,?";
+        $sql="insertarRefaccion ?,?,?,?,?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $codigo);
-        $query->bindValue(3, $nombre);
-        $query->bindValue(4, $unidad);
-        $query->bindValue(5, $marca);
-        $query->bindValue(6, $stock);
-        $query->bindValue(7, $proveedor);
-        $query->bindValue(8, $compra);
-        $query->bindValue(9, $venta);
-        $query->bindValue(10, $descripcion);
+        $query->bindValue(3, $categoria);
+        $query->bindValue(4, $nombre);
+        $query->bindValue(5, $unidad);
+        $query->bindValue(6, $marca);
+        $query->bindValue(7, $stock);
+        $query->bindValue(8, $proveedor);
+        $query->bindValue(9, $compra);
+        $query->bindValue(10, $venta);
+        $query->bindValue(11, $descripcion);
         $query->execute();
     }
 
@@ -51,23 +52,24 @@ class mdlRefaccion extends Conectar{
          $query->execute();
      }
 
-     public function mdlActualizarRegistro($nombre, $unidad, $marca, $proveedor, $compra, $venta, $descripcion, $token){
+     public function mdlActualizarRegistro($categoria, $nombre, $unidad, $marca, $proveedor, $compra, $venta, $descripcion, $token){
         $conectar = parent::Conexion();
-        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?";
+        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
     
         // Conversión a float para evitar errores con SQL Server
         $venta = floatval($venta);
         $compra = floatval($compra);
-    
-        $query->bindValue(1, $nombre);
-        $query->bindValue(2, $unidad);
-        $query->bindValue(3, $marca);
-        $query->bindValue(4, $proveedor);
-        $query->bindValue(5, $compra);
-        $query->bindValue(6, $venta);
-        $query->bindValue(7, $descripcion);
-        $query->bindValue(8, $token);
+        
+        $query->bindValue(1, $categoria);
+        $query->bindValue(2, $nombre);
+        $query->bindValue(3, $unidad);
+        $query->bindValue(4, $marca);
+        $query->bindValue(5, $proveedor);
+        $query->bindValue(6, $compra);
+        $query->bindValue(7, $venta);
+        $query->bindValue(8, $descripcion);
+        $query->bindValue(9, $token);
         $query->execute();
     }
     
@@ -79,6 +81,17 @@ class mdlRefaccion extends Conectar{
         $query->bindValue(1, $cantidad);
         $query->bindValue(2, $refaccion);
         $query->execute();
+    }
+
+
+ //Seleccionar registros vehiculo
+    public function mdlSeleccionarRefacciones($tabla, $item, $valor)
+    {
+        $conectar = parent::Conexion();
+        $sql = "seleccionarRefaccion";
+        $query = $conectar->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

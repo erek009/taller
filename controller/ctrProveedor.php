@@ -127,22 +127,24 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $proveedor->mdlEliminarRegistro($_POST["token"]);
-        break;
+        $tabla = "refacciones";
+        $item = "proveedor";
+        $valor = $_POST["token"];
 
-      /* TODO: Listado de Proveedor combobox */
-    // case "combo";
-    //     $tabla = "proveedores";
-    //     $item = "token";
-    //     $valor = $_POST["token"];
-    //     $datos = $proveedor->mdlSeleccionarRegistros($tabla, $item, $valor);
-    //     if (is_array($datos) == true and count($datos) > 0) {
-    //         $html = "";
-    //         $html .= "<option value='0' selected>Seleccionar</option>";
-    //         foreach ($datos as $row) {
-    //             $html .= "<option value='" . $row["id"] . "'>" . $row["id"] . "</option>";
-    //         }
-    //         echo $html;
-    //     }
-    //     break;
+        $validarProveedor = $proveedor->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if (!empty($validarProveedor)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No se puede eliminar este proveedor porque está siendo utilizado en una refacción."
+            ]);
+            return;
+        }
+
+        $proveedor->mdlEliminarRegistro($valor);
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Proveedor eliminado correctamente"
+        ]);
+        return;
+
 }

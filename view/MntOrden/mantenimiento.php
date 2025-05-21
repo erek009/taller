@@ -30,7 +30,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['placa'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['placa'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -111,7 +111,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['nombre'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['nombre'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -140,7 +140,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['nombreservicio'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['nombreservicio'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 

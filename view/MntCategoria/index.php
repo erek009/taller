@@ -11,7 +11,7 @@ require_once("../../config/conexion.php");
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 
 <head>
-    <title>Taller mecanico | Refacciones</title>
+    <title>Taller mecanico | Categoria</title>
 
     <?php require_once("../html/head.php"); ?>
 </head>
@@ -35,8 +35,8 @@ require_once("../../config/conexion.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Refacciones</a></li>
-                                        <li class="breadcrumb-item active">Refacciones</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Categoria</a></li>
+                                        <li class="breadcrumb-item active">Categoria</li>
                                     </ol>
                                 </div>
 
@@ -54,17 +54,7 @@ require_once("../../config/conexion.php");
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                
-                                                <th>Codigo</th>
                                                 <th>Categoria</th>
-                                                <th>Nombre</th>
-                                                <th>Unidad</th>
-                                                <th>Marca</th>
-                                                <th>Stock</th>
-                                                <th>Proveedor</th>
-                                                <th>Compra</th>
-                                                <th>Venta</th>
-                                                <th>Descripcion</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -90,7 +80,7 @@ require_once("../../config/conexion.php");
     <?php require_once("mantenimiento.php"); ?>
 
     <?php require_once("../html/js.php"); ?>
-    <script type="text/javascript" src="mntrefaccion.js"></script>
+    <script type="text/javascript" src="mntcategoria.js"></script>
 </body>
 
 </html>

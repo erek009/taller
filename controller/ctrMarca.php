@@ -88,6 +88,24 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $marca->mdlEliminarRegistro($_POST["token"]);
-        break;
+        $tabla = "vehiculo";
+        $item = "idmarca";
+        $valor = $_POST["token"];
+
+        $validarMarca = $marca->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if (!empty($validarMarca)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No se puede eliminar esta marca porque está siendo utilizado en un vehiculo."
+            ]);
+            return;
+        }
+
+        $marca->mdlEliminarRegistro($valor);
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Marca eliminada correctamente"
+        ]);
+        return;
+
 }

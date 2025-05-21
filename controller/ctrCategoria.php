@@ -1,50 +1,50 @@
 <?php
 /* TODO: Llamando clases */
 require_once("../config/conexion.php");
-require_once("../models/mdlAnoVehiculo.php");
+require_once("../models/mdlCategoria.php");
 
 /* TODO: Inicializando clases */
-$anoovehiculo = new mdlAnoVehiculo();
+$categoria = new mdlCategoria();
 
 switch ($_GET["op"]) {
 
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "guardaryeditar":
         if (empty($_POST["token"])) {
-            $token = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
+            $token = md5($_POST["categoria"] . "+" . $_POST["categoria"]);
 
             ///Verificando si año existe en BD
-            $tabla = "ano";
-            $item = "ano";
-            $valor = $_POST["AnoVehiculo"];
-            $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
-            if ($validarAno) {
-                echo "error-anoexiste";
+            $tabla = "categoria";
+            $item = "categoria";
+            $valor = $_POST["categoria"];
+            $validarCategoria = $categoria->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarCategoria) {
+                echo "error-categoriaexiste";
                 exit;
             }
 
-            $anoovehiculo->mdlRegistro(
+            $categoria->mdlRegistro(
                 $token,
-                $_POST["AnoVehiculo"]
+                $_POST["categoria"]
             );
         } else {
             //EDITAR
-            $nuevoToken = md5($_POST["AnoVehiculo"] . "+" . $_POST["AnoVehiculo"]);
+            $nuevoToken = md5($_POST["categoria"] . "+" . $_POST["categoria"]);
 
             ///Verificando si año existe en BD
-            $tabla = "ano";
-            $item = "ano";
-            $valor = $_POST["AnoVehiculo"];
-            $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
-            if ($validarAno) {
-                if ($validarAno['token'] != $_POST["token"]) {
-                echo "error-anoexiste";
-                exit;
+            $tabla = "categoria";
+            $item = "categoria";
+            $valor = $_POST["categoria"];
+            $validarCategoria = $categoria->mdlSeleccionarRegistros($tabla, $item, $valor);
+            if ($validarCategoria) {
+                if ($validarCategoria['token'] != $_POST["token"]) {
+                    echo "error-categoriaexiste";
+                    exit;
+                }
             }
-        }
 
-            $anoovehiculo->mdlActualizarRegistro(
-                $_POST["AnoVehiculo"],
+            $categoria->mdlActualizarRegistro(
+                $_POST["categoria"],
                 $nuevoToken,
                 $_POST["token"]
             );
@@ -53,12 +53,12 @@ switch ($_GET["op"]) {
 
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
-        $tabla = "ano";
-        $datos = $anoovehiculo->mdlSeleccionarRegistros($tabla, null, null);
+        $tabla = "categoria";
+        $datos = $categoria->mdlSeleccionarRegistros($tabla, null, null);
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
-            $sub_array[] = $row["ano"];
+            $sub_array[] = $row["categoria"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
             $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
@@ -75,14 +75,14 @@ switch ($_GET["op"]) {
 
     /*TODO: Mostrar informacion de registro por ID*/
     case "mostrar":
-        $tabla = "ano";
+        $tabla = "categoria";
         $item = "token";
         $valor = $_POST["token"];
-        $datos = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
+        $datos = $categoria->mdlSeleccionarRegistros($tabla, $item, $valor);
         if (is_array($datos) == true and count($datos) > 0) {
             // foreach ($datos as $row) {
-                $output["token"] = $datos["token"];
-                $output["ano"] = $datos["ano"];
+            $output["token"] = $datos["token"];
+            $output["categoria"] = $datos["categoria"];
             // }
             echo json_encode($output);
         }
@@ -91,24 +91,24 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $tabla = "vehiculo";
-        $item = "idano";
-        $valor = $_POST["token"];
+        $tabla = "refacciones";
+        $item = "idcategoria"; 
+        $valor = $_POST["token"]; // Token de la categoría que quieres eliminar
 
-        $validarAno = $anoovehiculo->mdlSeleccionarRegistros($tabla, $item, $valor);
-        if (!empty($validarAno)) {
+        $validarCategoria = $categoria->mdlSeleccionarRegistros($tabla, $item, $valor);
+
+        if (!empty($validarCategoria)) {
             echo json_encode([
                 "status" => "error",
-                "message" => "No se puede eliminar este año porque está siendo utilizado en un vehiculo."
+                "message" => "No se puede eliminar esta categoría porque está siendo utilizada en una refacción."
             ]);
             return;
         }
 
-        $anoovehiculo->mdlEliminarRegistro($valor);
+         $categoria->mdlEliminarRegistro($valor);
         echo json_encode([
             "status" => "ok",
-            "message" => "Año eliminado correctamente"
+            "message" => "Categoria eliminada correctamente"
         ]);
         return;
-
 }

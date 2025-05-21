@@ -36,6 +36,7 @@ switch ($_GET["op"]) {
             $refaccion->mdlRegistro(
                 $token,
                 $_POST["codigo"],
+                $_POST["categoria"],
                 $_POST["nombreproducto"],
                 $_POST["unidadmedida"],
                 $_POST["marca"],
@@ -59,6 +60,7 @@ switch ($_GET["op"]) {
                 }
             }
             $refaccion->mdlActualizarRegistro(
+                $_POST["categoria"],
                 $_POST["nombreproducto"],
                 $_POST["unidadmedida"],
                 $_POST["marca"],
@@ -74,16 +76,17 @@ switch ($_GET["op"]) {
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
         $tabla = "refacciones";
-        $datos = $refaccion->mdlSeleccionarRegistros($tabla, null, null);
+        $datos = $refaccion->mdlSeleccionarRefacciones($tabla, null, null);
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
             $sub_array[] = $row["codigo"];
+            $sub_array[] = $row["categoria"];
             $sub_array[] = $row["nombre"];
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["marca"];
             $sub_array[] = $row["stock"];
-            $sub_array[] = $row["proveedor"];
+            $sub_array[] = $row["razonsocial"];
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["precioventa"];
             $sub_array[] = $row["descripcion"];
@@ -110,6 +113,7 @@ switch ($_GET["op"]) {
             // foreach ($datos as $row) {
             $output["token"] = $datos["token"];
             $output["codigo"] = $datos["codigo"];
+            $output["idcategoria"] = $datos["idcategoria"];
             $output["nombre"] = $datos["nombre"];
             $output["unidadmedida"] = $datos["unidadmedida"];
             $output["marca"] = $datos["marca"];

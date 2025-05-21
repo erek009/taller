@@ -111,26 +111,29 @@ function eliminar(token) {
       confirmButtonText: "Si",
       showCancelButton: true,
       cancelButtonText: "No",
-    })
-    .then((result) => {
-      if (result.value) {
-        $.post(
-          "../../controller/ctrAnoVehiculo.php?op=eliminar",
-          { token: token },
-          function (data) {
-            console.log(data);
+    }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../controller/ctrAnoVehiculo.php?op=eliminar",
+        type: "POST",
+        data: { token: token },
+        dataType: "json",
+        success: function (response) {
+          if (response.status === "error") {
+            Swal.fire("Atención", response.message, "warning");
+          } else if (response.status === "ok") {
+            Swal.fire("Eliminado", response.message, "success").then(() => {
+              $("#table_data").DataTable().ajax.reload();
+            });
           }
-        );
-
-        $("#table_data").DataTable().ajax.reload();
-
-        swal.fire({
-          title: "Año vehiculo",
-          text: "Registro Eliminado",
-          icon: "success",
-        });
-      }
-    });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error en la petición AJAX:", error);
+          Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
+        }
+      });
+    }
+  });
 }
 
 function editar(partoken) {

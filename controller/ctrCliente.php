@@ -104,6 +104,23 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $cliente->mdlEliminarRegistro($_POST["token"]);
-        break;
+        $tabla = "vehiculo";
+        $item = "idcliente";
+        $valor = $_POST["token"];
+
+        $validarCliente = $cliente->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if (!empty($validarCliente)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No se puede eliminar cliente porque está siendo utilizado en un vehiculo."
+            ]);
+            return;
+        }
+
+        $cliente->mdlEliminarRegistro($valor);
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Cliente eliminado correctamente"
+        ]);
+        return;
 }

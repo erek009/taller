@@ -58,7 +58,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['marca'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['marca'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -98,7 +98,7 @@
 
                                     <!-- <select> -->
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['ano'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['ano'] ?></option>
                                     <?php endforeach; ?>
                                     <!-- </select> -->
                                 </select>
@@ -149,7 +149,7 @@
 
                                     <!-- <select> -->
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['id'] ?>"><?= $value['nombre'] ?></option>
+                                        <option value="<?= $value['token'] ?>"><?= $value['nombre'] ?></option>
                                     <?php endforeach; ?>
                                     <!-- </select> -->
                                 </select>

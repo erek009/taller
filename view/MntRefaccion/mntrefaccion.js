@@ -2,6 +2,9 @@
 let codigo = $("#codigo");
 let codigohelper = $("#codigohelp");
 
+let categoria = $("#categoria");
+let categoriahelper = $("#categoriahelp");
+
 let nombre = $("#nombreproducto");
 let nombrehelper = $("#nombrehelp");
 
@@ -31,6 +34,10 @@ let token = $("#token");
 /*VALIDACIONES REGISTRO*/
     codigo.on("keyup change blur", (e) => {
       ValidarCodigo(codigo, codigohelper);
+    });
+
+    categoria.on("keyup change blur", (e) => {
+      ValidarCategoria(categoria, categoriahelper);
     });
     
     nombre.on("keyup change blur", (e) => {
@@ -77,6 +84,7 @@ function guardaryeditar(e) {
 
    // Validaciones
    let isValidCodigo = ValidarCodigo(codigo, codigohelper);
+   let isValidCategoria = ValidarCategoria(categoria, categoriahelper);
    let isValidNombre = ValidarNombre(nombre, nombrehelper);
    let isValidUnidad = ValidarUnidad(unidad, unidadhelper);
    let isValidMarca = ValidarMarca(marca, marcahelper);
@@ -88,6 +96,7 @@ function guardaryeditar(e) {
 
    let formIsValid =
    isValidCodigo &&
+   isValidCategoria &&
    isValidNombre &&
    isValidUnidad &&
    isValidMarca &&
@@ -199,7 +208,7 @@ $(document).ready(function () {
           $("#table_data").DataTable().ajax.reload();
   
           swal.fire({
-            title: "Año vehiculo",
+            title: "Producto",
             text: "Registro Eliminado",
             icon: "success",
           });
@@ -216,6 +225,7 @@ $(document).ready(function () {
         token.val(data.token);
         codigo.prop("disabled", true);
         codigo.val(data.codigo);
+        categoria.val(data.idcategoria);
         nombre.val(data.nombre);
         unidad.val(data.unidadmedida);
         marca.val(data.marca);
@@ -237,6 +247,7 @@ $(document).ready(function () {
     stock.prop("disabled", false);
     /* TODO: Limpiar informacion */
     codigo.val("");
+    categoria.val("");
     nombre.val("");
     unidad.val("");
     marca.val("");
@@ -269,6 +280,16 @@ function ValidarCodigo(Control, Helper) {
     return false;
   }
 
+  Helper.hide();
+  return true;
+}
+
+function ValidarCategoria(Control, Helper) {
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("La categoria es requerida");
+    Helper.show();
+    return false;
+  }
   Helper.hide();
   return true;
 }
@@ -336,18 +357,11 @@ function ValidarStock(Control, Helper) {
 }
 
 function ValidarProveedor(Control, Helper) {
-  if (Control.val().trim() == "") {
-    Helper.text("El nombre del proveedor es requerido");
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("Nombre proveedor es requerido");
     Helper.show();
     return false;
   }
-
-  if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
-    Helper.text("Proveedor no puede contener caracteres especiales");
-    Helper.show();
-    return false;
-  }
-
   Helper.hide();
   return true;
 }
@@ -406,6 +420,7 @@ function ValidarDescripcion(Control, Helper) {
 //OCULTA MENSAJES HELPER
 function OcultarHelpers() {
   codigohelper.hide();
+  categoriahelper.hide();
   nombrehelper.hide();
   unidadhelper.hide();
   marcahelper.hide();
@@ -419,6 +434,7 @@ function OcultarHelpers() {
 //LIMPIA MENSAJES HELPER
 function LimpiarFormularios() {
   codigo.val("");
+  categoria.val("");
   nombre.val("");
   unidad.val("");
   marca.val("");

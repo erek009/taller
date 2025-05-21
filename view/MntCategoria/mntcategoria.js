@@ -1,14 +1,12 @@
-
-let marca = $("#marca");
-let marcahelper = $("#marcahelp");
-
+//nuevo usuario
+let categoria = $("#categoria");
+let categoriahelper = $("#categoriahelp");
 let token = $("#token");
 
-/* VALIDACIONES */
-    marca.on("keyup change blur", (e) => {
-      ValidarMarca(marca, marcahelper);
-  });
-  
+/* VALIDACIONES REGISTRO */
+categoria.on("keyup change blur", (e) => {
+  ValidarCategoria(categoria, categoriahelper);
+}); //
 
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
@@ -19,27 +17,27 @@ function init() {
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
-  formData.append("marca", marca.val());//
+  formData.append("categoria", categoria.val());//
 
   // Validaciones
-  let isValidMarca = ValidarMarca(marca, marcahelper); //
-  let formIsValid = isValidMarca; //
+  let isValidCategoria = ValidarCategoria(categoria, categoriahelper); //
+  let formIsValid = isValidCategoria; //
 
   if (formIsValid) {//
 
     /* TODO: Guardar Informacion */
     $.ajax({
-      url: "../../controller/ctrMarca.php?op=guardaryeditar",
+      url: "../../controller/ctrCategoria.php?op=guardaryeditar",
       type: "POST",
       data: formData,
       contentType: false,
       processData: false,
       success: function (data) {
-        if (data === "error-marcaexiste") {
+        if (data === "error-categoriaexiste") {
           // Si el año ya existe en la base de datos, mostrar un mensaje de error
           swal.fire({
             title: "Error",
-            text: "La marca del vehículo ya existe en el sistema.",
+            text: "La categoria ya existe en el sistema.",
             icon: "error",
           });
         } else {
@@ -47,7 +45,7 @@ function guardaryeditar(e) {
           $("#modalmantenimiento").modal("hide");
           /* TODO: Mensaje de sweetalert */
           swal.fire({
-            title: "Marca",
+            title: "Año",
             text: "Registro Confirmado",
             icon: "success",
           });
@@ -65,7 +63,7 @@ $(document).ready(function () {
     dom: "Bfrtip",
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
     ajax: {
-      url: "../../controller/ctrMarca.php?op=listar",
+      url: "../../controller/ctrCategoria.php?op=listar",
       type: "post",
       data: { token: 1 },
     },
@@ -116,7 +114,7 @@ function eliminar(token) {
     }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-        url: "../../controller/ctrMarca.php?op=eliminar",
+        url: "../../controller/ctrCategoria.php?op=eliminar",
         type: "POST",
         data: { token: token },
         dataType: "json",
@@ -138,14 +136,15 @@ function eliminar(token) {
   });
 }
 
+
 function editar(partoken) {
   $.post(
-    "../../controller/ctrMarca.php?op=mostrar",
+    "../../controller/ctrCategoria.php?op=mostrar",
     { token: partoken },
     function (data) {
       data = JSON.parse(data);
       token.val(data.token);
-      marca.val(data.marca);
+      categoria.val(data.categoria);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -155,7 +154,7 @@ function editar(partoken) {
 
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
-  marca.val("");
+  categoria.val("");
   token.val("");
   $("#lbltitulo").html("Nuevo Registro");
   $("#mantenimiento_form")[0].reset();
@@ -165,16 +164,16 @@ $(document).on("click", "#btnnuevo", function () {
 
 init();
 
-// VALIDACIONES //
-function ValidarMarca(Control, Helper) {
-  if (Control.val().trim() == "") {
-    Helper.text("La marca es requerida");
+// VALIDACION Año
+function ValidarCategoria(Control, Helper) {
+  if (Control.val().trim() == ""){
+    Helper.text("El Nombre requerido");
     Helper.show();
     return false;
   }
 
-  if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
-    Helper.text("La marca no puede contener caracteres especiales");
+  if (!Control.val().match(/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+    Helper.text("Nombre no puede contener caracteres especiales");
     Helper.show();
     return false;
   }
@@ -182,3 +181,19 @@ function ValidarMarca(Control, Helper) {
   Helper.hide();
   return true;
 }
+
+
+//FUNCIONES OCULTAN HELPERS / BORRA DATOS EN INPUT
+function OcultarHelpers() {
+  categoriahelper.hide();
+}
+
+function LimpiarFormularios() {
+  categoria.val("");
+}
+
+// Borra helpers
+$("#modalmantenimiento").on("hidden.bs.modal", function () {
+  OcultarHelpers();
+  LimpiarFormularios();
+});
