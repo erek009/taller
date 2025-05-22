@@ -135,6 +135,20 @@ switch ($_GET["op"]) {
             return;
         }
 
+
+        $tabla = "ordenes";
+        $item = "idusuario";
+        $valor = $_POST["token"];
+
+        $validarUsuario = $usuario->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if (!empty($validarUsuario)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No se puede eliminar este usuario porque está siendo utilizado en orden de servicio."
+            ]);
+            return;
+        }
+
         $usuario->mdlEliminarRegistro($valor);
         echo json_encode([
             "status" => "ok",

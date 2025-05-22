@@ -42,21 +42,21 @@ if (isset($_SESSION["id"])) {
                                 </div>
                             </div>
                         </div>
-                    
-                         <!-- TODO:Datos Proveedor -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header align-items-center d-flex">
-                                                <h4 class="card-title mb-0 flex-grow-1">Datos del Proveedor</h4>
-                                            </div>
 
-                                            <div class="card-body">
-                                                <div class="live-preview">
-                                                    <div class="row align-items-center g-3">
-                                                        <div class="col-lg-4">
-                                                            <label for="prov_id" class="form-label">Proveedor</label>
-                                                             <select id="proveedor" name="proveedor" class="form-control form-select" aria-label="Seleccione">
+                        <!-- TODO:Datos Proveedor -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">Datos del Proveedor</h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="live-preview">
+                                            <div class="row align-items-center g-3">
+                                                <div class="col-lg-4">
+                                                    <label for="prov_id" class="form-label">Proveedor</label>
+                                                    <select id="proveedor" name="proveedor" class="form-control form-select" aria-label="Seleccione">
                                                         <?php
                                                         echo ' 
                                                         <option value="" disabled selected> Seleccione proveedor </option> ';
@@ -75,34 +75,34 @@ if (isset($_SESSION["id"])) {
                                                             <option value="<?= $value['token'] ?>"><?= $value['razonsocial'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                        </div>
+                                                </div>
 
-                                                        <div class="col-lg-4">
-                                                            <label for="prov_rfc" class="form-label">RFC</label>
-                                                            <input type="text" class="form-control" id="rfc" name="rfc" placeholder="RFC" readonly />
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <label for="prov_direccion" class="form-label">Dirección</label>
-                                                            <input type="text" class="form-control" id="prov_direccion" name="prov_direccion" placeholder="Dirección" readonly />
-                                                        </div>
+                                                <div class="col-lg-4">
+                                                    <label for="prov_rfc" class="form-label">RFC</label>
+                                                    <input type="text" class="form-control" id="rfc" name="rfc" placeholder="RFC" readonly />
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label for="prov_direccion" class="form-label">Dirección</label>
+                                                    <input type="text" class="form-control" id="prov_direccion" name="prov_direccion" placeholder="Dirección" readonly />
+                                                </div>
 
-                                                        <div class="col-lg-6">
-                                                            <label for="prov_correo" class="form-label">Correo</label>
-                                                            <input type="text" class="form-control" id="prov_correo" name="prov_correo" placeholder="Correo Electronico" readonly />
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="prov_telefono" class="form-label">Telefono</label>
-                                                            <input type="text" class="form-control" id="prov_telefono" name="prov_telefono" placeholder="Telefono" readonly />
-                                                        </div>
-                                                    </div>
+                                                <div class="col-lg-6">
+                                                    <label for="prov_correo" class="form-label">Correo</label>
+                                                    <input type="text" class="form-control" id="prov_correo" name="prov_correo" placeholder="Correo Electronico" readonly />
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="prov_telefono" class="form-label">Telefono</label>
+                                                    <input type="text" class="form-control" id="prov_telefono" name="prov_telefono" placeholder="Telefono" readonly />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                
-                       
+
+
                         <!-- TODO:Datos del Producto -->
                         <div class="row">
                             <div class="col-lg-12">
@@ -114,9 +114,34 @@ if (isset($_SESSION["id"])) {
                                     <div class="card-body">
                                         <div class="live-preview">
                                             <div class="row align-items-center g-3">
+
                                                 <div class="col-lg-3">
+                                                    <label for="categoria" class="form-label">Categoria</label>
+                                                    <select id="categoria" name="categoria" class="form-control form-select" aria-label="Seleccione">
+                                                        <?php
+                                                        echo ' 
+                                                        <option value="" disabled selected> Seleccione categoria </option> ';
+
+                                                        include '../../models/mdlCategoria.php';
+
+                                                        // Crear instancia del modelo
+                                                        $categoria = new mdlCategoria();
+
+                                                        // Llamar al método
+                                                        $tabla = "categoria";
+                                                        $datos = $categoria->mdlSeleccionarRegistros($tabla, null, null);
+                                                        ?>
+
+                                                        <?php foreach ($datos as $value): ?>
+                                                            <option value="<?= $value['token'] ?>"><?= $value['categoria'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+
+
+                                                <!-- <div class="col-lg-3">
                                                     <label for="producto" class="form-label">Producto</label>
-                                                       <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
+                                                    <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
                                                         <?php
                                                         echo ' 
                                                         <option value="" disabled selected> Seleccione producto </option> ';
@@ -135,9 +160,20 @@ if (isset($_SESSION["id"])) {
                                                             <option value="<?= $value['token'] ?>"><?= $value['nombre'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
+                                                </div> -->
+
+                                                <div class="col-lg-3">
+                                                    <label for="producto" class="form-label">Producto</label>
+                                                    <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
+                                                         <?php
+                                                        echo ' 
+                                                        <option value="">Seleccione un producto</option>';
+                                                        ?>
+                                                  
+                                                    <!-- <input type="number" class="form-control" id="precio_compra" name="precio_compra" placeholder="Precio" /> -->
+                                                      </select>
                                                 </div>
 
-                                                
                                                 <div class="col-lg-1">
                                                     <label for="precio_compra" class="form-label">Precio</label>
                                                     <input type="number" class="form-control" id="precio_compra" name="precio_compra" placeholder="Precio" />

@@ -9,13 +9,13 @@ $compra = new mdlCompra();
 switch ($_GET["op"]) {
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "registrardetalle":
-            $compra->mdlRegistro(
-                $_POST["refaccion"],
-                $_POST["proveedor"],
-                $_POST["unidadmedida"],
-                $_POST["preciocompra"],
-                $_POST["cantidad"]
-            );
+        $compra->mdlRegistro(
+            $_POST["refaccion"],
+            $_POST["proveedor"],
+            $_POST["unidadmedida"],
+            $_POST["preciocompra"],
+            $_POST["cantidad"]
+        );
         break;
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
@@ -30,7 +30,7 @@ switch ($_GET["op"]) {
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["cantidad"];
             $sub_array[] = $row["total"];
-         $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["id"] . '\')" id="' . $row["id"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["id"] . '\')" id="' . $row["id"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
         }
         $results = array(
@@ -40,11 +40,11 @@ switch ($_GET["op"]) {
             "aaData" => $data
         );
         echo json_encode($results);
-        break;    
+        break;
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
-     case "eliminar":
-         $compra->mdlEliminarRegistro($_POST["id"]);
-         break;
-    
+    case "eliminar":
+        $compra->mdlEliminarRegistro($_POST["id"]);
+        break;
+
 }
