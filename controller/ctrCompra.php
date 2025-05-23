@@ -7,6 +7,15 @@ require_once("../models/mdlCompra.php");
 $compra = new mdlCompra();
 
 switch ($_GET["op"]) {
+    // registra ingreso nueva a compra
+    case "registrar":
+        $datos = $compra->insert_compra( $_POST["usu_id"]);
+        foreach ($datos as $row) {
+            $output["compra_id"] = $row["compra_id"];
+        }
+        echo json_encode($output);
+        break;
+
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
     case "registrardetalle":
         $compra->mdlRegistro(

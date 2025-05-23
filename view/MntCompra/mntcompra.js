@@ -1,3 +1,5 @@
+var usu_id = $("#token_usu").val();
+
 var proveedor = $("#proveedor");
 var rfc = $("#rfc");
 var direccion = $("#prov_direccion");
@@ -10,7 +12,14 @@ var stock = $("#stock");
 var undmedida = $("#und_medida");
 var preciocompra = $("#precio_compra");
 
-$(document).ready(function () {});
+$(document).ready(function () {
+
+$.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(data){
+        // data=JSON.parse(data);
+        // $('#compr_id').val(data.compr_id);
+    });
+
+});
 
 $(document).on("click", "#btnagregar", function () {
   var refaccion = $("#producto").val();
