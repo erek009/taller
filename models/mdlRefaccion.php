@@ -99,17 +99,16 @@ class mdlRefaccion extends Conectar
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
     //SELECCIONAR PRODUCTOS POR CATEGORIA
-    public function getProductosPorCategoria($categoria_id) {
+    public function mdlSeleccionarProductosPorCategoria($categoria_id) {
     $conectar = parent::Conexion();
 
     // Parámetros nombrados explícitamente
     $sql = "EXEC seleccionarPorCategoria @p_categoria_id = :categoria_id";
     $query = $conectar->prepare($sql);
-
     $query->bindParam(":categoria_id", $categoria_id, PDO::PARAM_STR);
     $query->execute();
-
     $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
     $query->closeCursor();
 

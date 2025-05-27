@@ -15,24 +15,24 @@ var preciocompra = $("#precio_compra");
 $(document).ready(function () {
 
 $.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(data){
-        // data=JSON.parse(data);
-        // $('#compr_id').val(data.compr_id);
+         data=JSON.parse(data);
+         $('#compra_id').val(data.compra_id);
     });
 
 });
 
 $(document).on("click", "#btnagregar", function () {
   var refaccion = $("#producto").val();
-  var proveedor = $("#provedor").val();
+  var compra_id = $("#compra_id").val();
   var preciocompra = $("#precio_compra").val();
   var unidadmedida = $("#und_medida").val();
   var cantidad = $("#detc_cant").val();
 
   $.post(
-    "../../controller/ctrCompra.php?op=registrardetalle",
+    "../../controller/ctrCompra.php?op=registrardetallecompra",
     {
       refaccion: refaccion,
-      proveedor: proveedor,
+      compra_id: compra_id,
       unidadmedida: unidadmedida,
       preciocompra: preciocompra,
       cantidad: cantidad,
@@ -255,7 +255,8 @@ $(proveedor).on("change", function () {
   });
 });
 
-function listar(refaccion) {
+function listar(compra_id) {
+   var compra_id = $("#compra_id").val();
   /* TODO: Listar informacion en el datatable js */
   $("#table_data").DataTable({
     aProcessing: true,
@@ -265,7 +266,7 @@ function listar(refaccion) {
     ajax: {
       url: "../../controller/ctrCompra.php?op=listar",
       type: "post",
-      data: { token: refaccion },
+      data: { compra_id: compra_id },
     },
     bDestroy: true,
     responsive: true,

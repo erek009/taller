@@ -28,6 +28,10 @@ if (isset($_SESSION["id"])) {
 
                 <div class="page-content">
                     <div class="container-fluid">
+
+                    <!-- ID DE COMPRA ///// -->
+                    <input type="hidden" id="compra_id" name="compra_id" />
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">

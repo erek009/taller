@@ -10,6 +10,7 @@ switch ($_GET["op"]) {
     // registra ingreso nueva a compra
     case "registrar":
         $datos = $compra->insert_compra( $_POST["usu_id"]);
+        //Devuelve datos con select del insert
         foreach ($datos as $row) {
             $output["compra_id"] = $row["compra_id"];
         }
@@ -17,29 +18,29 @@ switch ($_GET["op"]) {
         break;
 
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
-    case "registrardetalle":
+    case "registrardetallecompra":
         $compra->mdlRegistro(
             $_POST["refaccion"],
-            $_POST["proveedor"],
+            $_POST["compra_id"],
             $_POST["unidadmedida"],
             $_POST["preciocompra"],
             $_POST["cantidad"]
         );
         break;
-    /*TODO: Listado de registros formato JSON para Datatable JS*/
+    /*TODO: Listado de registros por compra_id*/
     case "listar":
-        $tabla = "compra_detalle";
-        $datos = $compra->mdlSeleccionarRegistrosCompra($tabla, null, null);
+        $compra_id = $_POST['compra_id'];
+        $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
             $sub_array[] = $row["nombre"];
-            $sub_array[] = $row["razonsocial"];
+            $sub_array[] = $row["compra_id"];
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["cantidad"];
             $sub_array[] = $row["total"];
-            $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["id"] . '\')" id="' . $row["id"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
+            $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["detalle_id"] . '\')" id="' . $row["detalle_id"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
         }
         $results = array(

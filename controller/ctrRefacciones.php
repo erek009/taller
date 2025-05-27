@@ -132,10 +132,10 @@ switch ($_GET["op"]) {
         $refaccion->mdlEliminarRegistro($_POST["token"]);
         break;
 
-        
+     /*TODO: Muestra productos en select por categoria)*/
     case "productos_por_categoria":
         $categoria_id = $_POST['categoria_id'];
-        $data = $refaccion->getProductosPorCategoria($categoria_id);
+        $data = $refaccion->mdlSeleccionarProductosPorCategoria($categoria_id);
         echo json_encode($data);
         break;
 }
