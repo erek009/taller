@@ -223,8 +223,8 @@ if (isset($_SESSION["id"])) {
                                         <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th>Categoria</th>
                                                     <th>Producto</th>
-                                                    <th>Proveedor</th>
                                                     <th>Und. Medida</th>
                                                     <th>P. Compra</th>
                                                     <th>Cantidad</th>

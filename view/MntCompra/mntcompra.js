@@ -22,6 +22,7 @@ $.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(da
 });
 
 $(document).on("click", "#btnagregar", function () {
+  var categoria = $("#categoria").val();
   var refaccion = $("#producto").val();
   var compra_id = $("#compra_id").val();
   var preciocompra = $("#precio_compra").val();
@@ -31,6 +32,7 @@ $(document).on("click", "#btnagregar", function () {
   $.post(
     "../../controller/ctrCompra.php?op=registrardetallecompra",
     {
+      categoria: categoria,
       refaccion: refaccion,
       compra_id: compra_id,
       unidadmedida: unidadmedida,
@@ -45,7 +47,7 @@ $(document).on("click", "#btnagregar", function () {
   );
 });
 
-function eliminar(id) {
+function eliminar(detalle_id) {
   swal
     .fire({
       title: "Eliminar!",
@@ -59,22 +61,24 @@ function eliminar(id) {
       if (result.value) {
         $.post(
           "../../controller/ctrCompra.php?op=eliminar",
-          { id: id },
+          { detalle_id: detalle_id },
           function (data) {
             console.log(data);
+
+            // ✅ Solo recarga la tabla si la eliminación fue exitosa
+            $("#table_data").DataTable().ajax.reload();
+
+            swal.fire({
+              title: "Producto",
+              text: "Registro Eliminado",
+              icon: "success",
+            });
           }
         );
-
-        $("#table_data").DataTable().ajax.reload();
-
-        swal.fire({
-          title: "Orden",
-          text: "Registro Eliminado",
-          icon: "success",
-        });
       }
     });
 }
+
 
 $(document).on("click", "#btnguardar", function () {
   var compr_id = $("#compr_id").val();
@@ -150,28 +154,6 @@ $(document).on("click", "#btnguardar", function () {
 $(document).on("click", "#btnlimpiar", function () {
   location.reload();
 });
-
-// //muestra datos del producto
-// $(producto).on("change", function(){
-
-//     $.ajax({
-//         url: "../../controller/ctrRefacciones.php?op=mostrar",
-//         type: "POST",
-//         data: { token: producto.val() },
-//         dataType: "json",
-//         success: function (response) {
-//           stock.val(response["stock"]);
-//           undmedida.val(response["unidadmedida"]);
-//           preciocompra.val(response["preciocompra"]);
-//         },
-//         error: function (xhr, status, error) {
-//           console.error("Error en la petición AJAX:", error);
-//           Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
-//         }
-//     });
-// });
-
-/////////////////////////////PRUEBAS///////////////////////
 
 // Cuando cambie la categoría, carga los productos de esa categoría
 $("#categoria").on("change", function () {

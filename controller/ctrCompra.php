@@ -17,9 +17,10 @@ switch ($_GET["op"]) {
         echo json_encode($output);
         break;
 
-    /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
+    /*TODO: Registra detalle compra*/
     case "registrardetallecompra":
         $compra->mdlRegistro(
+            $_POST["categoria"],
             $_POST["refaccion"],
             $_POST["compra_id"],
             $_POST["unidadmedida"],
@@ -34,8 +35,8 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
+            $sub_array[] = $row["categoria"];
             $sub_array[] = $row["nombre"];
-            $sub_array[] = $row["compra_id"];
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["cantidad"];
@@ -54,7 +55,7 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $compra->mdlEliminarRegistro($_POST["id"]);
+        $compra->mdlEliminarRegistro($_POST["detalle_id"]);
         break;
 
 }
