@@ -53,6 +53,16 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
+    case "calculo":
+        $datos = $compra->compra_calculo($_POST["compra_id"]);
+         foreach ($datos as $row) {
+            $output["compra_subtotal"] = $row["compra_subtotal"];
+            $output["compra_iva"] = $row["compra_iva"];
+            $output["compra_total"] = $row["compra_total"];
+        }
+        echo json_encode($output);
+        break;
+
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
         $compra->mdlEliminarRegistro($_POST["detalle_id"]);

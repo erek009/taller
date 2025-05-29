@@ -242,15 +242,15 @@ if (isset($_SESSION["id"])) {
                                             <tbody>
                                                 <tr>
                                                     <td>Sub Total</td>
-                                                    <td class="text-end" id="txtsubtotal">0</td>
+                                                    <td class="text-end" id="precio_subtotal">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td>IVA(16%)</td>
-                                                    <td class="text-end" id="txtiva">0</td>
+                                                    <td class="text-end" id="precio_iva">0</td>
                                                 </tr>
                                                 <tr class="border-top border-top-dashed fs-15">
                                                     <th scope="row">Total</th>
-                                                    <th class="text-end" id="txttotal">0</th>
+                                                    <th class="text-end" id="precio_total">0</th>
                                                 </tr>
                                             </tbody>
                                         </table>

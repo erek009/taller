@@ -12,6 +12,8 @@ var stock = $("#stock");
 var undmedida = $("#und_medida");
 var preciocompra = $("#precio_compra");
 
+
+// Inicializa el DataTable para mostrar los detalles de la compra
 $(document).ready(function () {
 
 $.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(data){
@@ -21,6 +23,8 @@ $.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(da
 
 });
 
+
+// Agrega un nuevo detalle de compra
 $(document).on("click", "#btnagregar", function () {
   var categoria = $("#categoria").val();
   var refaccion = $("#producto").val();
@@ -40,13 +44,23 @@ $(document).on("click", "#btnagregar", function () {
       cantidad: cantidad,
     },
     function (data) {
-      console.log(data);
+      console.log("Detalle registrado:", data);
 
+      // ✅ Solo hacer el cálculo DESPUÉS de registrar exitosamente el detalle
+      $.post("../../controller/ctrCompra.php?op=calculo", { compra_id: compra_id }, function (data) {
+        data = JSON.parse(data);
+        $('#precio_subtotal').html(data.compra_subtotal);
+        $('#precio_iva').html(data.compra_iva);
+        $('#precio_total').html(data.compra_total);
+      });
+
+      // ✅ Actualizar campos relacionados (como tabla de productos o formulario)
       listar(refaccion);
     }
   );
 });
 
+// Elimina un detalle de compra
 function eliminar(detalle_id) {
   swal
     .fire({
@@ -65,19 +79,37 @@ function eliminar(detalle_id) {
           function (data) {
             console.log(data);
 
-            // ✅ Solo recarga la tabla si la eliminación fue exitosa
+            // ✅ Recargar tabla
             $("#table_data").DataTable().ajax.reload();
 
+            // ✅ Mostrar mensaje
             swal.fire({
               title: "Producto",
               text: "Registro Eliminado",
               icon: "success",
             });
+
+            // ✅ Recalcular totales
+            // Necesitas tener el ID de la compra disponible aquí
+            var compra_id = $("#compra_id").val(); // Asegúrate de que este ID exista en tu HTML
+
+            $.post(
+              "../../controller/ctrCompra.php?op=calculo",
+              { compra_id: compra_id },
+              function (data) {
+                data = JSON.parse(data);
+                $('#precio_subtotal').html(data.compra_subtotal);
+                $('#precio_iva').html(data.compra_iva);
+                $('#precio_total').html(data.compra_total);
+              }
+            );
           }
         );
       }
     });
 }
+
+
 
 
 $(document).on("click", "#btnguardar", function () {

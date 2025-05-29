@@ -14,7 +14,7 @@ class mdlCompra extends Conectar
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Registrar telefono
+    //Registrar 
     public function mdlRegistro($categoria, $refaccion, $compra_id, $undmedida, $preciocompra, $cantidad)
     {
         $conectar = parent::Conexion();
@@ -28,9 +28,6 @@ class mdlCompra extends Conectar
         $query->bindValue(6, $cantidad);
         $query->execute();
     }
-
-
-    //Seleccionar registros vehiculo
 
     //SELECCIONAR PRODUCTOS POR CATEGORIA
     public function mdlSeleccionarRegistrosCompra($compra_id)
@@ -47,6 +44,16 @@ class mdlCompra extends Conectar
         return $resultado;
     }
 
+    /* TODO: Listar Registro por ID en especifico */
+    public function compra_calculo($compra_id)
+    {
+        $conectar = parent::Conexion();
+        $sql = "updateCompra_01 ?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $compra_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     //Eliminar registros
     public function mdlEliminarRegistro($detalle_id)
