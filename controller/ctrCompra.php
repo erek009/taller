@@ -28,6 +28,7 @@ switch ($_GET["op"]) {
             $_POST["cantidad"]
         );
         break;
+
     /*TODO: Listado de registros por compra_id*/
     case "listar":
         $compra_id = $_POST['compra_id'];
@@ -53,6 +54,7 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
+    //TODO: calculo de compra
     case "calculo":
         $datos = $compra->compra_calculo($_POST["compra_id"]);
          foreach ($datos as $row) {
@@ -61,6 +63,20 @@ switch ($_GET["op"]) {
             $output["compra_total"] = $row["compra_total"];
         }
         echo json_encode($output);
+        break;
+
+        ///////////////////////////////////////////
+    /*TODO: Registra detalle compra*/
+    case "guardar":
+        $compra->actualiza_compra(
+            $_POST["compra_id"],
+            $_POST["prov_id"],
+            $_POST["prov_rfc"],
+            $_POST["prov_direccion"],
+            $_POST["prov_email"],
+            $_POST["prov_telefono"],
+            $_POST["comentario"]
+        );
         break;
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/

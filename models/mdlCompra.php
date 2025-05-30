@@ -18,7 +18,7 @@ class mdlCompra extends Conectar
     public function mdlRegistro($categoria, $refaccion, $compra_id, $undmedida, $preciocompra, $cantidad)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarCompra ?,?,?,?,?,?";
+        $sql = "insertarCompraDetalle ?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $categoria);
         $query->bindValue(2, $refaccion);
@@ -53,6 +53,22 @@ class mdlCompra extends Conectar
         $query->bindValue(1, $compra_id);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /* TODO: actualiza compra final */
+    public function actualiza_compra($compra_id, $prov_id, $prov_rfc, $prov_direccion, $prov_email, $prov_telefono, $comentario)
+    {
+        $conectar = parent::Conexion();
+        $sql = "inserta_compra_fin ?,?,?,?,?,?,?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $compra_id);
+        $query->bindValue(2, $prov_id);
+        $query->bindValue(3, $prov_rfc);
+        $query->bindValue(4, $prov_direccion);
+        $query->bindValue(5, $prov_email);
+        $query->bindValue(6, $prov_telefono);
+        $query->bindValue(7, $comentario);
+        $query->execute();
     }
 
     //Eliminar registros

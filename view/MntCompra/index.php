@@ -60,7 +60,7 @@ if (isset($_SESSION["id"])) {
                                             <div class="row align-items-center g-3">
                                                 <div class="col-lg-4">
                                                     <label for="prov_id" class="form-label">Proveedor</label>
-                                                    <select id="proveedor" name="proveedor" class="form-control form-select" aria-label="Seleccione">
+                                                    <select id="prov_id" name="prov_id" class="form-control form-select" aria-label="Seleccione">
                                                         <?php
                                                         echo ' 
                                                         <option value="" disabled selected> Seleccione proveedor </option> ';
@@ -83,7 +83,7 @@ if (isset($_SESSION["id"])) {
 
                                                 <div class="col-lg-4">
                                                     <label for="prov_rfc" class="form-label">RFC</label>
-                                                    <input type="text" class="form-control" id="rfc" name="rfc" placeholder="RFC" readonly />
+                                                    <input type="text" class="form-control" id="prov_rfc" name="prov_rfc" placeholder="RFC" readonly />
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label for="prov_direccion" class="form-label">Dirección</label>
@@ -91,8 +91,8 @@ if (isset($_SESSION["id"])) {
                                                 </div>
 
                                                 <div class="col-lg-6">
-                                                    <label for="prov_correo" class="form-label">Correo</label>
-                                                    <input type="text" class="form-control" id="prov_correo" name="prov_correo" placeholder="Correo Electronico" readonly />
+                                                    <label for="prov_email" class="form-label">Correo</label>
+                                                    <input type="text" class="form-control" id="prov_email" name="prov_email" placeholder="Correo Electronico" readonly />
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="prov_telefono" class="form-label">Telefono</label>

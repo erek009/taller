@@ -153,6 +153,7 @@ function editar(partoken) {
   $("#modalmantenimiento").modal("show");
 }
 
+//boton nuevo
 $(document).on("click", "#btnnuevo", function () {
   /* TODO: Limpiar informacion */
   marca.val("");

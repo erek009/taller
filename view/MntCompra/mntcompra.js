@@ -1,9 +1,9 @@
 var usu_id = $("#token_usu").val();
 
-var proveedor = $("#proveedor");
-var rfc = $("#rfc");
+var proveedor = $("#prov_id");
+var rfc = $("#prov_rfc");
 var direccion = $("#prov_direccion");
-var correo = $("#prov_correo");
+var correo = $("#prov_email");
 var telefono = $("#prov_telefono");
 
 var categoria = $("#categoria");
@@ -12,17 +12,17 @@ var stock = $("#stock");
 var undmedida = $("#und_medida");
 var preciocompra = $("#precio_compra");
 
-
 // Inicializa el DataTable para mostrar los detalles de la compra
 $(document).ready(function () {
-
-$.post("../../controller/ctrCompra.php?op=registrar",{usu_id:usu_id},function(data){
-         data=JSON.parse(data);
-         $('#compra_id').val(data.compra_id);
-    });
-
+  $.post(
+    "../../controller/ctrCompra.php?op=registrar",
+    { usu_id: usu_id },
+    function (data) {
+      data = JSON.parse(data);
+      $("#compra_id").val(data.compra_id);
+    }
+  );
 });
-
 
 // Agrega un nuevo detalle de compra
 $(document).on("click", "#btnagregar", function () {
@@ -33,31 +33,55 @@ $(document).on("click", "#btnagregar", function () {
   var unidadmedida = $("#und_medida").val();
   var cantidad = $("#detc_cant").val();
 
-  $.post(
-    "../../controller/ctrCompra.php?op=registrardetallecompra",
-    {
-      categoria: categoria,
-      refaccion: refaccion,
-      compra_id: compra_id,
-      unidadmedida: unidadmedida,
-      preciocompra: preciocompra,
-      cantidad: cantidad,
-    },
-    function (data) {
-      console.log("Detalle registrado:", data);
+  // Validación de campos vacíos
+  if (
+    $("#categoria").val() == "" ||
+    $("#producto").val() == "" ||
+    $("#precio_compra").val() == "" ||
+    $("#detc_cant").val() == ""
+  ) {
+    // Mostrar mensaje de error si falta información
+    Swal.fire({
+      title: "Error",
+      text: "Todos los campos son obligatorios.",
+      icon: "warning",
+    });
+  } else {
+    // Enviar datos al servidor si todo está bien
+    $.post(
+      "../../controller/ctrCompra.php?op=registrardetallecompra",
+      {
+        categoria: categoria,
+        refaccion: refaccion,
+        compra_id: compra_id,
+        unidadmedida: unidadmedida,
+        preciocompra: preciocompra,
+        cantidad: cantidad,
+      },
+      function (data) {
+        console.log("Detalle registrado:", data);
 
-      // ✅ Solo hacer el cálculo DESPUÉS de registrar exitosamente el detalle
-      $.post("../../controller/ctrCompra.php?op=calculo", { compra_id: compra_id }, function (data) {
-        data = JSON.parse(data);
-        $('#precio_subtotal').html(data.compra_subtotal);
-        $('#precio_iva').html(data.compra_iva);
-        $('#precio_total').html(data.compra_total);
-      });
+        // Calcular subtotal/iva/total después de cada registro
+        $.post(
+          "../../controller/ctrCompra.php?op=calculo",
+          { compra_id: compra_id },
+          function (data) {
+            data = JSON.parse(data);
+            $("#precio_subtotal").html(data.compra_subtotal);
+            $("#precio_iva").html(data.compra_iva);
+            $("#precio_total").html(data.compra_total);
+          }
+        );
 
-      // ✅ Actualizar campos relacionados (como tabla de productos o formulario)
-      listar(refaccion);
-    }
-  );
+        // limpiar campos después de agregar el detalle
+        $("#precio_compra").val("");
+        $("#detc_cant").val("");
+
+        // Actualizar listado
+        listar(compra_id);
+      }
+    );
+  }
 });
 
 // Elimina un detalle de compra
@@ -79,28 +103,26 @@ function eliminar(detalle_id) {
           function (data) {
             console.log(data);
 
-            // ✅ Recargar tabla
+            // Recargar tabla
             $("#table_data").DataTable().ajax.reload();
 
-            // ✅ Mostrar mensaje
+            // confirmación de eliminación
             swal.fire({
               title: "Producto",
               text: "Registro Eliminado",
               icon: "success",
             });
 
-            // ✅ Recalcular totales
-            // Necesitas tener el ID de la compra disponible aquí
-            var compra_id = $("#compra_id").val(); // Asegúrate de que este ID exista en tu HTML
-
+            //Recalcular $$ totales
+            var compra_id = $("#compra_id").val();
             $.post(
               "../../controller/ctrCompra.php?op=calculo",
               { compra_id: compra_id },
               function (data) {
                 data = JSON.parse(data);
-                $('#precio_subtotal').html(data.compra_subtotal);
-                $('#precio_iva').html(data.compra_iva);
-                $('#precio_total').html(data.compra_total);
+                $("#precio_subtotal").html(data.compra_subtotal);
+                $("#precio_iva").html(data.compra_iva);
+                $("#precio_total").html(data.compra_total);
               }
             );
           }
@@ -109,71 +131,57 @@ function eliminar(detalle_id) {
     });
 }
 
-
-
-
 $(document).on("click", "#btnguardar", function () {
-  var compr_id = $("#compr_id").val();
-  var doc_id = $("#doc_id").val();
-  var pag_id = $("#pag_id").val();
+  // Validaciones campos vacíos
+  var categoria = $("#categoria").val();
+  var compra_id = $("#compra_id").val();
   var prov_id = $("#prov_id").val();
-  var prov_ruc = $("#prov_ruc").val();
-  var prov_direcc = $("#prov_direcc").val();
-  var prov_correo = $("#prov_correo").val();
-  var compr_coment = $("#compr_coment").val();
-  var mon_id = $("#mon_id").val();
+  var prov_rfc = $("#prov_rfc").val();
+  var prov_direccion = $("#prov_direccion").val();
+  var prov_email = $("#prov_email").val();
+  var prov_telefono = $("#prov_telefono").val();
+  var comentario = $("#comentario").val();
 
-  if (
-    $("#doc_id").val() == "0" ||
-    $("#pag_id").val() == "0" ||
-    $("#prov_id").val() == "0" ||
-    $("#mon_id").val() == "0"
-  ) {
-    /* TODO:Validacion de Pago , Proveedor , Moneda */
-    swal.fire({
-      title: "Compra",
-      text: "Error Campos Vacios",
-      icon: "error",
+  // Validación de campos vacíos
+  if ($.trim(prov_id) === "" || $.trim(categoria) === "") {
+    Swal.fire({
+      title: "Error",
+      text: "Todos los campos son obligatorios.",
+      icon: "warning",
     });
   } else {
+    // Verificar si hay productos agregados (total > 0)
     $.post(
-      "../../controller/compra.php?op=calculo",
-      { compr_id: compr_id },
+      "../../controller/ctrCompra.php?op=calculo",
+      { compra_id: compra_id },
       function (data) {
         data = JSON.parse(data);
-        console.log(data);
-        if (data.COMPR_TOTAL == null) {
-          /* TODO:Validacion de Detalle */
-          swal.fire({
-            title: "Compra",
-            text: "Error No Existe Detalle",
-            icon: "error",
+
+        if (data.compra_total == null) {
+          Swal.fire({
+            title: "Error",
+            text: "No hay productos agregados a la compra.",
+            icon: "warning",
           });
+          return;
         } else {
+          // Guardar la compra
           $.post(
-            "../../controller/compra.php?op=guardar",
+            "../../controller/ctrCompra.php?op=guardar",
             {
-              compr_id: compr_id,
-              pag_id: pag_id,
+              compra_id: compra_id,
               prov_id: prov_id,
-              prov_ruc: prov_ruc,
-              prov_direcc: prov_direcc,
-              prov_correo: prov_correo,
-              compr_coment: compr_coment,
-              mon_id: mon_id,
-              doc_id: doc_id,
+              prov_rfc: prov_rfc,
+              prov_direccion: prov_direccion,
+              prov_email: prov_email,
+              prov_telefono: prov_telefono,
+              comentario: comentario,
             },
             function (data) {
-              /* TODO:Mensaje de Sweetalert */
-              swal.fire({
+              Swal.fire({
                 title: "Compra",
-                text: "Compra registrada Correctamente con Nro: C-" + compr_id,
+                text: "Registro guardado correctamente.",
                 icon: "success",
-                /* TODO: Ruta para mostrar documento de compra */
-                footer:
-                  "<a href='../ViewCompra/?c=" +
-                  compr_id +
-                  "' target='_blank'>Desea ver el Documento?</a>",
               });
             }
           );
@@ -181,7 +189,7 @@ $(document).on("click", "#btnguardar", function () {
       }
     );
   }
-});
+}); 
 
 $(document).on("click", "#btnlimpiar", function () {
   location.reload();
@@ -270,7 +278,7 @@ $(proveedor).on("change", function () {
 });
 
 function listar(compra_id) {
-   var compra_id = $("#compra_id").val();
+  var compra_id = $("#compra_id").val();
   /* TODO: Listar informacion en el datatable js */
   $("#table_data").DataTable({
     aProcessing: true,
