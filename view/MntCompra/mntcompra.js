@@ -165,7 +165,7 @@ $(document).on("click", "#btnguardar", function () {
           });
           return;
         } else {
-          // Guardar la compra
+          // Guarda la compra
           $.post(
             "../../controller/ctrCompra.php?op=guardar",
             {
@@ -180,8 +180,9 @@ $(document).on("click", "#btnguardar", function () {
             function (data) {
               Swal.fire({
                 title: "Compra",
-                text: "Registro guardado correctamente.",
+                text: "Compra registrada correctamente con No. C-" +compra_id,
                 icon: "success",
+                footer: "<a href='../../view/ViewCompra/?c="+compra_id+"' target='_blank'>Desea ver el Documento?</a>",
               });
             }
           );

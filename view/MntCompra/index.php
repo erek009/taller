@@ -11,7 +11,7 @@ if (isset($_SESSION["id"])) {
     <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 
     <head>
-        <title>AnderCode | Compraax</title>
+        <title>Taller mecanico | Compra</title>
 
         <?php require_once("../html/head.php"); ?>
     </head>
@@ -35,7 +35,7 @@ if (isset($_SESSION["id"])) {
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Nueva Compraax</h4>
+                                    <h4 class="mb-sm-0">Nueva Compra</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">

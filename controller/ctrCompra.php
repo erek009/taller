@@ -84,4 +84,21 @@ switch ($_GET["op"]) {
         $compra->mdlEliminarRegistro($_POST["detalle_id"]);
         break;
 
+    //TODO: mnostrar compra
+    case "mostrar":
+        $compra_id = $_POST['compra_id'];
+        $datos = $compra->mdlSeleccionarCompra($compra_id);
+         foreach ($datos as $row) {
+            $output["compra_id"] = $row["compra_id"];
+            $output["fech_crea"] = $row["fech_crea"];
+            $output["compra_total"] = $row["compra_total"];
+            $output["prov_id"] = $row["razonsocial"];
+            $output["prov_rfc"] = $row["rfc"];
+            $output["prov_direccion"] = $row["direccion"];
+            $output["prov_correo"] = $row["email"];
+            $output["prov_telefono"] = $row["telefono"];
+            $output["usu_nom"] = $row["nombre"];
+        }
+        echo json_encode($output);
+        break;
 }

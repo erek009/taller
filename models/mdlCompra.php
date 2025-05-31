@@ -80,4 +80,20 @@ class mdlCompra extends Conectar
         $query->bindValue(1, $detalle_id);
         $query->execute();
     }
+
+    //MOSTRAR REGISTROS DE COMPRA EN TICKET
+    public function mdlSeleccionarCompra($compra_id)
+    {
+        $conectar = parent::Conexion();
+        $sql = "EXEC seleccionarCompra @Compra_id = :compra_id";
+        $query = $conectar->prepare($sql);
+
+        $query->bindParam(":compra_id", $compra_id, PDO::PARAM_STR);
+        $query->execute();
+
+        $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query->closeCursor();
+        return $resultado;
+    }
+
 }
