@@ -84,7 +84,7 @@ require_once("../../config/conexion.php");
 
                                                 <div class="col-lg-3 col-6">
                                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Total</p>
-                                                    <h5 class="fs-14 mb-0"><span id="compra_total"></span></h5>
+                                                    <h5 class="fs-14 mb-0"><span id="totalpago"></span></h5>
                                                 </div>
 
                                             </div>
@@ -131,12 +131,12 @@ require_once("../../config/conexion.php");
                                                 <table class="table table-borderless text-center table-nowrap align-middle mb-0">
                                                     <thead>
                                                         <tr class="table-active">
-                                                            <th scope="col"></th>
+                                                            <!-- <th scope="col"></th> -->
                                                             <th scope="col">Categoria</th>
                                                             <th scope="col">Producto</th>
                                                             <th scope="col" style="width: 50px;">Und</th>
                                                             <th scope="col">P.Compra</th>
-                                                            <th scope="col">Cant.</th>
+                                                            <th scope="col">Cantidad</th>
                                                             <th scope="col" class="text-end">Total</th>
                                                         </tr>
                                                     </thead>
@@ -156,7 +156,7 @@ require_once("../../config/conexion.php");
                                                         </tr>
                                                         <tr>
                                                             <td>IGV (18%)</td>
-                                                            <td class="text-end" id="compra_rfc"></td>
+                                                            <td class="text-end" id="compra_iva"></td>
                                                         </tr>
                                                         <tr class="border-top border-top-dashed fs-15">
                                                             <th scope="row">Total</th>
@@ -170,7 +170,7 @@ require_once("../../config/conexion.php");
                                             <div class="mt-4">
                                                 <div class="alert alert-info">
                                                     <p class="mb-0"><span class="fw-semibold">Comentario:</span>
-                                                        <span id="compra_coment">
+                                                        <span id="compra_comentario">
                                                         </span>
                                                     </p>
                                                 </div>

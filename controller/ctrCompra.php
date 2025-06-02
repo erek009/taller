@@ -56,7 +56,7 @@ switch ($_GET["op"]) {
 
     //TODO: calculo de compra
     case "calculo":
-        $datos = $compra->compra_calculo($_POST["compra_id"]);
+        $datos = $compra->mdlcompra_calculo($_POST["compra_id"]);
          foreach ($datos as $row) {
             $output["compra_subtotal"] = $row["compra_subtotal"];
             $output["compra_iva"] = $row["compra_iva"];
@@ -65,10 +65,28 @@ switch ($_GET["op"]) {
         echo json_encode($output);
         break;
 
-        ///////////////////////////////////////////
+    /*TODO: Listado detalle formato*/
+    case "listardetalleformato":
+        $compra_id = $_POST['compra_id'];
+        $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
+        // $data = array();
+        foreach ($datos as $row) {
+        ?>
+            <tr>
+                <th><?php echo $row["categoria"]; ?></th>
+                <td><?php echo $row["nombre"]; ?></td>
+                <td><?php echo $row["unidadmedida"]; ?></td>
+                <td><?php echo $row["preciocompra"]; ?></td>
+                <td><?php echo $row["cantidad"]; ?></td>
+                <td class="text-end"><?php echo $row["total"]; ?></td>
+            </tr>
+        <?php
+        }
+        break;
+
     /*TODO: Registra detalle compra*/
     case "guardar":
-        $compra->actualiza_compra(
+        $compra->mdlActualiza_compra(
             $_POST["compra_id"],
             $_POST["prov_id"],
             $_POST["prov_rfc"],
@@ -76,6 +94,10 @@ switch ($_GET["op"]) {
             $_POST["prov_email"],
             $_POST["prov_telefono"],
             $_POST["comentario"]
+        );
+
+        $compra->mdlActualizaCompra_stock(
+            $_POST["compra_id"]
         );
         break;
 
@@ -91,6 +113,8 @@ switch ($_GET["op"]) {
          foreach ($datos as $row) {
             $output["compra_id"] = $row["compra_id"];
             $output["fech_crea"] = $row["fech_crea"];
+            $output["compra_iva"] = $row["compra_iva"];
+            $output["compra_subtotal"] = $row["compra_subtotal"];
             $output["compra_total"] = $row["compra_total"];
             $output["prov_id"] = $row["razonsocial"];
             $output["prov_rfc"] = $row["rfc"];
@@ -98,7 +122,36 @@ switch ($_GET["op"]) {
             $output["prov_correo"] = $row["email"];
             $output["prov_telefono"] = $row["telefono"];
             $output["usu_nom"] = $row["nombre"];
+            $output["compra_comentario"] = $row["compra_comentario"];
+
         }
         echo json_encode($output);
         break;
+
+    /*TODO: Listado detalle formato*/
+    case "listarcomprafinalizada":
+        $tabla = "compra";
+        $datos = $compra->mdlListarCompraFinalizada($tabla, null, null);
+        $data = array();
+        foreach ($datos as $row) {
+                $sub_array = array();
+                $sub_array[] = "C-".$row["compra_id"];
+                $sub_array[] = $row["razonsocial"];
+                $sub_array[] = $row["rfc"];
+                $sub_array[] = $row["compra_subtotal"];
+                $sub_array[] = $row["compra_total"];
+                $sub_array[] = $row["nombre"];
+                $sub_array[] = '<a href="../../view/ViewCompra/?c='.$row["compra_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-settings-2-line"></i></button>';
+                $data[] = $sub_array;
+        }
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        echo json_encode($results);
+        break;
+
 }

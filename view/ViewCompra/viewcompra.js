@@ -6,24 +6,26 @@ $(document).ready(function(){
         data=JSON.parse(data);
         $('#compra_id').html(data.compra_id);
         $('#fech_crea').html(data.fech_crea);
-        // $('#pag_nom').html(data.PAG_NOM);
-        $('#compra_total').html(data.compra_total);
-
-        // $('#compr_subtotal').html(data.COMPR_SUBTOTAL);
-        // $('#compr_igv').html(data.COMPR_IGV);
-        // $('#compr_total').html(data.COMPR_TOTAL);
-
-        // $('#compra_coment').html(data.compra_coment);
-
-         $('#usu_nom').html(data.usu_nom);
-
+        $('#totalpago').html(data.compra_total);
+        
         $('#prov_id').html("<b>Nombre: </b>"+data.prov_id);
-        $('#prov_rfc').html("<b>RUC: </b>"+data.prov_rfc);
+        $('#prov_rfc').html("<b>RFC: </b>"+data.prov_rfc);
         $('#prov_direccion').html("<b>Dirección: </b>"+data.prov_direccion);
         $('#prov_correo').html("<b>Correo: </b>"+data.prov_correo);
 
+        $('#usu_nom').html(data.usu_nom);
+
+        $('#compra_subtotal').html(data.compra_subtotal);
+        $('#compra_iva').html(data.compra_iva);
+        $('#compra_total').html(data.compra_total);
+
+        $('#compra_comentario').html(data.compra_comentario);
+
     });
 
+    $.post("../../controller/ctrCompra.php?op=listardetalleformato",{compra_id:compra_id},function(data){
+         $('#listdetalle').html(data);
+    });
 });
 
 

@@ -45,7 +45,7 @@ class mdlCompra extends Conectar
     }
 
     /* TODO: Listar Registro por ID en especifico */
-    public function compra_calculo($compra_id)
+    public function mdlcompra_calculo($compra_id)
     {
         $conectar = parent::Conexion();
         $sql = "updateCompra_01 ?";
@@ -56,7 +56,7 @@ class mdlCompra extends Conectar
     }
 
     /* TODO: actualiza compra final */
-    public function actualiza_compra($compra_id, $prov_id, $prov_rfc, $prov_direccion, $prov_email, $prov_telefono, $comentario)
+    public function mdlActualiza_compra($compra_id, $prov_id, $prov_rfc, $prov_direccion, $prov_email, $prov_telefono, $comentario)
     {
         $conectar = parent::Conexion();
         $sql = "inserta_compra_fin ?,?,?,?,?,?,?";
@@ -96,4 +96,25 @@ class mdlCompra extends Conectar
         return $resultado;
     }
 
+    /* TODO: Listar Regista compra finalizada */
+    public function mdlListarCompraFinalizada()
+    {
+        $conectar = parent::Conexion();
+        $sql = "ListaCompraFinalizada ";
+        $query = $conectar->prepare($sql);
+        // $query->bindValue(1, $compra_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     /* TODO: Listar Regista compra finalizada */
+    public function mdlActualizaCompra_stock($compra_id)
+    {
+        $conectar = parent::Conexion();
+        $sql = "ActualizaCompra_stock ?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $compra_id);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

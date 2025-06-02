@@ -123,7 +123,7 @@
                         </a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntListCompra">
+                        <a class="nav-link menu-link" href="../ListCompra">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Lista compra</span>
                         </a>
                 </li>
