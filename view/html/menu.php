@@ -131,7 +131,7 @@
 
                 <li class="menu-title"><span data-key="t-menu">Venta</span></li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntNuevaVenta">
+                        <a class="nav-link menu-link" href="../MntVenta">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Nueva venta</span>
                         </a>
                 </li>

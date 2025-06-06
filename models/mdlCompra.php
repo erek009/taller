@@ -4,7 +4,7 @@ class mdlCompra extends Conectar
 {
 
     /* TODO: Listar Registro por ID en especifico */
-    public function insert_compra($usu_id)
+    public function mdlInsertaCompra($usu_id)
     {
         $conectar = parent::Conexion();
         $sql = "insertar_compra_01 ?";
@@ -111,10 +111,10 @@ class mdlCompra extends Conectar
     public function mdlActualizaCompra_stock($compra_id)
     {
         $conectar = parent::Conexion();
-        $sql = "ActualizaCompra_stock ?";
+        $sql = "testActualizaCompraStock ?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $compra_id);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        // return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -65,8 +65,9 @@
                                 <select id="unidadmedida" class="form-control" name="unidadmedida">
                                     <?php
                                     echo ' 
-                                            <option value="" disabled selected>Unidad de medida </option> 
+                                        <option value="" disabled selected>Unidad de medida </option> 
                                         <option>Unidad</option>
+                                        <option>Garrafa</option>
                                         <option>Litro</option>';
                                     ?>
                                 </select>
@@ -91,34 +92,6 @@
                                 <label for="valueInput" class="form-label">Stock</label>
                                 <input type="number" class="form-control" id="stock" name="stock" required />
                                 <span class="text-danger" id="stockhelp"> </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row gy-2">
-                        <div class="col-md-12">
-                            <div>
-                                <label for="valueInput" class="form-label">Proveedor</label>
-                                <select id="proveedor" class="form-control" name="proveedor">
-                                    <?php
-                                    echo ' 
-                                    <option value="" disabled selected> Seleccione proveedor </option> ';
-
-                                    include '../../models/mdlProveedor.php';
-
-                                    // Crear instancia del modelo
-                                    $proveedor = new mdlProveedor();
-
-                                    // Llamar al método
-                                    $tabla = "proveedores";
-                                    $datos = $proveedor->mdlSeleccionarRegistros($tabla, null, null);
-                                    ?>
-
-                                    <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['token'] ?>"><?= $value['razonsocial'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <span class="text-danger" id="proveedorhelp"> </span>
                             </div>
                         </div>
                     </div>

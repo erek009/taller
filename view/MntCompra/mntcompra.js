@@ -49,7 +49,7 @@ $(document).on("click", "#btnagregar", function () {
   } else {
     // Enviar datos al servidor si todo está bien
     $.post(
-      "../../controller/ctrCompra.php?op=registrardetallecompra",
+      "../../controller/ctrCompra.php?op=registrardetalleproductos",
       {
         categoria: categoria,
         refaccion: refaccion,
@@ -180,9 +180,11 @@ $(document).on("click", "#btnguardar", function () {
             function (data) {
               Swal.fire({
                 title: "Compra",
-                text: "Compra registrada correctamente con No. C-" +compra_id,
+                text: "Compra registrada correctamente con No. C-" + compra_id,
                 icon: "success",
-                footer: "<a href='../../view/ViewCompra/?c="+compra_id+"' target='_blank'>Desea ver el Documento?</a>",
+                footer: "<a href='../../view/ViewCompra/?c=" + compra_id + "' target='_blank'>Desea ver el Documento?</a>",
+              }).then(() => {
+                location.reload(); // Recargar la página
               });
             }
           );
@@ -190,7 +192,8 @@ $(document).on("click", "#btnguardar", function () {
       }
     );
   }
-}); 
+});
+
 
 $(document).on("click", "#btnlimpiar", function () {
   location.reload();

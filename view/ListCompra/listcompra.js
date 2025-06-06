@@ -7,7 +7,7 @@ $(document).ready(function () {
     dom: "Bfrtip",
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
     ajax: {
-      url: "../../controller/ctrCompra.php?op=listarcomprafinalizada",
+      url: "../../controller/ctrCompra.php?op=listacomprasfinalizadas",
       type: "post",
       data: { token : 1 },
     },

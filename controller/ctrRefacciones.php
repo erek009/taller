@@ -41,7 +41,7 @@ switch ($_GET["op"]) {
                 $_POST["unidadmedida"],
                 $_POST["marca"],
                 $_POST["stock"],
-                $_POST["proveedor"],
+                // $_POST["proveedor"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
                 $_POST["descripcion"]
@@ -64,7 +64,6 @@ switch ($_GET["op"]) {
                 $_POST["nombreproducto"],
                 $_POST["unidadmedida"],
                 $_POST["marca"],
-                $_POST["proveedor"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
                 $_POST["descripcion"],
@@ -86,7 +85,6 @@ switch ($_GET["op"]) {
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["marca"];
             $sub_array[] = $row["stock"];
-            $sub_array[] = $row["razonsocial"];
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["precioventa"];
             $sub_array[] = $row["descripcion"];
@@ -118,7 +116,6 @@ switch ($_GET["op"]) {
             $output["unidadmedida"] = $datos["unidadmedida"];
             $output["marca"] = $datos["marca"];
             $output["stock"] = $datos["stock"];
-            $output["proveedor"] = $datos["proveedor"];
             $output["preciocompra"] = $datos["preciocompra"];
             $output["precioventa"] = $datos["precioventa"];
             $output["descripcion"] = $datos["descripcion"];

@@ -58,6 +58,7 @@ require_once("../../config/conexion.php");
                                                 <th>Subtotal</th>
                                                 <th>Total</th>
                                                 <th>Usuario</th>
+                                                <th>Fecha Creacion</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>

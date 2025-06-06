@@ -9,7 +9,7 @@ $compra = new mdlCompra();
 switch ($_GET["op"]) {
     // registra ingreso nueva a compra
     case "registrar":
-        $datos = $compra->insert_compra( $_POST["usu_id"]);
+        $datos = $compra->mdlInsertaCompra( $_POST["usu_id"]);
         //Devuelve datos con select del insert
         foreach ($datos as $row) {
             $output["compra_id"] = $row["compra_id"];
@@ -18,7 +18,7 @@ switch ($_GET["op"]) {
         break;
 
     /*TODO: Registra detalle compra*/
-    case "registrardetallecompra":
+    case "registrardetalleproductos":
         $compra->mdlRegistro(
             $_POST["categoria"],
             $_POST["refaccion"],
@@ -54,7 +54,7 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
-    //TODO: calculo de compra
+    //TODO: calculo de costo compra
     case "calculo":
         $datos = $compra->mdlcompra_calculo($_POST["compra_id"]);
          foreach ($datos as $row) {
@@ -106,7 +106,7 @@ switch ($_GET["op"]) {
         $compra->mdlEliminarRegistro($_POST["detalle_id"]);
         break;
 
-    //TODO: mnostrar compra
+    //TODO: mnostra producto para agregar a detalle compra
     case "mostrar":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarCompra($compra_id);
@@ -129,7 +129,7 @@ switch ($_GET["op"]) {
         break;
 
     /*TODO: Listado detalle formato*/
-    case "listarcomprafinalizada":
+    case "listacomprasfinalizadas":
         $tabla = "compra";
         $datos = $compra->mdlListarCompraFinalizada($tabla, null, null);
         $data = array();
@@ -141,8 +141,9 @@ switch ($_GET["op"]) {
                 $sub_array[] = $row["compra_subtotal"];
                 $sub_array[] = $row["compra_total"];
                 $sub_array[] = $row["nombre"];
+                $sub_array[] = $row["fech_crea"];
                 $sub_array[] = '<a href="../../view/ViewCompra/?c='.$row["compra_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-settings-2-line"></i></button>';
+                $sub_array[] = '<button type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></button>';
                 $data[] = $sub_array;
         }
         $results = array(
@@ -154,4 +155,4 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
-}
+    }

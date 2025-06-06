@@ -61,7 +61,7 @@ require_once("../../config/conexion.php");
                                                 <th>Unidad</th>
                                                 <th>Marca</th>
                                                 <th>Stock</th>
-                                                <th>Proveedor</th>
+                                                <!-- <th>Proveedor</th> -->
                                                 <th>Compra</th>
                                                 <th>Venta</th>
                                                 <th>Descripcion</th>
