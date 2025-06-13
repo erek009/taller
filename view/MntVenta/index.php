@@ -29,7 +29,7 @@ if (isset($_SESSION["id"])) {
                 <div class="page-content">
                     <div class="container-fluid">
 
-                    <!-- ID DE VENTA ///// -->
+                    <!-- ID DE VENTA lo trae de la BD con PA [insertar_venta_01]///// -->
                     <input type="hidden" id="venta_id" name="venta_id" />
 
                         <div class="row">
@@ -171,8 +171,8 @@ if (isset($_SESSION["id"])) {
                                                 </div>
 
                                                 <div class="col-lg-1">
-                                                    <label for="precio_compra" class="form-label">Precio</label>
-                                                    <input type="number" class="form-control" id="precio_compra" name="precio_compra" placeholder="Precio" />
+                                                    <label for="precio_venta" class="form-label">Precio</label>
+                                                    <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Precio" />
                                                 </div>
 
                                                 <div class="col-lg-1">

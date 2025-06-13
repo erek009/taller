@@ -56,7 +56,7 @@ switch ($_GET["op"]) {
 
     //TODO: calculo de costo compra
     case "calculo":
-        $datos = $compra->mdlcompra_calculo($_POST["compra_id"]);
+        $datos = $compra->mdlCompra_Calculo($_POST["compra_id"]);
          foreach ($datos as $row) {
             $output["compra_subtotal"] = $row["compra_subtotal"];
             $output["compra_iva"] = $row["compra_iva"];
@@ -65,7 +65,30 @@ switch ($_GET["op"]) {
         echo json_encode($output);
         break;
 
-    /*TODO: Listado detalle formato*/
+    /*TODO: Registra detalle compra*/
+    case "guardar":
+        $compra->mdlGuarda_compra(
+            $_POST["compra_id"],
+            $_POST["prov_id"],
+            $_POST["prov_rfc"],
+            $_POST["prov_direccion"],
+            $_POST["prov_email"],
+            $_POST["prov_telefono"],
+            $_POST["comentario"]
+        );
+
+        $compra->mdlActualizaStockCompra(
+            $_POST["compra_id"]
+        );
+        break;
+
+    /*TODO: Eliminar (cambia estado a 0 del registro)*/
+    case "eliminar":
+        $compra->mdlEliminarDetalleCompra($_POST["detalle_id"]);
+        break;
+
+
+        /*TODO: Listado detalle de compra formato (PDF)*/
     case "listardetalleformato":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
@@ -84,29 +107,8 @@ switch ($_GET["op"]) {
         }
         break;
 
-    /*TODO: Registra detalle compra*/
-    case "guardar":
-        $compra->mdlActualiza_compra(
-            $_POST["compra_id"],
-            $_POST["prov_id"],
-            $_POST["prov_rfc"],
-            $_POST["prov_direccion"],
-            $_POST["prov_email"],
-            $_POST["prov_telefono"],
-            $_POST["comentario"]
-        );
-
-        $compra->mdlActualizaCompra_stock(
-            $_POST["compra_id"]
-        );
-        break;
-
-    /*TODO: Eliminar (cambia estado a 0 del registro)*/
-    case "eliminar":
-        $compra->mdlEliminarRegistro($_POST["detalle_id"]);
-        break;
-
-    //TODO: mnostra producto para agregar a detalle compra
+        
+    //TODO: muestra formato tipo PDF de Lista compra
     case "mostrar":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarCompra($compra_id);
@@ -128,7 +130,7 @@ switch ($_GET["op"]) {
         echo json_encode($output);
         break;
 
-    /*TODO: Listado detalle formato*/
+    /*TODO: Listado compras realizadas*/
     case "listacomprasfinalizadas":
         $tabla = "compra";
         $datos = $compra->mdlListarCompraFinalizada($tabla, null, null);

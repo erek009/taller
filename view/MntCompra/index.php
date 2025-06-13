@@ -29,7 +29,7 @@ if (isset($_SESSION["id"])) {
                 <div class="page-content">
                     <div class="container-fluid">
 
-                    <!-- ID DE COMPRA ///// -->
+                    <!-- ID DE COMPRA lo trae de la BD con PA [insertar_compra_01]///// -->
                     <input type="hidden" id="compra_id" name="compra_id" />
 
                         <div class="row">
