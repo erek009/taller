@@ -136,7 +136,7 @@
                         </a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntListVenta">
+                        <a class="nav-link menu-link" href="../ListVenta">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Lista venta</span>
                         </a>
                 </li>

@@ -2,7 +2,7 @@
 $(document).ready(function(){
     var compra_id = getUrlParameter('c');
 
-    $.post("../../controller/ctrCompra.php?op=mostrar",{compra_id:compra_id},function(data){
+    $.post("../../controller/ctrCompra.php?op=mostrarDatosCompra",{compra_id:compra_id},function(data){
         data=JSON.parse(data);
         $('#compra_id').html(data.compra_id);
         $('#fech_crea').html(data.fech_crea);
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
     });
 
-    $.post("../../controller/ctrCompra.php?op=listardetalleformato",{compra_id:compra_id},function(data){
+    $.post("../../controller/ctrCompra.php?op=listarDetalleProductosCompra",{compra_id:compra_id},function(data){
          $('#listdetalle').html(data);
     });
 });

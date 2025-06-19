@@ -59,8 +59,18 @@ $(document).on("click", "#btnagregar", function () {
         cantidad: cantidad,
       },
       function (data) {
-        console.log("Detalle registrado:", data);
 
+        if (data === "error-stockinsuficiente") {
+          Swal.fire({
+            title: "Error",
+            text: "No hay suficiente stock para esta refacción.",
+            icon: "error",
+          });
+          return; 
+        }
+
+        console.log("Detalle registrado:", data);
+        
         // Calcular subtotal/iva/total después de cada registro
          $.post(
            "../../controller/ctrVenta.php?op=calculo",
@@ -208,14 +218,14 @@ $(document).on("click", "#btnguardar", function () {
         if (data.venta_total == null) {
           Swal.fire({
             title: "Error",
-            text: "No hay productos agregados a la compra.",
+            text: "No hay productos agregados a la venta.",
             icon: "warning",
           });
           return;
         } else {
-          // Guarda la compra
+          // Guarda la venta
           $.post(
-            "../../controller/ctrVenta.php?op=guardar",
+            "../../controller/ctrVenta.php?op=guardarVenta",
             {
               venta_id: venta_id,
               clie_id: clie_id,

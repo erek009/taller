@@ -5,6 +5,7 @@ require_once("../models/mdlVenta.php");
 
 /* TODO: Inicializando clases */
 $venta = new mdlVenta();
+// $refaccion = new mdlRefaccion();
 
 switch ($_GET["op"]) {
     // registra ingreso nueva venta
@@ -19,6 +20,21 @@ switch ($_GET["op"]) {
 
     /*TODO: Registra detalle compra*/
     case "registrardetalleproductos":
+
+        //Verificando si hay stock suficiente
+        $tabla = "refacciones";
+        $item = "token";
+        $valor = $_POST["refaccion"];
+
+        $producto = $venta->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if ($producto) {
+            // Comparar el stock disponible con la cantidad solicitada
+            if ($_POST["cantidad"] > $producto["stock"]) {
+                echo 'error-stockinsuficiente';
+                exit;
+            }
+        }
+            
         $venta->mdlRegistroDetalle(
             $_POST["categoria"],
             $_POST["refaccion"],
@@ -28,7 +44,7 @@ switch ($_GET["op"]) {
             $_POST["cantidad"]
         );
         break;
-    
+      
     /*TODO: Listado de registros por venta_id*/
     case "listar":
         $venta_id = $_POST['venta_id'];
@@ -66,7 +82,7 @@ switch ($_GET["op"]) {
         break;
 
         /*TODO: Registra detalle compra*/
-    case "guardar":
+    case "guardarVenta":
         $venta->mdlGuarda_venta(
             $_POST["venta_id"],
             $_POST["clie_id"],
@@ -86,7 +102,7 @@ switch ($_GET["op"]) {
         break;
 
           /*TODO: Listado detalle de compra formato (PDF)*/
-    case "listardetalleformato":
+    case "listarDetalleProductosVenta":
         $venta_id = $_POST['venta_id'];
         $datos = $venta->mdlSeleccionarDetalleVenta($venta_id);
         // $data = array();
@@ -105,7 +121,7 @@ switch ($_GET["op"]) {
         break;
 
       //TODO: muestra formato tipo PDF de Lista compra
-    case "mostrarventas":
+    case "mostrarDatosVenta":
         $venta_id = $_POST['venta_id'];
         $datos = $venta->mdlSeleccionarVenta($venta_id);
          foreach ($datos as $row) {
@@ -124,4 +140,30 @@ switch ($_GET["op"]) {
         echo json_encode($output);
         break;
 
+       /*TODO: Listado compras realizadas*/
+    case "listaventasfinalizadas":
+        $tabla = "venta";
+        $datos = $venta->mdlListarVentaFinalizada($tabla, null, null);
+        $data = array();
+        foreach ($datos as $row) {
+                $sub_array = array();
+                $sub_array[] = "V-".$row["venta_id"];
+                $sub_array[] = $row["nombre"];
+                $sub_array[] = $row["telefono"];
+                $sub_array[] = $row["venta_subtotal"];
+                $sub_array[] = $row["venta_total"];
+                // $sub_array[] = $row["nombre"];
+                $sub_array[] = $row["fech_crea"];
+                $sub_array[] = '<a href="../../view/ViewVenta/?v='.$row["venta_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
+                $sub_array[] = '<a type="button" onClick="ver(' . $row["venta_id"] . ')" id="' . $row["venta_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></a>';
+                $data[] = $sub_array;
+        }
+        $results = array(
+            "sEcho" => 1,
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        echo json_encode($results);
+        break;
 }

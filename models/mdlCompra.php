@@ -81,6 +81,17 @@ class mdlCompra extends Conectar
         $query->execute();
     }
 
+      /* TODO: actualiza stock */
+    public function mdlActualizaStockCompra($compra_id)
+    {
+        $conectar = parent::Conexion();
+        $sql = "testActualizaCompraStock ?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $compra_id);
+        $query->execute();
+        // return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //MOSTRAR REGISTROS DE COMPRA EN TICKET
     public function mdlSeleccionarCompra($compra_id)
     {
@@ -107,14 +118,5 @@ class mdlCompra extends Conectar
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     /* TODO: actualiza stock */
-    public function mdlActualizaStockCompra($compra_id)
-    {
-        $conectar = parent::Conexion();
-        $sql = "testActualizaCompraStock ?";
-        $query = $conectar->prepare($sql);
-        $query->bindValue(1, $compra_id);
-        $query->execute();
-        // return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+   
 }

@@ -216,7 +216,7 @@ $(document).on("click", "#btnguardar", function () {
         } else {
           // Guarda la compra
           $.post(
-            "../../controller/ctrCompra.php?op=guardar",
+            "../../controller/ctrCompra.php?op=guardarCompra",
             {
               compra_id: compra_id,
               prov_id: prov_id,

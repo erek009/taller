@@ -2,7 +2,7 @@
 $(document).ready(function(){
     var venta_id = getUrlParameter('v');
 
-    $.post("../../controller/ctrVenta.php?op=mostrarventas",{venta_id:venta_id},function(data){
+    $.post("../../controller/ctrVenta.php?op=mostrarDatosVenta",{venta_id:venta_id},function(data){
         data=JSON.parse(data);
         $('#venta_id').html(data.venta_id);
         $('#fech_crea').html(data.fech_crea);
@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     });
 
-    $.post("../../controller/ctrVenta.php?op=listardetalleformato",{venta_id:venta_id},function(data){
+    $.post("../../controller/ctrVenta.php?op=listarDetalleProductosVenta",{venta_id:venta_id},function(data){
          $('#listdetalle').html(data);
     });
 });

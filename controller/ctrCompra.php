@@ -66,7 +66,7 @@ switch ($_GET["op"]) {
         break;
 
     /*TODO: Registra detalle compra*/
-    case "guardar":
+    case "guardarCompra":
         $compra->mdlGuarda_compra(
             $_POST["compra_id"],
             $_POST["prov_id"],
@@ -89,7 +89,7 @@ switch ($_GET["op"]) {
 
 
         /*TODO: Listado detalle de compra formato (PDF)*/
-    case "listardetalleformato":
+    case "listarDetalleProductosCompra":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
         // $data = array();
@@ -109,7 +109,7 @@ switch ($_GET["op"]) {
 
         
     //TODO: muestra formato tipo PDF de Lista compra
-    case "mostrar":
+    case "mostrarDatosCompra":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarCompra($compra_id);
          foreach ($datos as $row) {
@@ -144,8 +144,8 @@ switch ($_GET["op"]) {
                 $sub_array[] = $row["compra_total"];
                 $sub_array[] = $row["nombre"];
                 $sub_array[] = $row["fech_crea"];
-                $sub_array[] = '<a href="../../view/ViewCompra/?c='.$row["compra_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></button>';
-                $sub_array[] = '<button type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></button>';
+                $sub_array[] = '<a href="../../view/ViewCompra/?c='.$row["compra_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
+                $sub_array[] = '<a type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></a>';
                 $data[] = $sub_array;
         }
         $results = array(
