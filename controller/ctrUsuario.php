@@ -36,7 +36,8 @@ switch ($_GET["op"]) {
                 $token,
                 $_POST["nombre"],
                 $_POST["correo"],
-                $pass
+                $pass,
+                $_POST["usu_img"]
             );
         } else {
             $nuevoToken = md5($_POST["nombre"] . "+" . $_POST["correo"]);
@@ -75,6 +76,7 @@ switch ($_GET["op"]) {
                 $_POST["nombre"],
                 $_POST["correo"],
                 $pass,
+                $_POST["usu_img"],
                 $nuevoToken,
                 $_POST["token"]
             );
@@ -88,6 +90,22 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
+
+            if ($row["usu_img"] != ''){
+                    $sub_array[] =
+                    "<div class='d-flex align-items-center'>" .
+                        "<div class='flex-shrink-0 me-2'>".
+                            "<img src='../../assets/usuario/".$row["usu_img"]."' alt='' class='avatar-xs rounded-circle'>".
+                        "</div>".
+                    "</div>";
+                }else{
+                    $sub_array[] =
+                    "<div class='d-flex align-items-center'>" .
+                        "<div class='flex-shrink-0 me-2'>".
+                            "<img src='../../assets/usuario/nousuario.png' alt='' class='avatar-xs rounded-circle'>".
+                        "</div>".
+                    "</div>";
+                }
             $sub_array[] = $row["nombre"];
             $sub_array[] = $row["correo"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
@@ -114,8 +132,11 @@ switch ($_GET["op"]) {
             $output["token"] = $datos["token"];
             $output["nombre"] = $datos["nombre"];
             $output["correo"] = $datos["correo"];
-            // $output["password"] = $row["password"];
-            //}
+            if($datos["usu_img"] != ''){
+                    $output["usu_img"] = '<img src="../../assets/usuario/'.$datos["usu_img"].'" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_usuario_imagen" value="'.$datos["usu_img"].'" />';
+                }else{
+                    $output["usu_img"] = '<img src="../../assets/usuario/nousuario.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_usuario_imagen" value="" />';
+                }
             echo json_encode($output);
         }
         break;

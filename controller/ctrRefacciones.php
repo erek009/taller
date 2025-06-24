@@ -41,10 +41,10 @@ switch ($_GET["op"]) {
                 $_POST["unidadmedida"],
                 $_POST["marca"],
                 $_POST["stock"],
-                // $_POST["proveedor"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
-                $_POST["descripcion"]
+                $_POST["descripcion"],
+                $_POST["prod_img"]
             );
         } else {
 
@@ -67,6 +67,7 @@ switch ($_GET["op"]) {
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
                 $_POST["descripcion"],
+                $_POST["prod_img"],
                 $_POST["token"]
             );
         }
@@ -79,6 +80,22 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
+
+            if ($row["prod_img"] != ''){
+                    $sub_array[] =
+                    "<div class='d-flex align-items-center'>" .
+                        "<div class='flex-shrink-0 me-2'>".
+                            "<img src='../../assets/producto/".$row["prod_img"]."' alt='' class='avatar-xs rounded-circle'>".
+                        "</div>".
+                    "</div>";
+                }else{
+                    $sub_array[] =
+                    "<div class='d-flex align-items-center'>" .
+                        "<div class='flex-shrink-0 me-2'>".
+                            "<img src='../../assets/producto/no_imagen.avif' alt='' class='avatar-xs rounded-circle'>".
+                        "</div>".
+                    "</div>";
+                }
             $sub_array[] = $row["codigo"];
             $sub_array[] = $row["categoria"];
             $sub_array[] = $row["nombre"];
@@ -119,7 +136,11 @@ switch ($_GET["op"]) {
             $output["preciocompra"] = $datos["preciocompra"];
             $output["precioventa"] = $datos["precioventa"];
             $output["descripcion"] = $datos["descripcion"];
-            // }
+            if($datos["prod_img"] != ''){
+                    $output["prod_img"] = '<img src="../../assets/producto/'.$datos["prod_img"].'" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="'.$datos["prod_img"].'" />';
+                }else{
+                    $output["prod_img"] = '<img src="../../assets/producto/no_imagen.avif" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="" />';
+                }
             echo json_encode($output);
         }
         break;

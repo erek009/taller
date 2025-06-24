@@ -29,48 +29,59 @@ let ventahelper = $("#ventahelp");
 let descripcion = $("#descripcion");
 let descripcionhelper = $("#descripcionhelp");
 
+let imagen = $("#prod_img");
+let imagenhelper = $("#imagenhelp");
+
+
+let pre_imagen = $("#pre_imagen");
+
+
 let token = $("#token");
 
 /*VALIDACIONES REGISTRO*/
-    codigo.on("keyup change blur", (e) => {
-      ValidarCodigo(codigo, codigohelper);
-    });
+codigo.on("keyup change blur", (e) => {
+  ValidarCodigo(codigo, codigohelper);
+});
 
-    categoria.on("keyup change blur", (e) => {
-      ValidarCategoria(categoria, categoriahelper);
-    });
-    
-    nombre.on("keyup change blur", (e) => {
-      ValidarNombre(nombre, nombrehelper);
-    });
-    
-    unidad.on("keyup change blur", (e) => {
-      ValidarUnidad(unidad, unidadhelper);
-    });
-    
-    marca.on("keyup change blur", (e) => {
-      ValidarMarca(marca, marcahelper);
-    });
-    
-    stock.on("keyup change blur", (e) => {
-      ValidarStock(stock, stockhelper);
-    });
-    
-    proveedor.on("keyup change blur", (e) => {
-      ValidarProveedor(proveedor, proveedorhelper);
-    });
-    
-    compra.on("keyup change blur", (e) => {
-      ValidarCompra(compra, comprahelper);
-    });
-    
-    venta.on("keyup change blur", (e) => {
-      ValidarVenta(venta, ventahelper);
-    });
-    
-    descripcion.on("keyup change blur", (e) => {
-      ValidarDescripcion(descripcion, descripcionhelper);
-    });
+categoria.on("keyup change blur", (e) => {
+  ValidarCategoria(categoria, categoriahelper);
+});
+
+nombre.on("keyup change blur", (e) => {
+  ValidarNombre(nombre, nombrehelper);
+});
+
+unidad.on("keyup change blur", (e) => {
+  ValidarUnidad(unidad, unidadhelper);
+});
+
+marca.on("keyup change blur", (e) => {
+  ValidarMarca(marca, marcahelper);
+});
+
+stock.on("keyup change blur", (e) => {
+  ValidarStock(stock, stockhelper);
+});
+
+proveedor.on("keyup change blur", (e) => {
+  ValidarProveedor(proveedor, proveedorhelper);
+});
+
+compra.on("keyup change blur", (e) => {
+  ValidarCompra(compra, comprahelper);
+});
+
+venta.on("keyup change blur", (e) => {
+  ValidarVenta(venta, ventahelper);
+});
+
+descripcion.on("keyup change blur", (e) => {
+  ValidarDescripcion(descripcion, descripcionhelper);
+});
+
+imagen.on("change", (e) => {
+  ValidarImagen(imagen, imagenhelper);
+  });
 
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
@@ -82,29 +93,32 @@ function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
 
-   // Validaciones
-   let isValidCodigo = ValidarCodigo(codigo, codigohelper);
-   let isValidCategoria = ValidarCategoria(categoria, categoriahelper);
-   let isValidNombre = ValidarNombre(nombre, nombrehelper);
-   let isValidUnidad = ValidarUnidad(unidad, unidadhelper);
-   let isValidMarca = ValidarMarca(marca, marcahelper);
-   let isValidStock = ValidarStock(stock, stockhelper);
-   let isValidProveedor = ValidarProveedor(proveedor, proveedorhelper);
-   let isValidCompra = ValidarCompra(compra, comprahelper);
-   let isValidVenta = ValidarVenta(venta, ventahelper);
-   let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
+  // Validaciones
+  let isValidCodigo = ValidarCodigo(codigo, codigohelper);
+  let isValidCategoria = ValidarCategoria(categoria, categoriahelper);
+  let isValidNombre = ValidarNombre(nombre, nombrehelper);
+  let isValidUnidad = ValidarUnidad(unidad, unidadhelper);
+  let isValidMarca = ValidarMarca(marca, marcahelper);
+  let isValidStock = ValidarStock(stock, stockhelper);
+  let isValidProveedor = ValidarProveedor(proveedor, proveedorhelper);
+  let isValidCompra = ValidarCompra(compra, comprahelper);
+  let isValidVenta = ValidarVenta(venta, ventahelper);
+  let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
+  let isValidImagen = ValidarImagen(imagen, imagenhelper);
 
-   let formIsValid =
-   isValidCodigo &&
-   isValidCategoria &&
-   isValidNombre &&
-   isValidUnidad &&
-   isValidMarca &&
-   isValidStock &&
-   isValidProveedor &&
-   isValidCompra &&
-   isValidVenta &&
-   isValidDescripcion;
+
+  let formIsValid =
+    isValidCodigo &&
+    isValidCategoria &&
+    isValidNombre &&
+    isValidUnidad &&
+    isValidMarca &&
+    isValidStock &&
+    isValidProveedor &&
+    isValidCompra &&
+    isValidVenta &&
+    isValidImagen &&
+    isValidDescripcion;
 
   // formIsValid = true;
   if (formIsValid) {
@@ -138,137 +152,172 @@ function guardaryeditar(e) {
 }
 
 $(document).ready(function () {
-    /* TODO: Listar informacion en el datatable js */
-    $("#table_data").DataTable({
-      aProcessing: true,
-      aServerSide: true,
-      dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
-      ajax: {
-        url: "../../controller/ctrRefacciones.php?op=listar",
-        type: "post",
-        data: { token : 1},
+  /* TODO: Listar informacion en el datatable js */
+  $("#table_data").DataTable({
+    aProcessing: true,
+    aServerSide: true,
+    dom: "Bfrtip",
+    buttons: ["copyHtml5", "excelHtml5", "csvHtml5"],
+    ajax: {
+      url: "../../controller/ctrRefacciones.php?op=listar",
+      type: "post",
+      data: { token: 1 },
+    },
+    bDestroy: true,
+    responsive: true,
+    bInfo: true,
+    iDisplayLength: 10,
+    order: [[0, "desc"]],
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo:
+        "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior",
       },
-      bDestroy: true,
-      responsive: true,
-      bInfo: true,
-      iDisplayLength: 10,
-      order: [[0, "desc"]],
-      language: {
-        sProcessing: "Procesando...",
-        sLengthMenu: "Mostrar _MENU_ registros",
-        sZeroRecords: "No se encontraron resultados",
-        sEmptyTable: "Ningún dato disponible en esta tabla",
-        sInfo:
-          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-        sInfoPostFix: "",
-        sSearch: "Buscar:",
-        sUrl: "",
-        sInfoThousands: ",",
-        sLoadingRecords: "Cargando...",
-        oPaginate: {
-          sFirst: "Primero",
-          sLast: "Último",
-          sNext: "Siguiente",
-          sPrevious: "Anterior",
-        },
-        oAria: {
-          sSortAscending:
-            ": Activar para ordenar la columna de manera ascendente",
-          sSortDescending:
-            ": Activar para ordenar la columna de manera descendente",
-        },
+      oAria: {
+        sSortAscending:
+          ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending:
+          ": Activar para ordenar la columna de manera descendente",
       },
-    });
+    },
   });
+});
 
+function eliminar(token) {
+  swal
+    .fire({
+      title: "Eliminar!",
+      text: "Desea Eliminar el Registro?",
+      icon: "error",
+      confirmButtonText: "Si",
+      showCancelButton: true,
+      cancelButtonText: "No",
+    })
+    .then((result) => {
+      if (result.value) {
+        $.post(
+          "../../controller/ctrRefacciones.php?op=eliminar",
+          { token: token },
+          function (data) {
+            console.log(data);
+         
+        $("#table_data").DataTable().ajax.reload();
 
-  function eliminar(token) {
-    swal
-      .fire({
-        title: "Eliminar!",
-        text: "Desea Eliminar el Registro?",
-        icon: "error",
-        confirmButtonText: "Si",
-        showCancelButton: true,
-        cancelButtonText: "No",
-      })
-      .then((result) => {
-        if (result.value) {
-          $.post(
-            "../../controller/ctrRefacciones.php?op=eliminar",
-            { token: token },
-            function (data) {
-              console.log(data);
-            }
-          );
-  
-          $("#table_data").DataTable().ajax.reload();
-  
-          swal.fire({
-            title: "Producto",
-            text: "Registro Eliminado",
-            icon: "success",
-          });
-        }
-      });
-  }
-
-  function editar(partoken) {
-    $.post(
-      "../../controller/ctrRefacciones.php?op=mostrar",
-      { token: partoken },
-      function (data) {
-        data = JSON.parse(data);
-        token.val(data.token);
-        codigo.prop("disabled", true);
-        codigo.val(data.codigo);
-        categoria.val(data.idcategoria);
-        nombre.val(data.nombre);
-        unidad.val(data.unidadmedida);
-        marca.val(data.marca);
-        stock.prop("disabled", true);
-        stock.val(data.stock);
-        proveedor.val(data.proveedor);
-        compra.val(data.preciocompra);
-        venta.val(data.precioventa);
-        descripcion.val(data.descripcion);
+        swal.fire({
+          title: "Producto",
+          text: "Registro Eliminado",
+          icon: "success",
+         });
+          }
+        );
       }
-    );
-    $("#lbltitulo").html("Editar Registro");
-    /* TODO: Mostrar Modal */
-    $("#modalmantenimiento").modal("show");
-  }
+    });
+}
 
-  $(document).on("click", "#btnnuevo", function () {
-    codigo.prop("disabled", false);
-    stock.prop("disabled", false);
-    /* TODO: Limpiar informacion */
-    codigo.val("");
-    categoria.val("");
-    nombre.val("");
-    unidad.val("");
-    marca.val("");
-    stock.val("");
-    proveedor.val("");
-    compra.val("");
-    venta.val("");
-    descripcion.val("");
-    token.val("");
-    $("#lbltitulo").html("Nuevo Registro");
-    $("#mantenimiento_form")[0].reset();
-    /* TODO: Mostrar Modal */
-    $("#modalmantenimiento").modal("show");
-  });
+function editar(partoken) {
+  $.post(
+    "../../controller/ctrRefacciones.php?op=mostrar",
+    { token: partoken },
+    function (data) {
+      data = JSON.parse(data);
+      token.val(data.token);
+      codigo.prop("disabled", true);
+      codigo.val(data.codigo);
+      categoria.val(data.idcategoria);
+      nombre.val(data.nombre);
+      unidad.val(data.unidadmedida);
+      marca.val(data.marca);
+      stock.prop("disabled", true);
+      stock.val(data.stock);
+      proveedor.val(data.proveedor);
+      compra.val(data.preciocompra);
+      venta.val(data.precioventa);
+      descripcion.val(data.descripcion);
+
+      pre_imagen.html(data.prod_img);
+    }
+  );
+  $("#lbltitulo").html("Editar Registro");
   
-  init();
+  /* TODO: Mostrar Modal */
+  $("#modalmantenimiento").modal("show");
+}
 
-  // VALIDACIONES //
+$(document).on("click", "#btnnuevo", function () {
+  codigo.prop("disabled", false);
+  stock.prop("disabled", false);
+  /* TODO: Limpiar informacion */
+  codigo.val("");
+  categoria.val("");
+  nombre.val("");
+  unidad.val("");
+  marca.val("");
+  stock.val("");
+  proveedor.val("");
+  compra.val("");
+  venta.val("");
+  descripcion.val("");
+  token.val("");
+  $("#lbltitulo").html("Nuevo Registro");
+  $("#pre_imagen").html(
+    '<img src="../../assets/producto/no_imagen.avif" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="" />'
+  );
+  $("#mantenimiento_form")[0].reset();
+  /* TODO: Mostrar Modal */
+  $("#modalmantenimiento").modal("show");
+});
+
+
+
+// Previsualiza la imagen del producto
+function filePreview(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $("#pre_imagen").html(
+        "<img src=" +
+          e.target.result +
+          ' class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img>'
+      );
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Muestra la imagen del producto al seleccionar un archivo
+$(document).on("change", "#prod_img", function () {
+  filePreview(this);
+});
+
+// Elimina la imagen del producto y muestra la imagen por defecto
+$(document).on("click", "#btnremovephoto", function () {
+  $("#prod_img").val("");
+  $("#pre_imagen").html(
+    '<img src="../../assets/producto/no_imagen.avif" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="" />'
+  );
+});
+
+init();
+
+// VALIDACIONES //
 
 function ValidarCodigo(Control, Helper) {
-  if (Control.val().trim()== "") {
+  if (Control.val().trim() == "") {
     Helper.text("El codigo de producto es requerido");
     Helper.show();
     return false;
@@ -295,7 +344,7 @@ function ValidarCategoria(Control, Helper) {
 }
 
 function ValidarNombre(Control, Helper) {
-  if (Control.val().trim()== "") {
+  if (Control.val().trim() == "") {
     Helper.text("El nombre de producto es requerido");
     Helper.show();
     return false;
@@ -417,6 +466,19 @@ function ValidarDescripcion(Control, Helper) {
 }
 
 
+function ValidarImagen(Control, Helper) {
+//    if (Control.val().trim() == "") {
+//     Helper.text("El precio de venta es requerido");
+//     Helper.show();
+//      return false;
+//  }
+
+  Helper.hide();
+  return true;
+}
+
+
+
 //OCULTA MENSAJES HELPER
 function OcultarHelpers() {
   codigohelper.hide();
@@ -443,6 +505,7 @@ function LimpiarFormularios() {
   compra.val("");
   venta.val("");
   descripcion.val("");
+  pre_imagen.html("");
 }
 
 // Borra helpers & limpiar formularios

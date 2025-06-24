@@ -163,8 +163,6 @@ function eliminar(token) {
           { token: token },
           function (data) {
             console.log(data);
-          }
-        );
 
         $("#table_data").DataTable().ajax.reload();
 
@@ -172,7 +170,9 @@ function eliminar(token) {
           title: "Orden",
           text: "Registro Eliminado",
           icon: "success",
-        });
+         });
+          }
+        );
       }
     });
 }

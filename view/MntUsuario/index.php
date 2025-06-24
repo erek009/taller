@@ -50,6 +50,7 @@ require_once("../../config/conexion.php");
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>Img</th>
                                                 <th>Nombre</th>
                                                 <th>Email</th>
                                                 <th></th>

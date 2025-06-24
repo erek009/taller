@@ -6,6 +6,11 @@ let password = $("#password");
 let passhelper = $("#passhelp");
 let confirmpass = $("#confirmpass");
 let confirmpasshelper = $("#confirmpasshelp");
+
+let imagen = $("#usu_img");
+let imagenhelper = $("#imagenhelp");
+let pre_imagen = $("#pre_imagen");
+
 let token = $("#token");
 
 // Manda validar nombre
@@ -17,6 +22,10 @@ nombre.on("keyup change blur", (e) => {
 correo.on("keyup change blur", (e) => {
   ValidarEmail(correo, correohelper);
 });
+
+imagen.on("change", (e) => {
+  ValidarImagen(imagen, imagenhelper);
+  });
 
 // manda a validar password
 password.on("keyup change blur", (e) => {
@@ -41,14 +50,8 @@ function guardaryeditar(e) {
   // Validaciones
   let isValidNombre = ValidarName(nombre, nombrehelper);
   let isValidEmail = ValidarEmail(correo, correohelper);
-  // let isValidarPass = ValidarPass(password, passhelper);
-  // let isValidarConfirmpass = ValidarConfirmpass(
-  //  confirmpass,
-  //  password,
-  //  confirmpasshelper
-  // );
-
   let isValidarPass;
+  let isValidImagen = ValidarImagen(imagen, imagenhelper);
   let isValidarConfirmpass;
 
   // Solo validar la contraseña si el token está vacío
@@ -74,7 +77,7 @@ function guardaryeditar(e) {
   }
 
   let formIsValid =
-    isValidNombre && isValidEmail && isValidarPass && isValidarConfirmpass;
+    isValidNombre && isValidEmail && isValidImagen && isValidarPass && isValidarConfirmpass;
 
   if (formIsValid) {
     /* TODO: Guardar Informacion */
@@ -185,13 +188,16 @@ function eliminar(token) {
         },
         error: function (xhr, status, error) {
           console.error("Error en la petición AJAX:", error);
-          Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
-        }
+          Swal.fire(
+            "Error",
+            "Ocurrió un error al procesar la solicitud.",
+            "error"
+          );
+        },
       });
     }
   });
 }
-
 
 function editar(partoken) {
   $.post(
@@ -203,6 +209,7 @@ function editar(partoken) {
       nombre.val(data.nombre);
       correo.val(data.correo);
       password.val(data.password);
+      pre_imagen.html(data.usu_img);
     }
   );
   $("#lbltitulo").html("Editar Registro");
@@ -218,9 +225,41 @@ $(document).on("click", "#btnnuevo", function () {
   confirmpass.val("");
   token.val("");
   $("#lbltitulo").html("Nuevo Registro");
+  $("#pre_imagen").html(
+    '<img src="../../assets/usuario/nousuario.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_usuario_imagen" value="" />'
+  );
   $("#mantenimiento_form")[0].reset();
   /* TODO: Mostrar Modal */
   $("#modalmantenimiento").modal("show");
+});
+
+
+// Previsualiza la imagen del producto
+function filePreview(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $("#pre_imagen").html(
+        "<img src=" +
+          e.target.result +
+          ' class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img>'
+      );
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Muestra la imagen del producto al seleccionar un archivo
+$(document).on("change", "#usu_img", function () {
+  filePreview(this);
+});
+
+// Elimina la imagen del producto y muestra la imagen por defecto
+$(document).on("click", "#btnremovephoto", function () {
+  $("#usu_img").val("");
+  $("#pre_imagen").html(
+    '<img src="../../assets/usuario/nousuario.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_usuario_imagen" value="" />'
+  );
 });
 
 init();
@@ -310,6 +349,17 @@ function ValidarConfirmpass(Control, Control1, Helper) {
   return true;
 }
 
+function ValidarImagen(Control, Helper) {
+//    if (Control.val().trim() == "") {
+//     Helper.text("El precio de venta es requerido");
+//     Helper.show();
+//      return false;
+//  }
+
+  Helper.hide();
+  return true;
+}
+
 function OcultarHelpers() {
   nombrehelper.hide();
   correohelper.hide();
@@ -322,6 +372,7 @@ function LimpiarFormularios() {
   correo.val("");
   password.val("");
   confirmpass.val("");
+  pre_imagen.html("");
 }
 
 // Borra helpers

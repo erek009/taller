@@ -4,15 +4,25 @@ class mdlUsuario extends Conectar
 {
 
     //Registrar usuario
-    public function mdlRegistro($token, $nombre, $correo, $pass)
+    public function mdlRegistro($token, $nombre, $correo, $pass, $usu_img)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarUsuario ?,?,?,?";
+
+        //sube la imagen del producto
+        require_once("mdlUsuario.php");
+        $usuario = new mdlUsuario();
+        $usu_img = '';
+        if ($_FILES["usu_img"]["name"] != '') {
+            $usu_img = $usuario->guardar_imagen();
+        }
+        
+        $sql = "insertarUsuario ?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $nombre);
         $query->bindValue(3, $correo);
         $query->bindValue(4, $pass);
+        $query->bindValue(5, $usu_img);
         $query->execute();
     }
 
@@ -50,16 +60,27 @@ class mdlUsuario extends Conectar
     }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($nombre, $correo, $password, $nuevoToken, $token)
+    public function mdlActualizarRegistro($nombre, $correo, $password, $usu_img, $nuevoToken, $token)
     {
         $conectar = parent::Conexion();
-        $sql = "actualizarUsuario ?,?,?,?,?";
+         //sube la imagen del producto
+        require_once("mdlUsuario.php");
+        $usuario = new mdlUsuario();
+        $usu_img = '';
+        if ($_FILES["usu_img"]["name"] != '') {
+            $usu_img = $usuario->guardar_imagen();
+         } else {
+            $usu_img = $POST["hidden_usuario_imagen"];
+        }
+
+        $sql = "actualizarUsuario ?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $nombre);
         $query->bindValue(2, $correo);
         $query->bindValue(3, $password);
-        $query->bindValue(4, $nuevoToken);
-        $query->bindValue(5, $token);
+        $query->bindValue(4, $usu_img);
+        $query->bindValue(5, $nuevoToken);
+        $query->bindValue(6, $token);
         $query->execute();
     }
 
@@ -103,4 +124,17 @@ class mdlUsuario extends Conectar
             exit();
         }
     }
+
+    /* TODO: Registrar Imagen */
+    public function guardar_imagen()
+    {
+        if (isset($_FILES["usu_img"])) {
+            $extension = explode('.', $_FILES['usu_img']['name']);
+            $new_name = rand() . '.' . $extension[1];
+            $destination = '../assets/usuario/' . $new_name;
+            move_uploaded_file($_FILES['usu_img']['tmp_name'], $destination);
+            return $new_name;
+        }
+    }
+
 }

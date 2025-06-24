@@ -55,6 +55,7 @@ require_once("../../config/conexion.php");
                                         <thead>
                                             <tr>
                                                 
+                                            <th>img</th>
                                                 <th>Codigo</th>
                                                 <th>Categoria</th>
                                                 <th>Nombre</th>

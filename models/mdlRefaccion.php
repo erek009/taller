@@ -4,10 +4,19 @@ class mdlRefaccion extends Conectar
 {
 
     //Registrar refaccion
-    public function mdlRegistro($token, $codigo, $categoria, $nombre, $unidad, $marca, $stock, $compra, $venta, $descripcion)
+    public function mdlRegistro($token, $codigo, $categoria, $nombre, $unidad, $marca, $stock, $compra, $venta, $descripcion, $prod_img)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarRefaccion ?,?,?,?,?,?,?,?,?,?";
+
+        //sube la imagen del producto
+        require_once("mdlRefaccion.php");
+        $prod = new mdlRefaccion();
+        $prod_img = '';
+        if ($_FILES["prod_img"]["name"] != '') {
+            $prod_img = $prod->guardar_imagen();
+        }
+
+        $sql = "insertarRefaccion ?,?,?,?,?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $codigo);
@@ -19,6 +28,7 @@ class mdlRefaccion extends Conectar
         $query->bindValue(8, $compra);
         $query->bindValue(9, $venta);
         $query->bindValue(10, $descripcion);
+        $query->bindValue(11, $prod_img);
         $query->execute();
     }
 
@@ -54,12 +64,22 @@ class mdlRefaccion extends Conectar
         $query->execute();
     }
 
-    public function mdlActualizarRegistro($categoria, $nombre, $unidad, $marca, $compra, $venta, $descripcion, $token)
+    public function mdlActualizarRegistro($categoria, $nombre, $unidad, $marca, $compra, $venta, $descripcion, $prod_img, $token)
     {
         $conectar = parent::Conexion();
-        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?";
-        $query = $conectar->prepare($sql);
 
+        //sube la imagen del producto
+        require_once("mdlRefaccion.php");
+        $prod = new mdlRefaccion();
+        $prod_img = '';
+        if ($_FILES["prod_img"]["name"] != '') {
+            $prod_img = $prod->guardar_imagen();
+        } else {
+            $prod_img = $POST["hidden_producto_imagen"];
+        }
+
+        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?,?";
+        $query = $conectar->prepare($sql);
         // Conversión a float para evitar errores con SQL Server
         $venta = floatval($venta);
         $compra = floatval($compra);
@@ -71,7 +91,8 @@ class mdlRefaccion extends Conectar
         $query->bindValue(5, $compra);
         $query->bindValue(6, $venta);
         $query->bindValue(7, $descripcion);
-        $query->bindValue(8, $token);
+        $query->bindValue(8, $prod_img);
+        $query->bindValue(9, $token);
         $query->execute();
     }
 
@@ -112,5 +133,18 @@ class mdlRefaccion extends Conectar
 
     return $resultado;
 }
+
+/* TODO: Registrar Imagen */
+    public function guardar_imagen()
+    {
+        if (isset($_FILES["prod_img"])) {
+            $extension = explode('.', $_FILES['prod_img']['name']);
+            $new_name = rand() . '.' . $extension[1];
+            $destination = '../assets/producto/' . $new_name;
+            move_uploaded_file($_FILES['prod_img']['tmp_name'], $destination);
+            return $new_name;
+        }
+    }
+
 
 }
