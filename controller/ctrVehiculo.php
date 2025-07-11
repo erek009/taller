@@ -90,8 +90,8 @@ switch ($_GET["op"]) {
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
         $tabla = "vehiculo";
-        $item = "token";
-        $valor = $_POST["token"];
+        // $item = "token";
+        // $valor = $_POST["token"];
         $datos = $vehiculo->mdlSeleccionarRegistrosVehiculo(null, null, null);
         $data = array();
         foreach ($datos as $row) {

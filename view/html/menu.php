@@ -1,7 +1,8 @@
 <?php
-    // require_once("../../models/Menu.php");
-    // $menu = new Menu();
-    // $datos = $menu->get_menu_x_rol_id($_SESSION["ROL_ID"]);
+require_once("../../models/mdlMenu.php");
+$menu = new mdlMenu();
+$datos = $menu->mdlMenu_x_rol_id($_SESSION["rol"]);
+
 ?>
 
 <div class="app-menu navbar-menu">
@@ -39,108 +40,172 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                
+
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../home/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashboard</span>
-                        </a>
-                </li>
+
+
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Dashboard" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
+
 
                 <li class="menu-title"><span data-key="t-menu">Usuarios</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntUsuario/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Usuarios</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Usuarios" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
                 <li class="menu-title"><span data-key="t-menu">Vehiculos</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntVehiculo/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Vehiculos</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntAno/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Año</span>
-                        </a>
-                </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntMarca/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Marcas</span>
-                        </a>
-                </li>
+                    if ($row["menu_grupo"] == "Vehiculos" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
                 <li class="menu-title"><span data-key="t-menu">Ordenes</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntOrden/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Ordenes</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Ordenes" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
+
 
                 <li class="menu-title"><span data-key="t-menu">Servicio</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntServicio/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Servicio</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Servicios" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
                 <li class="menu-title"><span data-key="t-menu">Clientes</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntCliente/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Clientes</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Clientes" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
+
 
                 <li class="menu-title"><span data-key="t-menu">Refacciones</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntRefaccion/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Refacciones</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
 
-                <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntCategoria">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Categoria</span>
-                        </a>
-                </li>
-
+                    if ($row["menu_grupo"] == "Refacciones" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
                 <li class="menu-title"><span data-key="t-menu">Proveedor</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntProveedor/">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Proveedor</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
 
+                    if ($row["menu_grupo"] == "Proveedor" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
                 <li class="menu-title"><span data-key="t-menu">Compra</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntCompra">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Nueva compra</span>
-                        </a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link menu-link" href="../ListCompra">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Lista compra</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
+
+                    if ($row["menu_grupo"] == "Compra" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
 
                 <li class="menu-title"><span data-key="t-menu">Venta</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../MntVenta">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Nueva venta</span>
-                        </a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link menu-link" href="../ListVenta">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Lista venta</span>
-                        </a>
-                </li>
+                <?php
+                foreach ($datos as $row) {
 
+                    if ($row["menu_grupo"] == "Venta" && $row["permiso"] == "Si") {
+                ?>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["menu_ruta"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row["menu_nombre"]; ?></span>
+                            </a>
+                        </li>
+                <?php
+                    }
+                }
+                ?>
 
 
 

@@ -4,7 +4,7 @@ class mdlUsuario extends Conectar
 {
 
     //Registrar usuario
-    public function mdlRegistro($token, $nombre, $correo, $pass, $usu_img)
+    public function mdlRegistro($token, $nombre, $correo, $pass, $rol, $usu_img)
     {
         $conectar = parent::Conexion();
 
@@ -16,13 +16,14 @@ class mdlUsuario extends Conectar
             $usu_img = $usuario->guardar_imagen();
         }
         
-        $sql = "insertarUsuario ?,?,?,?,?";
+        $sql = "insertarUsuario ?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $nombre);
         $query->bindValue(3, $correo);
         $query->bindValue(4, $pass);
-        $query->bindValue(5, $usu_img);
+        $query->bindValue(5, $rol);
+        $query->bindValue(6, $usu_img);
         $query->execute();
     }
 
@@ -48,6 +49,19 @@ class mdlUsuario extends Conectar
         }
     }
 
+    //Seleccionar registros vehiculo
+    public function mdlSeleccionarRegistrosUsuario($tabla, $item, $valor)
+    {
+        $conectar = parent::Conexion();
+        $sql = "seleccionarRegistroUsuario";
+        $query = $conectar->prepare($sql);
+        // $query->bindValue(1, $tabla);
+        // $query->bindValue(1, $item);
+        // $query->bindValue(1, $valor);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     //Eliminar registros
     public function mdlEliminarRegistro($token)
@@ -60,7 +74,7 @@ class mdlUsuario extends Conectar
     }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($nombre, $correo, $password, $usu_img, $nuevoToken, $token)
+    public function mdlActualizarRegistro($nombre, $correo, $password, $rol, $usu_img, $nuevoToken, $token)
     {
         $conectar = parent::Conexion();
          //sube la imagen del producto
@@ -73,14 +87,15 @@ class mdlUsuario extends Conectar
             $usu_img = $POST["hidden_usuario_imagen"];
         }
 
-        $sql = "actualizarUsuario ?,?,?,?,?,?";
+        $sql = "actualizarUsuario ?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $nombre);
         $query->bindValue(2, $correo);
         $query->bindValue(3, $password);
-        $query->bindValue(4, $usu_img);
-        $query->bindValue(5, $nuevoToken);
-        $query->bindValue(6, $token);
+        $query->bindValue(4, $rol);
+        $query->bindValue(5, $usu_img);
+        $query->bindValue(6, $nuevoToken);
+        $query->bindValue(7, $token);
         $query->execute();
     }
 
@@ -109,6 +124,9 @@ class mdlUsuario extends Conectar
 
                     $_SESSION["id"] = $resultado["id"];
                     $_SESSION["nombre"] = $resultado["nombre"];
+                    $_SESSION["usu_img"] = $resultado["usu_img"];
+                    $_SESSION["rol"] = $resultado["rol"];
+
 
                     header("Location:" . Conectar::ruta() . "view/home/");
                 } else {

@@ -37,6 +37,7 @@ switch ($_GET["op"]) {
                 $_POST["nombre"],
                 $_POST["correo"],
                 $pass,
+                $_POST["rol"],
                 $_POST["usu_img"]
             );
         } else {
@@ -76,6 +77,7 @@ switch ($_GET["op"]) {
                 $_POST["nombre"],
                 $_POST["correo"],
                 $pass,
+                $_POST["rol"],
                 $_POST["usu_img"],
                 $nuevoToken,
                 $_POST["token"]
@@ -86,7 +88,7 @@ switch ($_GET["op"]) {
     /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
         $tabla = "usuarios";
-        $datos = $usuario->mdlSeleccionarRegistros($tabla, null, null);
+        $datos = $usuario->mdlSeleccionarRegistrosUsuario(null, null, null);
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
@@ -108,6 +110,7 @@ switch ($_GET["op"]) {
                 }
             $sub_array[] = $row["nombre"];
             $sub_array[] = $row["correo"];
+            $sub_array[] = $row["rol_nombre"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
             $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;
@@ -132,6 +135,7 @@ switch ($_GET["op"]) {
             $output["token"] = $datos["token"];
             $output["nombre"] = $datos["nombre"];
             $output["correo"] = $datos["correo"];
+            $output["rol"] = $datos["rol"];
             if($datos["usu_img"] != ''){
                     $output["usu_img"] = '<img src="../../assets/usuario/'.$datos["usu_img"].'" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_usuario_imagen" value="'.$datos["usu_img"].'" />';
                 }else{

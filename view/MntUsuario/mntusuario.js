@@ -7,6 +7,9 @@ let passhelper = $("#passhelp");
 let confirmpass = $("#confirmpass");
 let confirmpasshelper = $("#confirmpasshelp");
 
+let rol = $("#rol");
+let rolhelper = $("#rolhelp");
+
 let imagen = $("#usu_img");
 let imagenhelper = $("#imagenhelp");
 let pre_imagen = $("#pre_imagen");
@@ -37,6 +40,11 @@ confirmpass.on("keyup change blur", (e) => {
   ValidarConfirmpass(confirmpass, password, confirmpasshelper);
 });
 
+//confirma rol
+rol.on("keyup change blur", (e) => {
+  ValidarRol(rol, rolhelper);
+});
+
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
     guardaryeditar(e);
@@ -51,6 +59,7 @@ function guardaryeditar(e) {
   let isValidNombre = ValidarName(nombre, nombrehelper);
   let isValidEmail = ValidarEmail(correo, correohelper);
   let isValidarPass;
+  let isValidarRol = ValidarRol(rol, rolhelper);
   let isValidImagen = ValidarImagen(imagen, imagenhelper);
   let isValidarConfirmpass;
 
@@ -60,7 +69,8 @@ function guardaryeditar(e) {
     isValidarConfirmpass = ValidarConfirmpass(
       confirmpass,
       password,
-      confirmpasshelper
+      confirmpasshelper,
+      isValidarRol
     );
   } else {
     if (password.val() != "") {
@@ -68,7 +78,8 @@ function guardaryeditar(e) {
       isValidarConfirmpass = ValidarConfirmpass(
         confirmpass,
         password,
-        confirmpasshelper
+        confirmpasshelper,
+        isValidarRol
       );
     } else {
       isValidarPass = true;
@@ -77,7 +88,7 @@ function guardaryeditar(e) {
   }
 
   let formIsValid =
-    isValidNombre && isValidEmail && isValidImagen && isValidarPass && isValidarConfirmpass;
+    isValidNombre && isValidEmail && isValidImagen && isValidarPass && isValidarConfirmpass && isValidarRol;
 
   if (formIsValid) {
     /* TODO: Guardar Informacion */
@@ -209,6 +220,7 @@ function editar(partoken) {
       nombre.val(data.nombre);
       correo.val(data.correo);
       password.val(data.password);
+      rol.val(data.rol);
       pre_imagen.html(data.usu_img);
     }
   );
@@ -345,6 +357,17 @@ function ValidarConfirmpass(Control, Control1, Helper) {
     return false;
   }
 
+  Helper.hide();
+  return true;
+}
+
+// valida rol
+function ValidarRol(Control, Helper) {
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("Rol de usuario requerido");
+    Helper.show();
+    return false;
+  }
   Helper.hide();
   return true;
 }

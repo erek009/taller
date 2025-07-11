@@ -1,13 +1,17 @@
 <?php
 require_once("../../config/conexion.php");
+// require_once("../../models/Rol.php");
+// $rol = new Rol();
+// $datos = $rol->validar_acceso_rol($_SESSION["USU_ID"],"mntcategoria");
   if(isset($_SESSION["id"])){
+// if(is_array($datos) and count($datos)>0){
 ?>
 
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 
 <head>
-    <title>Taller mecanico | Usuario</title>
+    <title>Taller mecanico | Rol</title>
 
     <?php require_once("../html/head.php"); ?>
 </head>
@@ -31,8 +35,8 @@ require_once("../../config/conexion.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Usuario</a></li>
-                                        <li class="breadcrumb-item active">Usuario</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Rol</a></li>
+                                        <li class="breadcrumb-item active">Rol</li>
                                     </ol>
                                 </div>
 
@@ -50,10 +54,9 @@ require_once("../../config/conexion.php");
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Img</th>
-                                                <th>Nombre</th>
-                                                <th>Email</th>
                                                 <th>Rol</th>
+                                                <th>Fecha creacion</th>
+                                                <th>Permiso</th> 
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -77,9 +80,10 @@ require_once("../../config/conexion.php");
     </div>
 
     <?php require_once("mantenimiento.php"); ?>
+    <?php require_once("modalpermiso.php"); ?>
 
     <?php require_once("../html/js.php"); ?>
-    <script type="text/javascript" src="mntusuario.js"></script>
+    <script type="text/javascript" src="mntrol.js"></script>
 </body>
 
 </html>

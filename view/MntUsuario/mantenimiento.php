@@ -50,6 +50,35 @@
                         </div>
                     </div>
 
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Rol usuario</label>
+                                <select id="rol" class="form-control" name="rol">
+                                    <?php
+                                    echo ' 
+                                    <option value="" disabled selected> Seleccione rol </option> ';
+
+                                    include '../../models/mdlRol.php';
+
+                                    // Crear instancia del modelo
+                                    $rol = new mdlRol();
+
+                                    // Llamar al método
+                                    $tabla = "rol_usuario";
+                                    $datos = $rol->mdlSeleccionarRegistros($tabla, null, null);
+                                    ?>
+
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['token'] ?>"><?= $value['rol_nombre'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                                <span class="text-danger" id="rolhelp"> </span>
+                            </div>
+                        </div>
+                    </div>
+
                      <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
