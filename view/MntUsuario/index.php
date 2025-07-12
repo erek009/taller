@@ -1,6 +1,11 @@
 <?php
 require_once("../../config/conexion.php");
-  if(isset($_SESSION["id"])){
+require_once("../../models/mdlRol.php");
+ $rol = new mdlRol();
+ $datos = $rol->mdlValidarAcceso_rol($_SESSION["token"],"usuario");
+
+  if(isset($_SESSION["token"])){
+ if(is_array($datos) and count($datos)>0){
 ?>
 
 <!doctype html>
@@ -84,6 +89,9 @@ require_once("../../config/conexion.php");
 
 </html>
 <?php
+ }else{
+     header("Location:".Conectar::ruta()."view/404/");
+ }
  }else{
      header("Location:".Conectar::ruta()."view/404/");
  }

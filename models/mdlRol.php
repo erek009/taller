@@ -58,4 +58,16 @@ class mdlRol extends Conectar
         $query->bindValue(3, $token);
         $query->execute();
     }
+
+     //Seleccionar valida acceso
+    public function mdlValidarAcceso_rol($token, $identificador)
+    {
+        $conectar = parent::Conexion();
+        $sql = "listamenu03 ?,?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $token);
+        $query->bindValue(2, $identificador);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

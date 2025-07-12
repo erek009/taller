@@ -1,6 +1,6 @@
 <?php 
 require_once("../../config/conexion.php");
-if(isset($_SESSION["id"])){
+if(isset($_SESSION["token"])){
 ?>
 
 <!doctype html>

@@ -122,7 +122,8 @@ class mdlUsuario extends Conectar
                 if (is_array($resultado) and count($resultado) > 0) {
                     /* TODO:Generar variables de Session del Usuario */
 
-                    $_SESSION["id"] = $resultado["id"];
+                    // $_SESSION["id"] = $resultado["id"];
+                    $_SESSION["token"] = $resultado["token"];
                     $_SESSION["nombre"] = $resultado["nombre"];
                     $_SESSION["usu_img"] = $resultado["usu_img"];
                     $_SESSION["rol"] = $resultado["rol"];

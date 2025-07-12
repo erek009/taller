@@ -93,7 +93,7 @@
                         </span>
                     </button>
 
-                        <input type="hidden" name="token_usu" id="token_usu" value="<?php echo $_SESSION["id"]?>"/>  
+                        <input type="hidden" name="token_usu" id="token_usu" value="<?php echo $_SESSION["token"]?>"/>  
                    
                     <div class="dropdown-menu dropdown-menu-end">
 

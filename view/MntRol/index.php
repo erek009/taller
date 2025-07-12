@@ -1,10 +1,11 @@
 <?php
 require_once("../../config/conexion.php");
-// require_once("../../models/Rol.php");
-// $rol = new Rol();
-// $datos = $rol->validar_acceso_rol($_SESSION["USU_ID"],"mntcategoria");
-  if(isset($_SESSION["id"])){
-// if(is_array($datos) and count($datos)>0){
+require_once("../../models/mdlRol.php");
+ $rol = new mdlRol();
+ $datos = $rol->mdlValidarAcceso_rol($_SESSION["token"],"Rol");
+
+  if(isset($_SESSION["token"])){
+ if(is_array($datos) and count($datos)>0){
 ?>
 
 <!doctype html>
@@ -89,6 +90,9 @@ require_once("../../config/conexion.php");
 </html>
 <?php
  }else{
+     header("Location:".Conectar::ruta()."view/404/");
+ }
+  }else{
      header("Location:".Conectar::ruta()."view/404/");
  }
 ?>
