@@ -3,7 +3,7 @@
 class mdlMenu extends Conectar
 {
 
-    //Seleccionar registros vehiculo
+    //Lista roles
     public function mdlMenu_x_rol_id($rol)
     {
         $conectar = parent::Conexion();
@@ -14,17 +14,18 @@ class mdlMenu extends Conectar
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //     public function mdlMenu_x_rol_id($rol)
-    // {
-    //     $conectar = parent::Conexion();
-    //     $sql = "EXEC listamenu01 ?"; 
-    //     $query = $conectar->prepare($sql);
-    //     $query->bindValue(1, $rol, PDO::PARAM_STR);
-    //     $query->execute();
-    //     return $query->fetchAll(PDO::FETCH_ASSOC);
-    // }
+    //Agrega nuevos menus por ROL
+         public function mdlInserMenu02($rol)
+     {
+         $conectar = parent::Conexion();
+        $sql = "InserMenu02 ?"; 
+         $query = $conectar->prepare($sql);
+        $query->bindValue(1, $rol);
+         $query->execute();
+         return $query->fetchAll(PDO::FETCH_ASSOC);
+     }
 
-    //habilitar
+    //habilita menu
     public function mdlUpdate_menu_habilitar($detalle_id)
     {
         $conectar = parent::Conexion();
@@ -35,7 +36,7 @@ class mdlMenu extends Conectar
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //deshabilitar
+    //deshabilita menu
     public function mdlUpdate_menu_deshabilitar($detalle_id)
     {
         $conectar = parent::Conexion();

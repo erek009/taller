@@ -1,4 +1,4 @@
-//nuevo usuario
+//nuevo ano
 let ano = $("#AnoVehiculo");
 let anohelper = $("#anohelp");
 let token = $("#token");

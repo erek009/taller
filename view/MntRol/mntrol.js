@@ -140,12 +140,12 @@ function eliminar(token) {
 //MENU **********************
 function permiso(token) {
     
-  // $.post(
-  //   "../../controller/menu.php?op=insert",{ token: token },function (data) {
-  //     data = JSON.parse(data);
-
-  //   }
-  // );
+  //inserta menu segun rol
+ $.post(
+   "../../controller/ctrMenu.php?op=insert",{ token: token },function (data) {
+     data = JSON.parse(data);
+   }
+ );
   $("#permisos_data").DataTable({
     aProcessing: true,
     aServerSide: true,

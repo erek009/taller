@@ -3,7 +3,8 @@ require_once("../../config/conexion.php");
 require_once("../../models/mdlRol.php");
 $rol = new mdlRol();
 $datos = $rol->mdlValidarAcceso_rol($_SESSION["token"], "nueva compra");
-if (isset($_SESSION["token"])) {
+if (isset($_SESSION["token"]))  {
+      if(isset($_SESSION["id"])){
      if (is_array($datos) and count($datos) > 0) {
 ?>
 
@@ -290,6 +291,11 @@ if (isset($_SESSION["token"])) {
     header("Location:" . Conectar::ruta() . "view/404/");
 }
  } else {
+     header("Location:" . Conectar::ruta() . "view/404/");
+ }
+
+ ///borr
+  } else {
      header("Location:" . Conectar::ruta() . "view/404/");
  }
 ?>

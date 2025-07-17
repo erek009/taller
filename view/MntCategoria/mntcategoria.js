@@ -164,7 +164,7 @@ $(document).on("click", "#btnnuevo", function () {
 
 init();
 
-// VALIDACION Año
+// VALIDACION Categoria
 function ValidarCategoria(Control, Helper) {
   if (Control.val().trim() == ""){
     Helper.text("El Nombre requerido");

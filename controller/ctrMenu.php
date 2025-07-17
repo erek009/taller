@@ -41,4 +41,10 @@ switch ($_GET["op"]) {
     case "deshabilitar":
         $menu->mdlUpdate_menu_deshabilitar($_POST["detalle_id"]);
         break;
+
+    //inserta menu nuevo por ROL
+    case "insert":
+        $menu = new mdlMenu();
+        $menu->mdlInserMenu02($_POST["token"]);
+        break;
 }
