@@ -26,6 +26,12 @@ let comprahelper = $("#comprahelp");
 let venta = $("#precioventa");
 let ventahelper = $("#ventahelp");
 
+let anaquel = $("#anaquel");
+let anaquelhelper = $("#anaquelhelp");
+
+let nivel = $("#nivel");
+let nivelhelper = $("#nivelhelp");
+
 let descripcion = $("#descripcion");
 let descripcionhelper = $("#descripcionhelp");
 
@@ -75,6 +81,14 @@ venta.on("keyup change blur", (e) => {
   ValidarVenta(venta, ventahelper);
 });
 
+anaquel.on("change", (e) => {
+  ValidarAnaquel(anaquel, anaquelhelper);
+  });
+
+nivel.on("change", (e) => {
+  ValidarNivel(nivel, nivelhelper);
+  });
+
 descripcion.on("keyup change blur", (e) => {
   ValidarDescripcion(descripcion, descripcionhelper);
 });
@@ -104,6 +118,8 @@ function guardaryeditar(e) {
   let isValidCompra = ValidarCompra(compra, comprahelper);
   let isValidVenta = ValidarVenta(venta, ventahelper);
   let isValidDescripcion = ValidarDescripcion(descripcion, descripcionhelper);
+  let isValidAnaquel = ValidarAnaquel(anaquel, anaquelhelper);
+  let isValidNivel = ValidarNivel(nivel, nivelhelper);
   let isValidImagen = ValidarImagen(imagen, imagenhelper);
 
 
@@ -117,6 +133,8 @@ function guardaryeditar(e) {
     isValidProveedor &&
     isValidCompra &&
     isValidVenta &&
+    isValidAnaquel &&
+    isValidNivel &&
     isValidImagen &&
     isValidDescripcion;
 
@@ -247,6 +265,8 @@ function editar(partoken) {
       proveedor.val(data.proveedor);
       compra.val(data.preciocompra);
       venta.val(data.precioventa);
+      anaquel.val(data.idanaquel);
+      nivel.val(data.idnivel);
       descripcion.val(data.descripcion);
 
       pre_imagen.html(data.prod_img);
@@ -271,6 +291,8 @@ $(document).on("click", "#btnnuevo", function () {
   proveedor.val("");
   compra.val("");
   venta.val("");
+  anaquel.val("");
+  nivel.val("");
   descripcion.val("");
   token.val("");
   $("#lbltitulo").html("Nuevo Registro");
@@ -444,6 +466,26 @@ function ValidarVenta(Control, Helper) {
     return false;
   }
 
+  Helper.hide();
+  return true;
+}
+
+function ValidarAnaquel(Control, Helper) {
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("Anaquel es requerido");
+    Helper.show();
+    return false;
+  }
+  Helper.hide();
+  return true;
+}
+
+function ValidarNivel(Control, Helper) {
+  if (!Control || Control.find(":selected").index() === 0) {
+    Helper.text("Nivel de anaquel es requerido");
+    Helper.show();
+    return false;
+  }
   Helper.hide();
   return true;
 }

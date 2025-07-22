@@ -119,6 +119,65 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
+                                <label for="valueInput" class="form-label">Anaquel</label>
+                                <select id="anaquel" class="form-control" name="anaquel">
+                                    <?php
+                                    echo ' 
+                                    <option value="" disabled selected> Seleccione anaquel </option> ';
+
+                                    include '../../models/mdlAnaquel.php';
+
+                                    // Crear instancia del modelo
+                                    $anaquel = new mdlAnaquel();
+
+                                    // Llamar al método
+                                    $tabla = "anaquel";
+                                    $datos = $anaquel->mdlSeleccionarRegistros($tabla, null, null);
+                                    ?>
+
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['token'] ?>"><?= $value['anaquel'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                                <span class="text-danger" id="anaquelhelp"> </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Nivel</label>
+                                <select id="nivel" class="form-control" name="nivel">
+                                    <?php
+                                    echo ' 
+                                    <option value="" disabled selected> Seleccione nivel </option> ';
+
+                                    include '../../models/mdlNivel.php';
+
+                                    // Crear instancia del modelo
+                                    $nivel = new mdlNivel();
+
+                                    // Llamar al método
+                                    $tabla = "nivel";
+                                    $datos = $nivel->mdlSeleccionarRegistros($tabla, null, null);
+                                    ?>
+
+                                    <?php foreach ($datos as $value): ?>
+                                        <option value="<?= $value['token'] ?>"><?= $value['nivel'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+
+                                <span class="text-danger" id="nivelhelp"> </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
                                 <label for="valueInput" class="form-label">Descripcion</label>
                                 <input type="text" class="form-control" id="descripcion" name="descripcion" required />
                                 <span class="text-danger" id="descripcionhelp"> </span>

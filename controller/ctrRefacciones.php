@@ -43,6 +43,8 @@ switch ($_GET["op"]) {
                 $_POST["stock"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
+                $_POST["anaquel"],
+                $_POST["nivel"],
                 $_POST["descripcion"],
                 $_POST["prod_img"]
             );
@@ -66,6 +68,8 @@ switch ($_GET["op"]) {
                 $_POST["marca"],
                 $_POST["preciocompra"],
                 $_POST["precioventa"],
+                $_POST["anaquel"],
+                $_POST["nivel"],
                 $_POST["descripcion"],
                 $_POST["prod_img"],
                 $_POST["token"]
@@ -104,6 +108,8 @@ switch ($_GET["op"]) {
             $sub_array[] = $row["stock"];
             $sub_array[] = $row["preciocompra"];
             $sub_array[] = $row["precioventa"];
+            $sub_array[] = $row["anaquel"];
+            $sub_array[] = $row["nivel"];
             $sub_array[] = $row["descripcion"];
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
             $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
@@ -135,6 +141,8 @@ switch ($_GET["op"]) {
             $output["stock"] = $datos["stock"];
             $output["preciocompra"] = $datos["preciocompra"];
             $output["precioventa"] = $datos["precioventa"];
+            $output["idanaquel"] = $datos["idanaquel"];
+            $output["idnivel"] = $datos["idnivel"];
             $output["descripcion"] = $datos["descripcion"];
             if($datos["prod_img"] != ''){
                     $output["prod_img"] = '<img src="../../assets/producto/'.$datos["prod_img"].'" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="'.$datos["prod_img"].'" />';

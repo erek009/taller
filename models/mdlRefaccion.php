@@ -4,7 +4,7 @@ class mdlRefaccion extends Conectar
 {
 
     //Registrar refaccion
-    public function mdlRegistro($token, $codigo, $categoria, $nombre, $unidad, $marca, $stock, $compra, $venta, $descripcion, $prod_img)
+    public function mdlRegistro($token, $codigo, $categoria, $nombre, $unidad, $marca, $stock, $compra, $venta, $anaquel, $nivel, $descripcion, $prod_img)
     {
         $conectar = parent::Conexion();
 
@@ -16,7 +16,7 @@ class mdlRefaccion extends Conectar
             $prod_img = $prod->guardar_imagen();
         }
 
-        $sql = "insertarRefaccion ?,?,?,?,?,?,?,?,?,?,?";
+        $sql = "insertarRefaccion ?,?,?,?,?,?,?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $codigo);
@@ -27,8 +27,10 @@ class mdlRefaccion extends Conectar
         $query->bindValue(7, $stock);
         $query->bindValue(8, $compra);
         $query->bindValue(9, $venta);
-        $query->bindValue(10, $descripcion);
-        $query->bindValue(11, $prod_img);
+        $query->bindValue(10, $anaquel);
+        $query->bindValue(11, $nivel);
+        $query->bindValue(12, $descripcion);
+        $query->bindValue(13, $prod_img);
         $query->execute();
     }
 
@@ -64,7 +66,7 @@ class mdlRefaccion extends Conectar
         $query->execute();
     }
 
-    public function mdlActualizarRegistro($categoria, $nombre, $unidad, $marca, $compra, $venta, $descripcion, $prod_img, $token)
+    public function mdlActualizarRegistro($categoria, $nombre, $unidad, $marca, $compra, $venta, $anaquel, $nivel, $descripcion, $prod_img, $token)
     {
         $conectar = parent::Conexion();
 
@@ -78,7 +80,7 @@ class mdlRefaccion extends Conectar
             $prod_img = $POST["hidden_producto_imagen"];
         }
 
-        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?,?";
+        $sql = "actualizarRefaccion ?,?,?,?,?,?,?,?,?,?,?";
         $query = $conectar->prepare($sql);
         // Conversión a float para evitar errores con SQL Server
         $venta = floatval($venta);
@@ -90,9 +92,11 @@ class mdlRefaccion extends Conectar
         $query->bindValue(4, $marca);
         $query->bindValue(5, $compra);
         $query->bindValue(6, $venta);
-        $query->bindValue(7, $descripcion);
-        $query->bindValue(8, $prod_img);
-        $query->bindValue(9, $token);
+        $query->bindValue(7, $anaquel);
+        $query->bindValue(8, $nivel);
+        $query->bindValue(9, $descripcion);
+        $query->bindValue(10, $prod_img);
+        $query->bindValue(11, $token);
         $query->execute();
     }
 

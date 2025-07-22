@@ -2,8 +2,7 @@
 require_once("../../config/conexion.php");
 require_once("../../models/mdlRol.php");
 $rol = new mdlRol();
-$datos = $rol->mdlValidarAcceso_rol($_SESSION["token"], "refaccion");
-
+$datos = $rol->mdlValidarAcceso_rol($_SESSION["token"], "Anaquel");
 if (isset($_SESSION["token"])) {
     if (is_array($datos) and count($datos) > 0) {
 ?>
@@ -12,7 +11,7 @@ if (isset($_SESSION["token"])) {
         <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 
         <head>
-            <title>Taller mecanico | Refacciones</title>
+            <title>Taller mecanico | Nivel</title>
 
             <?php require_once("../html/head.php"); ?>
         </head>
@@ -36,8 +35,8 @@ if (isset($_SESSION["token"])) {
 
                                         <div class="page-title-right">
                                             <ol class="breadcrumb m-0">
-                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Refacciones</a></li>
-                                                <li class="breadcrumb-item active">Refacciones</li>
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento Nivel</a></li>
+                                                <li class="breadcrumb-item active">Nivel</li>
                                             </ol>
                                         </div>
 
@@ -55,18 +54,6 @@ if (isset($_SESSION["token"])) {
                                             <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                                 <thead>
                                                     <tr>
-
-                                                        <th>img</th>
-                                                        <th>Codigo</th>
-                                                        <th>Categoria</th>
-                                                        <th>Nombre</th>
-                                                        <th>Unidad</th>
-                                                        <th>Marca</th>
-                                                        <th>Stock</th>
-                                                        <!-- <th>Proveedor</th> -->
-                                                        <th>Compra</th>
-                                                        <th>Venta</th>
-                                                        <th>Anaquel</th>
                                                         <th>Nivel</th>
                                                         <th>Descripcion</th>
                                                         <th></th>
@@ -94,7 +81,7 @@ if (isset($_SESSION["token"])) {
             <?php require_once("mantenimiento.php"); ?>
 
             <?php require_once("../html/js.php"); ?>
-            <script type="text/javascript" src="mntrefaccion.js"></script>
+            <script type="text/javascript" src="mntnivel.js"></script>
         </body>
 
         </html>
