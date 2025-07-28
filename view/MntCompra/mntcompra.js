@@ -8,8 +8,13 @@ var telefono = $("#prov_telefono");
 
 var categoria = $("#categoria");
 var producto = $("#producto");
+
+var producto1 = $("#producto1");
+
 var stock = $("#stock");
 var undmedida = $("#und_medida");
+var anaquel = $("#anaquel");
+var nivel = $("#nivel");
 var preciocompra = $("#precio_compra");
 
 // Inicializa el DataTable para mostrar los detalles de la compra
@@ -26,8 +31,8 @@ $(document).ready(function () {
 
 // Agrega un nuevo detalle de compra
 $(document).on("click", "#btnagregar", function () {
-  var categoria = $("#categoria").val();
-  var refaccion = $("#producto").val();
+
+  var refaccion = $("#producto_token").val();
   var compra_id = $("#compra_id").val();
   var preciocompra = $("#precio_compra").val();
   var unidadmedida = $("#und_medida").val();
@@ -35,8 +40,7 @@ $(document).on("click", "#btnagregar", function () {
 
   // Validación de campos vacíos
   if (
-    $("#categoria").val() == "" ||
-    $("#producto").val() == "" ||
+    $("#refaccion").val() == "" ||
     $("#precio_compra").val() == "" ||
     $("#detc_cant").val() == ""
   ) {
@@ -51,7 +55,7 @@ $(document).on("click", "#btnagregar", function () {
     $.post(
       "../../controller/ctrCompra.php?op=registrardetalleproductos",
       {
-        categoria: categoria,
+        // categoria: categoria,
         refaccion: refaccion,
         compra_id: compra_id,
         unidadmedida: unidadmedida,
@@ -182,7 +186,6 @@ function eliminar(detalle_id) {
 
 $(document).on("click", "#btnguardar", function () {
   // Validaciones campos vacíos
-  var categoria = $("#categoria").val();
   var compra_id = $("#compra_id").val();
   var prov_id = $("#prov_id").val();
   var prov_rfc = $("#prov_rfc").val();
@@ -192,7 +195,7 @@ $(document).on("click", "#btnguardar", function () {
   var comentario = $("#comentario").val();
 
   // Validación de campos vacíos
-  if ($.trim(prov_id) === "" || $.trim(categoria) === "") {
+  if ($.trim(prov_id) === "") {
     Swal.fire({
       title: "Error",
       text: "Todos los campos son obligatorios.",
@@ -330,3 +333,43 @@ $(proveedor).on("change", function () {
   });
 });
 
+
+
+// pruebaaaaaaaaaaaaaa
+// Buscar producto por nombre o código
+$("#busqueda_producto").on("keyup", function (e) {
+  let termino = $(this).val().trim();
+
+  // Puedes hacer búsqueda cuando haya mínimo 2 caracteres
+  if (termino.length >= 2) {
+    $.ajax({
+      url: "../../controller/ctrCompra.php?op=buscar_producto",
+      type: "POST",
+      data: { termino: termino },
+      dataType: "json",
+      success: function (producto) {
+        if (producto) {
+          // Autocompletar campos como si lo seleccionaras del dropdown
+          $("#producto1").val(producto.nombre);
+          $("#producto_token").val(producto.token);
+          $("#stock").val(producto.stock);
+          $("#und_medida").val(producto.unidadmedida);
+          $("#anaquel").val(producto.anaquelNombre);
+          $("#nivel").val(producto.nivelNombre);
+          $("#precio_compra").val(producto.preciocompra);
+        } else {
+          // Producto no encontrado
+          $("#producto").val("");
+          $("#stock").val("");
+          $("#und_medida").val("");
+          $("#anaquel").val("");
+          $("#nivel").val("");
+          $("#precio_compra").val("");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error al buscar producto:", error);
+      },
+    });
+  }
+});

@@ -132,7 +132,7 @@ if (isset($_SESSION["token"])) {
                                                             <thead>
                                                                 <tr class="table-active">
                                                                     <!-- <th scope="col"></th> -->
-                                                                    <th scope="col">Categoria</th>
+                                                                    <!-- <th scope="col">Categoria</th> -->
                                                                     <th scope="col">Producto</th>
                                                                     <th scope="col" style="width: 50px;">Und</th>
                                                                     <th scope="col">P.Compra</th>

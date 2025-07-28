@@ -164,4 +164,6 @@ switch ($_GET["op"]) {
         $data = $refaccion->mdlSeleccionarProductosPorCategoria($categoria_id);
         echo json_encode($data);
         break;
+
+
 }

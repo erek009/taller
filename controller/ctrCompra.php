@@ -3,13 +3,18 @@
 require_once("../config/conexion.php");
 require_once("../models/mdlCompra.php");
 
+// pruebaaaaaaa
+require_once("../models/mdlRefaccion.php");
+
+// pruebaaaaaaa
+
 /* TODO: Inicializando clases */
 $compra = new mdlCompra();
 
 switch ($_GET["op"]) {
     // registra ingreso nueva a compra
     case "registrar":
-        $datos = $compra->mdlInsertaCompra( $_POST["usu_id"]);
+        $datos = $compra->mdlInsertaCompra($_POST["usu_id"]);
         //Devuelve datos con select del insert
         foreach ($datos as $row) {
             $output["compra_id"] = $row["compra_id"];
@@ -20,7 +25,7 @@ switch ($_GET["op"]) {
     /*TODO: Registra detalle compra*/
     case "registrardetalleproductos":
         $compra->mdlRegistro(
-            $_POST["categoria"],
+            // $_POST["categoria"],
             $_POST["refaccion"],
             $_POST["compra_id"],
             $_POST["unidadmedida"],
@@ -36,7 +41,7 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
-            $sub_array[] = $row["categoria"];
+            // $sub_array[] = $row["categoria"];
             $sub_array[] = $row["nombre"];
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["preciocompra"];
@@ -57,7 +62,7 @@ switch ($_GET["op"]) {
     //TODO: calculo de costo compra
     case "calculo":
         $datos = $compra->mdlCompra_Calculo($_POST["compra_id"]);
-         foreach ($datos as $row) {
+        foreach ($datos as $row) {
             $output["compra_subtotal"] = $row["compra_subtotal"];
             $output["compra_iva"] = $row["compra_iva"];
             $output["compra_total"] = $row["compra_total"];
@@ -88,31 +93,31 @@ switch ($_GET["op"]) {
         break;
 
 
-        /*TODO: Listado detalle de compra formato (PDF)*/
+    /*TODO: Listado detalle de compra formato (PDF)*/
     case "listarDetalleProductosCompra":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
         // $data = array();
         foreach ($datos as $row) {
-        ?>
+?>
             <tr>
-                <th><?php echo $row["categoria"]; ?></th>
+                <!-- <th><?php echo $row["categoria"]; ?></th> -->
                 <td><?php echo $row["nombre"]; ?></td>
                 <td><?php echo $row["unidadmedida"]; ?></td>
                 <td><?php echo $row["preciocompra"]; ?></td>
                 <td><?php echo $row["cantidad"]; ?></td>
                 <td class="text-end"><?php echo $row["total"]; ?></td>
             </tr>
-        <?php
+<?php
         }
         break;
 
-        
+
     //TODO: muestra formato tipo PDF de Lista compra
     case "mostrarDatosCompra":
         $compra_id = $_POST['compra_id'];
         $datos = $compra->mdlSeleccionarCompra($compra_id);
-         foreach ($datos as $row) {
+        foreach ($datos as $row) {
             $output["compra_id"] = $row["compra_id"];
             $output["fech_crea"] = $row["fech_crea"];
             $output["compra_iva"] = $row["compra_iva"];
@@ -125,7 +130,6 @@ switch ($_GET["op"]) {
             $output["prov_telefono"] = $row["telefono"];
             $output["usu_nom"] = $row["nombre"];
             $output["compra_comentario"] = $row["compra_comentario"];
-
         }
         echo json_encode($output);
         break;
@@ -136,17 +140,17 @@ switch ($_GET["op"]) {
         $datos = $compra->mdlListarCompraFinalizada($tabla, null, null);
         $data = array();
         foreach ($datos as $row) {
-                $sub_array = array();
-                $sub_array[] = "C-".$row["compra_id"];
-                $sub_array[] = $row["razonsocial"];
-                $sub_array[] = $row["rfc"];
-                $sub_array[] = $row["compra_subtotal"];
-                $sub_array[] = $row["compra_total"];
-                $sub_array[] = $row["nombre"];
-                $sub_array[] = $row["fech_crea"];
-                $sub_array[] = '<a href="../../view/ViewCompra/?c='.$row["compra_id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
-                $sub_array[] = '<a type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></a>';
-                $data[] = $sub_array;
+            $sub_array = array();
+            $sub_array[] = "C-" . $row["compra_id"];
+            $sub_array[] = $row["razonsocial"];
+            $sub_array[] = $row["rfc"];
+            $sub_array[] = $row["compra_subtotal"];
+            $sub_array[] = $row["compra_total"];
+            $sub_array[] = $row["nombre"];
+            $sub_array[] = $row["fech_crea"];
+            $sub_array[] = '<a href="../../view/ViewCompra/?c=' . $row["compra_id"] . '" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
+            $sub_array[] = '<a type="button" onClick="ver(' . $row["compra_id"] . ')" id="' . $row["compra_id"] . '" class="btn btn-success btn-icon waves-effect waves-light"> <i class="ri-settings-2-line"></i></a>';
+            $data[] = $sub_array;
         }
         $results = array(
             "sEcho" => 1,
@@ -157,4 +161,18 @@ switch ($_GET["op"]) {
         echo json_encode($results);
         break;
 
-    }
+    // TODO: Buscar producto por nombre o código
+    case "buscar_producto":
+        require_once("../models/mdlRefaccion.php");
+        $producto = new mdlRefaccion();
+
+        $termino = $_POST["termino"];
+        $resultado = $producto->buscarPorNombreOCodigo($termino);
+
+        if ($resultado) {
+            echo json_encode($resultado);
+        } else {
+            echo json_encode(null);
+        }
+        break;
+}

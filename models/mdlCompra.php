@@ -15,17 +15,17 @@ class mdlCompra extends Conectar
     }
 
     //Registrar 
-    public function mdlRegistro($categoria, $refaccion, $compra_id, $undmedida, $preciocompra, $cantidad)
+    public function mdlRegistro($refaccion, $compra_id, $undmedida, $preciocompra, $cantidad)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarCompraDetalle ?,?,?,?,?,?";
+        $sql = "insertarCompraDetalle ?,?,?,?,?";
         $query = $conectar->prepare($sql);
-        $query->bindValue(1, $categoria);
-        $query->bindValue(2, $refaccion);
-        $query->bindValue(3, $compra_id);
-        $query->bindValue(4, $undmedida);
-        $query->bindValue(5, $preciocompra);
-        $query->bindValue(6, $cantidad);
+        // $query->bindValue(1, $categoria);
+        $query->bindValue(1, $refaccion);
+        $query->bindValue(2, $compra_id);
+        $query->bindValue(3, $undmedida);
+        $query->bindValue(4, $preciocompra);
+        $query->bindValue(5, $cantidad);
         $query->execute();
     }
 
@@ -119,4 +119,5 @@ class mdlCompra extends Conectar
     }
 
    
+
 }

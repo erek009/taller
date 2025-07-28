@@ -151,4 +151,17 @@ class mdlRefaccion extends Conectar
     }
 
 
+
+// pruebaaaaaaaaaaaaaaa
+
+public function buscarPorNombreOCodigo($termino) {
+    $conectar = parent::Conexion();
+    $sql = "EXEC buscarProductoPorNombreOCodigo ?";
+    $query = $conectar->prepare($sql);
+    $query->bindValue(1, $termino);
+    $query->execute();
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
+// pruebaaaaaaaaaaaaaaa
 }

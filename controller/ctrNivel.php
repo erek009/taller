@@ -92,8 +92,8 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $tabla = "nivel";
-        $item = "nivel";
+        $tabla = "refacciones";
+        $item = "idnivel";
         $valor = $_POST["token"]; // Token de anaquel que quieres eliminar
 
         $validarNivel = $nivel->mdlSeleccionarRegistros($tabla, $item, $valor);

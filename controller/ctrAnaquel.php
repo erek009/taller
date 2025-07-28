@@ -93,8 +93,8 @@ switch ($_GET["op"]) {
 
     /*TODO: Eliminar (cambia estado a 0 del registro)*/
     case "eliminar":
-        $tabla = "anaquel";
-        $item = "anaquel";
+        $tabla = "refacciones";
+        $item = "idanaquel";
         $valor = $_POST["token"]; // Token de anaquel que quieres eliminar
 
         $validarAnaquel = $anaquel->mdlSeleccionarRegistros($tabla, $item, $valor);
