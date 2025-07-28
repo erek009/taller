@@ -355,7 +355,7 @@ $("#busqueda_producto").on("keyup", function (e) {
           $("#stock").val(producto.stock);
           $("#und_medida").val(producto.unidadmedida);
           $("#anaquel").val(producto.anaquelNombre);
-          $("#nivel").val(producto.nivelNombre);
+          $("#nivel").val(producto.nivelNonbre);
           $("#precio_compra").val(producto.preciocompra);
         } else {
           // Producto no encontrado

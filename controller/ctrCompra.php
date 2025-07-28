@@ -99,7 +99,7 @@ switch ($_GET["op"]) {
         $datos = $compra->mdlSeleccionarRegistrosCompra($compra_id);
         // $data = array();
         foreach ($datos as $row) {
-?>
+        ?>
             <tr>
                 <!-- <th><?php echo $row["categoria"]; ?></th> -->
                 <td><?php echo $row["nombre"]; ?></td>
@@ -108,7 +108,7 @@ switch ($_GET["op"]) {
                 <td><?php echo $row["cantidad"]; ?></td>
                 <td class="text-end"><?php echo $row["total"]; ?></td>
             </tr>
-<?php
+    <?php
         }
         break;
 

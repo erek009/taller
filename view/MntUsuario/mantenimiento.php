@@ -59,7 +59,8 @@
                                     echo ' 
                                     <option value="" disabled selected> Seleccione rol </option> ';
 
-                                    include '../../models/mdlRol.php';
+                                    require_once '../../models/mdlRol.php';
+
 
                                     // Crear instancia del modelo
                                     $rol = new mdlRol();
