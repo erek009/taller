@@ -27,6 +27,7 @@ function init() {
   });
 }
 
+//Guarda y edita registros
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);

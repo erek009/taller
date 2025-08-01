@@ -47,7 +47,7 @@
                                     echo ' 
                                     <option value="" disabled selected> Seleccione marca </option> ';
 
-                                    include '../../models/mdlMarca.php';
+                                    include_once '../../models/mdlMarca.php';
 
                                     // Crear instancia del modelo
                                     $marca = new mdlMarca();

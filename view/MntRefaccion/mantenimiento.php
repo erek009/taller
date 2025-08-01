@@ -136,7 +136,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['token'] ?>"><?= $value['anaquel'] ?></option>
+                                        <option value="<?= $value['id'] ?>"><?= $value['anaquel'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -166,7 +166,7 @@
                                     ?>
 
                                     <?php foreach ($datos as $value): ?>
-                                        <option value="<?= $value['token'] ?>"><?= $value['nivel'] ?></option>
+                                        <option value="<?= $value['id'] ?>"><?= $value['nivel'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
@@ -184,15 +184,23 @@
                             </div>
                         </div>
                     </div>
+<div class="row gy-2">
+  <div class="col-md-12">
+    <div>
+      <label for="prod_img" class="form-label">Imagen</label>
+      <!-- Input para cargar nueva imagen -->
+      <input type="file" class="form-control" id="prod_img" name="prod_img" />
 
-                    <div class="row gy-2">
-                        <div class="col-md-12">
-                            <div>
-                                <label for="valueInput" class="form-label">Imagen</label>
-                                <input type="file" class="form-control" id="prod_img" name="prod_img"/>
-                            </div>
-                        </div>
-                    </div>
+      <!-- Input oculto para mantener el nombre de la imagen actual en edición -->
+      <input type="hidden" id="hidden_producto_imagen" name="hidden_producto_imagen" value="" />
+
+      <!-- Contenedor donde se mostrará la vista previa de la imagen -->
+      <div id="pre_imagen" class="mt-2">
+        <!-- Aquí va la imagen cargada o la imagen por defecto -->
+      </div>
+    </div>
+  </div>
+</div>
 
                      <div class="row gy-2">
                         <div class="col-md-12">

@@ -29,6 +29,7 @@ $(document).ready(function () {
   );
 });
 
+
 // Agrega un nuevo detalle de compra
 $(document).on("click", "#btnagregar", function () {
 
@@ -88,6 +89,7 @@ $(document).on("click", "#btnagregar", function () {
   }
 });
 
+
 //listado de productos
 function listar(compra_id) {
   var compra_id = $("#compra_id").val();
@@ -137,6 +139,7 @@ function listar(compra_id) {
   });
 }
 
+
 // Elimina un detalle de compra
 function eliminar(detalle_id) {
   swal
@@ -183,6 +186,7 @@ function eliminar(detalle_id) {
       }
     });
 }
+
 
 $(document).on("click", "#btnguardar", function () {
   // Validaciones campos vacíos
@@ -251,6 +255,7 @@ $(document).on("click", "#btnlimpiar", function () {
   location.reload();
 });
 
+
 // Cuando cambie la categoría, carga los productos de esa categoría
 $("#categoria").on("change", function () {
   let categoriaID = $(this).val();
@@ -281,6 +286,7 @@ $("#categoria").on("change", function () {
     $("#producto").html('<option value="">Seleccione un producto</option>');
   }
 });
+
 
 // Cuando cambie el producto, carga sus datos
 $("#producto").on("change", function () {
@@ -334,8 +340,6 @@ $(proveedor).on("change", function () {
 });
 
 
-
-// pruebaaaaaaaaaaaaaa
 // Buscar producto por nombre o código
 $("#busqueda_producto").on("keyup", function (e) {
   let termino = $(this).val().trim();
@@ -355,7 +359,7 @@ $("#busqueda_producto").on("keyup", function (e) {
           $("#stock").val(producto.stock);
           $("#und_medida").val(producto.unidadmedida);
           $("#anaquel").val(producto.anaquelNombre);
-          $("#nivel").val(producto.nivelNonbre);
+          $("#nivel").val(producto.nivelNombre);
           $("#precio_compra").val(producto.preciocompra);
         } else {
           // Producto no encontrado

@@ -13,6 +13,7 @@ let rolhelper = $("#rolhelp");
 let imagen = $("#usu_img");
 let imagenhelper = $("#imagenhelp");
 let pre_imagen = $("#pre_imagen");
+let usu_img = $("#usu_img");
 
 let token = $("#token");
 
@@ -396,6 +397,7 @@ function LimpiarFormularios() {
   password.val("");
   confirmpass.val("");
   pre_imagen.html("");
+  usu_img.val("");
 }
 
 // Borra helpers

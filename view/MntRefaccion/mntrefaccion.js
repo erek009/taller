@@ -38,9 +38,8 @@ let descripcionhelper = $("#descripcionhelp");
 let imagen = $("#prod_img");
 let imagenhelper = $("#imagenhelp");
 
-
+let prod_img = $("#prod_img");
 let pre_imagen = $("#pre_imagen");
-
 
 let token = $("#token");
 
@@ -83,11 +82,11 @@ venta.on("keyup change blur", (e) => {
 
 anaquel.on("change", (e) => {
   ValidarAnaquel(anaquel, anaquelhelper);
-  });
+});
 
 nivel.on("change", (e) => {
   ValidarNivel(nivel, nivelhelper);
-  });
+});
 
 descripcion.on("keyup change blur", (e) => {
   ValidarDescripcion(descripcion, descripcionhelper);
@@ -95,7 +94,7 @@ descripcion.on("keyup change blur", (e) => {
 
 imagen.on("change", (e) => {
   ValidarImagen(imagen, imagenhelper);
-  });
+});
 
 function init() {
   $("#mantenimiento_form").on("submit", function (e) {
@@ -121,7 +120,6 @@ function guardaryeditar(e) {
   let isValidAnaquel = ValidarAnaquel(anaquel, anaquelhelper);
   let isValidNivel = ValidarNivel(nivel, nivelhelper);
   let isValidImagen = ValidarImagen(imagen, imagenhelper);
-
 
   let formIsValid =
     isValidCodigo &&
@@ -233,14 +231,14 @@ function eliminar(token) {
           { token: token },
           function (data) {
             console.log(data);
-         
-        $("#table_data").DataTable().ajax.reload();
 
-        swal.fire({
-          title: "Producto",
-          text: "Registro Eliminado",
-          icon: "success",
-         });
+            $("#table_data").DataTable().ajax.reload();
+
+            swal.fire({
+              title: "Producto",
+              text: "Registro Eliminado",
+              icon: "success",
+            });
           }
         );
       }
@@ -269,12 +267,27 @@ function editar(partoken) {
       nivel.val(data.idnivel);
       descripcion.val(data.descripcion);
 
-      pre_imagen.html(data.prod_img);
+      if (data.prod_img && data.prod_img.trim() !== "") {
+        $("#pre_imagen").html(
+          '<img src="../../assets/producto/' +
+            data.prod_img +
+            '" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">' +
+            '<input type="hidden" name="hidden_producto_imagen" id="hidden_producto_imagen" value="' +
+            data.prod_img +
+            '">'
+        );
+      } else {
+        $("#pre_imagen").html(
+          '<img src="../../assets/producto/no_imagen.avif" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">' +
+            '<input type="hidden" name="hidden_producto_imagen" id="hidden_producto_imagen" value="">'
+        );
+      }
+
+      // Limpiar input file
+      $("#prod_img").val("");
     }
   );
   $("#lbltitulo").html("Editar Registro");
-  
-  /* TODO: Mostrar Modal */
   $("#modalmantenimiento").modal("show");
 }
 
@@ -303,8 +316,6 @@ $(document).on("click", "#btnnuevo", function () {
   /* TODO: Mostrar Modal */
   $("#modalmantenimiento").modal("show");
 });
-
-
 
 // Previsualiza la imagen del producto
 function filePreview(input) {
@@ -507,19 +518,16 @@ function ValidarDescripcion(Control, Helper) {
   return true;
 }
 
-
 function ValidarImagen(Control, Helper) {
-//    if (Control.val().trim() == "") {
-//     Helper.text("El precio de venta es requerido");
-//     Helper.show();
-//      return false;
-//  }
+  //    if (Control.val().trim() == "") {
+  //     Helper.text("El precio de venta es requerido");
+  //     Helper.show();
+  //      return false;
+  //  }
 
   Helper.hide();
   return true;
 }
-
-
 
 //OCULTA MENSAJES HELPER
 function OcultarHelpers() {
@@ -548,6 +556,7 @@ function LimpiarFormularios() {
   venta.val("");
   descripcion.val("");
   pre_imagen.html("");
+  imagen.val("");
 }
 
 // Borra helpers & limpiar formularios
