@@ -24,21 +24,16 @@ function init() {
 }
 
 
-//Guarda y edita registros
+// Guarda y edita registros
 function guardaryeditar(e) {
   e.preventDefault();
   var formData = new FormData($("#mantenimiento_form")[0]);
 
   // Validaciones
   let isValidRefaccion = ValidarRefaccion(refaccion, refaccionhelp);
-  let isValidCodigo = ValidarCodigo(codigo, codigoshelp);
-
-  let formIsValid = isValidRefaccion && isValidCodigo;
+  let formIsValid = isValidRefaccion;
 
   if (formIsValid) {
-    //
-
-    /* TODO: Guardar Informacion */
     $.ajax({
       url: "../../controller/ctrCodigo.php?op=guardaryeditar",
       type: "POST",
@@ -46,27 +41,60 @@ function guardaryeditar(e) {
       contentType: false,
       processData: false,
       success: function (data) {
-        if (data === "error-codigoexiste") {
-          // Si el año ya existe en la base de datos, mostrar un mensaje de error
+        try {
+          const response = JSON.parse(data);
+          let mensajes = [];
+
+          if (response.guardados && response.guardados.length > 0) {
+            mensajes.push(
+              `<strong>${response.guardados.length} código(s) guardado(s):</strong><br>` +
+              response.guardados.join("<br>")
+            );
+            $("#table_data").DataTable().ajax.reload();
+            $("#modalmantenimiento").modal("hide");
+          }
+
+          if (response.repetidos && response.repetidos.length > 0) {
+            mensajes.push(
+              `<strong>${response.repetidos.length} código(s) ya existen:</strong><br>` +
+              response.repetidos.join("<br>")
+            );
+
+            // Si no se guardó ninguno, igual cerramos el modal
+            if (!response.guardados || response.guardados.length === 0) {
+              $("#modalmantenimiento").modal("hide");
+            }
+          }
+
+          if (mensajes.length > 0) {
+            swal.fire({
+              icon: response.repetidos.length > 0 ? "warning" : "success",
+              title: "Resultado del registro",
+              html: mensajes.join("<hr>"),
+              width: "600px",
+            });
+          }
+        } catch (err) {
+          console.error("Error al procesar la respuesta:", data);
           swal.fire({
             title: "Error",
-            text: "El codigo ya existe en el sistema.",
+            text: "Ocurrió un problema al guardar los códigos.",
             icon: "error",
           });
-        } else {
-          $("#table_data").DataTable().ajax.reload();
-          $("#modalmantenimiento").modal("hide");
-          /* TODO: Mensaje de sweetalert */
-          swal.fire({
-            title: "Codigo",
-            text: "Registro Confirmado",
-            icon: "success",
-          });
         }
+      },
+      error: function () {
+        swal.fire({
+          title: "Error",
+          text: "No se pudo conectar con el servidor.",
+          icon: "error",
+        });
       },
     });
   }
 }
+
+
 
 
 $(document).ready(function () {
@@ -156,18 +184,37 @@ function editar(partoken) {
   );
 }
 
+$(document).on("click", "#btnnuevo", function () {
+  // Limpiar campos
+  codigo.val("");
+  token.val("");
+
+  // Limpiar Select2 correctamente
+  refaccion.val(null).trigger("change");
+
+  // Limpiar el formulario y título
+  $("#mantenimiento_form")[0].reset();
+  $("#lbltitulo").html("Nuevo Registro");
+
+  // Mostrar modal
+  $("#modalmantenimiento").modal("show");
+});
+
+
 init();
 
 
 
 function ValidarRefaccion(Control, Helper) {
-  if (Control.val().trim() == "") {
+  let valor = (Control.val() || "").trim();
+
+  if (valor === "") {
     Helper.text("El nombre de producto es requerido");
     Helper.show();
     return false;
   }
 
-  if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+  if (!valor.match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
     Helper.text("El nombre no puede contener caracteres especiales");
     Helper.show();
     return false;
@@ -178,21 +225,22 @@ function ValidarRefaccion(Control, Helper) {
 }
 
 
+
 function ValidarCodigo(Control, Helper) {
-  if (Control.val().trim() == "") {
-    Helper.text("El codigo de producto es requerido");
-    Helper.show();
-    return false;
-  }
+  // if (Control.val().trim() == "") {
+  //   Helper.text("El codigo de producto es requerido");
+  //   Helper.show();
+  //   return false;
+  // }
 
-  if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
-    Helper.text("Codigo no puede contener caracteres especiales");
-    Helper.show();
-    return false;
-  }
+  // if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
+  //   Helper.text("Codigo no puede contener caracteres especiales");
+  //   Helper.show();
+  //   return false;
+  // }
 
-  Helper.hide();
-  return true;
+  // Helper.hide();
+  // return true;
 }
 
 

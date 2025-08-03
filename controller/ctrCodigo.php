@@ -8,49 +8,66 @@ $codigo = new mdlCodigo();
 
 switch ($_GET["op"]) {
     /*TODO: Guardar y editar, guarda cuando el ID esta vacio y Actualiza cuando se envie el ID*/
-    case "guardaryeditar":
-        if (empty($_POST["token"])) {
-            $token = md5($_POST["codigo"] . "+" . $_POST["codigo"]);
+   case "guardaryeditar":
+    $refaccion = $_POST["refaccion"];
+    $codigos_raw = $_POST["codigo"]; // viene del <textarea name="codigo">
+    $codigos_array = array_filter(array_map('trim', explode("\n", $codigos_raw)));
 
-            //Verificando si codigo existe en BD
+    $repetidos = [];
+    $guardados = [];
+
+    if (empty($_POST["token"])) {
+        // NUEVO REGISTRO — múltiples códigos
+        foreach ($codigos_array as $codigoIndividual) {
+            if (empty($codigoIndividual)) continue;
+
+            $token = md5($codigoIndividual . "+" . $codigoIndividual);
+
+            // Verificar si ya existe
             $tabla = "codigos";
             $item = "codigo";
-            $valor = $_POST["codigo"];
-            $validarCodigo = $codigo->mdlSeleccionarRegistros($tabla, $item, $valor);
-            if ($validarCodigo) {
-                echo "error-codigoexiste";
-                exit;
+            $valor = $codigoIndividual;
+            $validar = $codigo->mdlSeleccionarRegistros($tabla, $item, $valor);
+
+            if ($validar) {
+                $repetidos[] = $codigoIndividual;
+                continue;
             }
 
-            $codigo->mdlRegistro(
-                $token,
-                $_POST["refaccion"],
-                $_POST["codigo"]
-            );
+            $codigo->mdlRegistro($token, $refaccion, $codigoIndividual);
+            $guardados[] = $codigoIndividual;
+        }
+    } else {
+        // EDICIÓN — solo se permite editar un código
+        $codigoEditar = trim($codigos_array[0]);
+        $nuevoToken = md5($codigoEditar . "+" . $codigoEditar);
+
+        $tabla = "codigos";
+        $item = "codigo";
+        $valor = $codigoEditar;
+        $validar = $codigo->mdlSeleccionarRegistros($tabla, $item, $valor);
+
+        if ($validar && $validar["token"] != $_POST["token"]) {
+            $repetidos[] = $codigoEditar;
         } else {
-            $nuevoToken = md5($_POST["codigo"] . "+" . $_POST["codigo"]);
+            $codigo->mdlActualizarRegistro(
+                $refaccion,
+                $codigoEditar,
+                $nuevoToken,
+                $_POST["token"]
+            );
+            $guardados[] = $codigoEditar;
+        }
+    }
 
-            //Verificando si servicio existe en BD
-            $tabla = "codigos";
-            $item = "codigo";
-            $valor = $_POST["codigo"];
-            $validarCodigo = $codigo->mdlSeleccionarRegistros($tabla, $item, $valor);
-            if ($validarCodigo) {
-                if ($validarCodigo['token'] != $_POST["token"]) {
-                    echo "error-codigoexiste";
-                    exit;
-                }
-            }
+    echo json_encode([
+        "status" => "ok",
+        "guardados" => $guardados,
+        "repetidos" => $repetidos
+    ]);
+    break;
 
-            //     $codigo->mdlActualizarRegistro(
-            //         $_POST["refaccion"],
-            //         $_POST["codigo"],
-            //         $nuevoToken,
-            //         $_POST["token"],
-            //     );
-            // }
-            // break;
-        } //BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
 
         /*TODO: Listado de registros formato JSON para Datatable JS*/
     case "listar":
@@ -63,6 +80,7 @@ switch ($_GET["op"]) {
             $sub_array = array();
             $sub_array[] = $row["codigo"];
             $sub_array[] = $row["nombre"];
+            $sub_array[] = date("d-m-Y H:i:s", strtotime($row["fech_crea"]));
             $sub_array[] = '<button type="button" onClick="editar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-warning btn-icon waves-effect waves-light"><i class="ri-edit-2-line"></i></button>';
             $sub_array[] = '<button type="button" onClick="eliminar(\'' . $row["token"] . '\')" id="' . $row["token"] . '" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-delete-bin-5-line"></i></button>';
             $data[] = $sub_array;

@@ -3,15 +3,21 @@
 class mdlCodigo extends Conectar{
 
     //Registrar codigo
-    public function mdlRegistro($token, $refaccion, $codigo){
-        $conectar=parent::Conexion();
-        $sql="insertarCodigo ?,?,?";
+   public function mdlRegistro($token, $refaccion, $codigo) {
+    try {
+        $conectar = parent::Conexion();
+        $sql = "EXEC insertarCodigo ?, ?, ?";
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $token);
         $query->bindValue(2, $refaccion);
         $query->bindValue(3, $codigo);
         $query->execute();
+    } catch (PDOException $e) {
+        // Puedes loguear o ignorar si el código ya existe
+        error_log("Error al insertar código: " . $codigo . " — " . $e->getMessage());
     }
+}
+
 
         //Consultar registros
         public function mdlSeleccionarRegistros($tabla, $item, $valor){
@@ -44,15 +50,14 @@ class mdlCodigo extends Conectar{
     //  }
 
     //Actualizar registros
-    public function mdlActualizarRegistro($nombreservicio, $costomobra, $descripcion, $nuevoToken, $token){
+    public function mdlActualizarRegistro($refaccion, $codigo, $nuevoToken, $token){
         $conectar = parent::Conexion();
-        $sql = "actualizarServicio ?,?,?,?,?";
+        $sql = "actualizarCodigo ?,?,?,?";
         $query = $conectar->prepare($sql);
-        $query->bindValue(1, $nombreservicio);
-        $query->bindValue(2, $costomobra);
-        $query->bindValue(3, $descripcion);
-        $query->bindValue(4, $nuevoToken);
-        $query->bindValue(5, $token);
+        $query->bindValue(1, $refaccion);
+        $query->bindValue(2, $codigo);
+        $query->bindValue(3, $nuevoToken);
+        $query->bindValue(4, $token);
         $query->execute();
     }
 

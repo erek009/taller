@@ -57,6 +57,7 @@ $datos = $rol->mdlValidarAcceso_rol($_SESSION["token"], "categoria");
                                             <tr>
                                                 <th>Codigo</th>
                                                 <th>Producto</th>
+                                                <th>Fecha creacion</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
