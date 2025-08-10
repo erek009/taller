@@ -145,7 +145,7 @@ class mdlRefaccion extends Conectar
         $query = $conectar->prepare($sql);
         $query->bindValue(1, $termino);
         $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

@@ -112,64 +112,18 @@ if (isset($_SESSION["token"])) {
                                             <div class="live-preview">
                                                 <div class="row align-items-center g-3">
 
-                                                    <div class="col-lg-3">
-                                                        <label for="categoria" class="form-label">Categoria</label>
-                                                        <select id="categoria" name="categoria" class="form-control form-select" aria-label="Seleccione">
-                                                            <?php
-                                                            echo ' 
-                                                        <option value="" disabled selected> Seleccione categoria </option> ';
+                                                 <div class="col-lg-3">
+                                                            <label for="busqueda_producto" class="form-label">Buscar por nombre o código</label>
+                                                            <input type="text" id="busqueda_producto" class="form-control" placeholder="Buscar producto...">
+                                                        </div>
 
-                                                            include '../../models/mdlCategoria.php';
-
-                                                            // Crear instancia del modelo
-                                                            $categoria = new mdlCategoria();
-
-                                                            // Llamar al método
-                                                            $tabla = "categoria";
-                                                            $datos = $categoria->mdlSeleccionarRegistros($tabla, null, null);
-                                                            ?>
-
-                                                            <?php foreach ($datos as $value): ?>
-                                                                <option value="<?= $value['token'] ?>"><?= $value['categoria'] ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
+                                                     <div class="col-lg-2">
+                                                            <label for="producto" class="form-label">Producto</label>
+                                                            <input type="text" class="form-control" id="producto" name="producto" placeholder="Producto" />
+                                                            <input type="hidden" id="producto_token" name="producto_token" />
+                                                        </div>
 
 
-                                                    <!-- <div class="col-lg-3">
-                                                    <label for="producto" class="form-label">Producto</label>
-                                                    <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
-                                                        <?php
-                                                        echo ' 
-                                                        <option value="" disabled selected> Seleccione producto </option> ';
-
-                                                        include '../../models/mdlRefaccion.php';
-
-                                                        // Crear instancia del modelo
-                                                        $producto = new mdlRefaccion();
-
-                                                        // Llamar al método
-                                                        $tabla = "refacciones";
-                                                        $datos = $producto->mdlSeleccionarRegistros($tabla, null, null);
-                                                        ?>
-
-                                                        <?php foreach ($datos as $value): ?>
-                                                            <option value="<?= $value['token'] ?>"><?= $value['nombre'] ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div> -->
-
-                                                    <div class="col-lg-3">
-                                                        <label for="producto" class="form-label">Producto</label>
-                                                        <select id="producto" name="producto" class="form-control form-select" aria-label="Seleccione">
-                                                            <?php
-                                                            echo ' 
-                                                        <option value="">Seleccione un producto</option>';
-                                                            ?>
-
-                                                            <!-- <input type="number" class="form-control" id="precio_compra" name="precio_compra" placeholder="Precio" /> -->
-                                                        </select>
-                                                    </div>
 
                                                     <div class="col-lg-1">
                                                         <label for="precio_venta" class="form-label">Precio</label>
@@ -181,10 +135,20 @@ if (isset($_SESSION["token"])) {
                                                         <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" readonly />
                                                     </div>
 
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-1">
                                                         <label for="und_nom" class="form-label">UndMedida</label>
                                                         <input type="text" class="form-control" id="und_medida" name="und_medida" placeholder="Und.Medida" readonly />
                                                     </div>
+
+                                                    <div class="col-lg-1">
+                                                            <label for="anaquel" class="form-label">Anaquel</label>
+                                                            <input type="text" class="form-control" id="anaquel" name="anaquel" placeholder="Anaquel" readonly />
+                                                        </div>
+
+                                                        <div class="col-lg-1">
+                                                            <label for="nivel" class="form-label">Nivel</label>
+                                                            <input type="text" class="form-control" id="nivel" name="nivel" placeholder="Nivel" readonly />
+                                                        </div>
 
                                                     <div class="col-lg-1">
                                                         <label for="detc_cant" class="form-label">Cantidad</label>
@@ -216,7 +180,6 @@ if (isset($_SESSION["token"])) {
                                             <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Categoria</th>
                                                         <th>Producto</th>
                                                         <th>Und. Medida</th>
                                                         <th>P. Compra</th>

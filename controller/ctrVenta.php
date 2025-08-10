@@ -36,7 +36,6 @@ switch ($_GET["op"]) {
         }
             
         $venta->mdlRegistroDetalle(
-            $_POST["categoria"],
             $_POST["refaccion"],
             $_POST["venta_id"],
             $_POST["unidadmedida"],
@@ -52,7 +51,6 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($datos as $row) {
             $sub_array = array();
-            $sub_array[] = $row["categoria"];
             $sub_array[] = $row["nombre"];
             $sub_array[] = $row["unidadmedida"];
             $sub_array[] = $row["precioventa"];
@@ -165,5 +163,20 @@ switch ($_GET["op"]) {
             "aaData" => $data
         );
         echo json_encode($results);
+        break;
+
+        // TODO: Buscar producto por nombre o código
+    case "buscar_producto":
+        require_once("../models/mdlRefaccion.php");
+        $producto = new mdlRefaccion();
+
+        $termino = $_POST["termino"];
+        $resultado = $producto->buscarPorNombreOCodigo($termino);
+
+        if ($resultado) {
+            echo json_encode($resultado);
+        } else {
+            echo json_encode(null);
+        }
         break;
 }

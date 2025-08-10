@@ -7,27 +7,29 @@ var telefono = $("#cli_telefono");
 
 //variables productos
 var categoria = $("#categoria");
+
 var producto = $("#producto");
 var stock = $("#stock");
 var undmedida = $("#und_medida");
+var anaquel = $("#anaquel");
+var nivel = $("#nivel");
 var precioventa = $("#precio_venta");
-
 
 $(document).ready(function () {
   //registra id de venta 01
-  $.post("../../controller/ctrVenta.php?op=registrar",{ usu_id: usu_id },
+  $.post(
+    "../../controller/ctrVenta.php?op=registrar",
+    { usu_id: usu_id },
     function (data) {
       data = JSON.parse(data);
       $("#venta_id").val(data.venta_id);
     }
   );
-    
 });
 
 // Agrega un nuevo detalle de compra
 $(document).on("click", "#btnagregar", function () {
-  var categoria = $("#categoria").val();
-  var refaccion = $("#producto").val();
+  var refaccion = $("#producto_token").val();
   var venta_id = $("#venta_id").val();
   var precioventa = $("#precio_venta").val();
   var unidadmedida = $("#und_medida").val();
@@ -35,8 +37,7 @@ $(document).on("click", "#btnagregar", function () {
 
   // Validación de campos vacíos
   if (
-    $("#categoria").val() == "" ||
-    $("#producto").val() == "" ||
+    $("#refaccion").val() == "" ||
     $("#precio_venta").val() == "" ||
     $("#detc_cant").val() == ""
   ) {
@@ -51,7 +52,6 @@ $(document).on("click", "#btnagregar", function () {
     $.post(
       "../../controller/ctrVenta.php?op=registrardetalleproductos",
       {
-        categoria: categoria,
         refaccion: refaccion,
         venta_id: venta_id,
         unidadmedida: unidadmedida,
@@ -59,36 +59,40 @@ $(document).on("click", "#btnagregar", function () {
         cantidad: cantidad,
       },
       function (data) {
-
         if (data === "error-stockinsuficiente") {
           Swal.fire({
             title: "Error",
             text: "No hay suficiente stock para esta refacción.",
             icon: "error",
           });
-          return; 
+          return;
         }
 
         console.log("Detalle registrado:", data);
-        
+
         // Calcular subtotal/iva/total después de cada registro
-         $.post(
-           "../../controller/ctrVenta.php?op=calculo",
-           { venta_id: venta_id },
-           function (data) {
-             data = JSON.parse(data);
-             $("#precio_subtotal").html(data.venta_subtotal);
-             $("#precio_iva").html(data.venta_iva);
-             $("#precio_total").html(data.venta_total);
-           }
-         );
+        $.post(
+          "../../controller/ctrVenta.php?op=calculo",
+          { venta_id: venta_id },
+          function (data) {
+            data = JSON.parse(data);
+            $("#precio_subtotal").html(data.venta_subtotal);
+            $("#precio_iva").html(data.venta_iva);
+            $("#precio_total").html(data.venta_total);
+          }
+        );
 
         // // limpiar campos después de agregar el detalle
-         $("#precio_venta").val("");
-         $("#detc_cant").val("");
+        $("#producto").val("");
+        $("#precio_venta").val("");
+        $("#und_medida").val("");
+        $("#anaquel").val("");
+        $("#nivel").val("");
+        $("#producto_token").val("");
+        $("#detc_cant").val("");
 
         // Actualizar listado
-         listar(venta_id);
+        listar(venta_id);
       }
     );
   }
@@ -193,7 +197,6 @@ function eliminar(detalle_id) {
 //guarda la venta
 $(document).on("click", "#btnguardar", function () {
   // Validaciones campos vacíos
-  var categoria = $("#categoria").val();
   var venta_id = $("#venta_id").val();
   var clie_id = $("#cliente_id").val();
   var clie_direccion = $("#cli_direccion").val();
@@ -201,7 +204,7 @@ $(document).on("click", "#btnguardar", function () {
   var comentario = $("#comentario").val();
 
   // Validación de campos vacíos
-  if ($.trim(clie_id) === "" || $.trim(categoria) === "") {
+  if ($.trim(clie_id) === "") {
     Swal.fire({
       title: "Error",
       text: "Todos los campos son obligatorios.",
@@ -238,7 +241,10 @@ $(document).on("click", "#btnguardar", function () {
                 title: "Venta",
                 text: "Venta registrada correctamente con No. V-" + venta_id,
                 icon: "success",
-                footer: "<a href='../../view/ViewVenta/?v=" + venta_id + "' target='_blank'>Desea ver el Documento?</a>",
+                footer:
+                  "<a href='../../view/ViewVenta/?v=" +
+                  venta_id +
+                  "' target='_blank'>Desea ver el Documento?</a>",
               }).then(() => {
                 location.reload(); // Recargar la página
               });
@@ -247,37 +253,6 @@ $(document).on("click", "#btnguardar", function () {
         }
       }
     );
-  }
-});
-
-// Cuando cambie la categoría, carga los productos de esa categoría
-$("#categoria").on("change", function () {
-  let categoriaID = $(this).val();
-
-  if (categoriaID !== "") {
-    $.ajax({
-      url: "../../controller/ctrRefacciones.php?op=productos_por_categoria",
-      type: "POST",
-      data: { categoria_id: categoriaID },
-      dataType: "json",
-      success: function (productos) {
-        let opciones = '<option value="">Seleccione un producto</option>';
-        productos.forEach(function (p) {
-          opciones += `<option value="${p.token}">${p.nombre}</option>`;
-        });
-        $("#producto").html(opciones);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error en la petición AJAX:", error);
-        Swal.fire(
-          "Error",
-          "Ocurrió un error al cargar los productos.",
-          "error"
-        );
-      },
-    });
-  } else {
-    $("#producto").html('<option value="">Seleccione un producto</option>');
   }
 });
 
@@ -328,4 +303,61 @@ $(cliente).on("change", function () {
       Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
     },
   });
+});
+
+
+// Inicializar Select2 en el input de búsqueda
+$("#busqueda_producto").select2({
+  placeholder: "Buscar por nombre o código...",
+  allowClear: true,
+  ajax: {
+    url: "../../controller/ctrVenta.php?op=buscar_producto",
+    type: "POST",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        termino: params.term,
+      };
+    },
+    processResults: function (data) {
+      if (!data) return { results: [] };
+
+      return {
+        results: data.map(function (producto) {
+          return {
+            id: producto.token,
+            text: `${producto.nombre} (${producto.codigo})`,
+            data: producto,
+          };
+        }),
+      };
+    },
+    cache: true,
+  },
+  minimumInputLength: 2,
+});
+
+// Al seleccionar un producto del autocompletado
+$("#busqueda_producto").on("select2:select", function (e) {
+  const producto = e.params.data.data;
+
+  $("#producto").val(producto.nombre);
+  $("#producto_token").val(producto.token);
+  $("#stock").val(producto.stock);
+  $("#und_medida").val(producto.unidadmedida);
+  $("#anaquel").val(producto.anaquelNombre);
+  $("#nivel").val(producto.nivelNombre);
+  $("#precio_venta").val(producto.precioventa);
+});
+
+// Opcional: limpiar campos si se limpia el select2
+$("#busqueda_producto").on("select2:clear", function () {
+  $("#producto1").val("");
+  $("#producto_token").val("");
+  $("#stock").val("");
+  $("#und_medida").val("");
+  $("#anaquel").val("");
+  $("#nivel").val("");
+  $("#precio_compra").val("");
 });

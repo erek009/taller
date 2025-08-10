@@ -109,4 +109,26 @@ switch ($_GET["op"]) {
             echo json_encode($output);
         }
         break;
+
+    /*TODO: Eliminar (cambia estado a 0 del registro)*/
+    case "eliminar":
+        $tabla = "codigos";
+        $item = "codigo";
+        $valor = $_POST["token"];
+
+        $validarCodigo = $codigo->mdlSeleccionarRegistros($tabla, $item, $valor);
+        if (!empty($validarCodigo)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "No se puede eliminar este codigo porque está siendo utilizado en una refaccion."
+            ]);
+            return;
+        }
+
+        $codigo->mdlEliminarRegistro($valor);
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Codigo eliminado correctamente"
+        ]);
+        return;
 }

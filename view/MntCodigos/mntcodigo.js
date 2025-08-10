@@ -156,6 +156,41 @@ $(document).ready(function () {
 });
 
 
+function eliminar(token) {
+  swal
+    .fire({
+      title: "Eliminar!",
+      text: "Desea Eliminar el Registro?",
+      icon: "error",
+      confirmButtonText: "Si",
+      showCancelButton: true,
+      cancelButtonText: "No",
+    }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "../../controller/ctrCodigo.php?op=eliminar",
+        type: "POST",
+        data: { token: token },
+        dataType: "json",
+        success: function (response) {
+          if (response.status === "error") {
+            Swal.fire("Atención", response.message, "warning");
+          } else if (response.status === "ok") {
+            Swal.fire("Eliminado", response.message, "success").then(() => {
+              $("#table_data").DataTable().ajax.reload();
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error en la petición AJAX:", error);
+          Swal.fire("Error", "Ocurrió un error al procesar la solicitud.", "error");
+        }
+      });
+    }
+  });
+}
+
+
 // Edita un registro
 function editar(partoken) {
   $.post(
@@ -227,21 +262,32 @@ function ValidarRefaccion(Control, Helper) {
 
 
 function ValidarCodigo(Control, Helper) {
-  // if (Control.val().trim() == "") {
-  //   Helper.text("El codigo de producto es requerido");
-  //   Helper.show();
-  //   return false;
-  // }
+  let valor = (Control.val() || "").trim();
 
-  // if (!Control.val().match(/^[a-zA-Z0-9-ñÑáéíóúÁÉÍÓÚ ]+$/)) {
-  //   Helper.text("Codigo no puede contener caracteres especiales");
-  //   Helper.show();
-  //   return false;
-  // }
+  if (valor === "") {
+    Helper.text("Debe ingresar al menos un código.");
+    Helper.show();
+    return false;
+  }
 
-  // Helper.hide();
-  // return true;
+  // Dividir por líneas
+  const lineas = valor.split("\n").map(c => c.trim()).filter(c => c !== "");
+
+  // Verifica cada línea
+  for (let i = 0; i < lineas.length; i++) {
+    const codigo = lineas[i];
+
+    if (!codigo.match(/^[a-zA-Z0-9\-]+$/)) {
+      Helper.text(`Código inválido en la línea ${i + 1}: "${codigo}"`);
+      Helper.show();
+      return false;
+    }
+  }
+
+  Helper.hide();
+  return true;
 }
+
 
 
 function OcultarHelpers() {

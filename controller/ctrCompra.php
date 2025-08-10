@@ -25,7 +25,6 @@ switch ($_GET["op"]) {
     /*TODO: Registra detalle compra*/
     case "registrardetalleproductos":
         $compra->mdlRegistro(
-            // $_POST["categoria"],
             $_POST["refaccion"],
             $_POST["compra_id"],
             $_POST["unidadmedida"],
@@ -175,4 +174,5 @@ switch ($_GET["op"]) {
             echo json_encode(null);
         }
         break;
+
 }

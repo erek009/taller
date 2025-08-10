@@ -40,14 +40,16 @@ class mdlCodigo extends Conectar{
             }
         }
 
-    // //Eliminar registros
-    //  public function mdlEliminarRegistro($token){
-    //      $conectar=parent::Conexion();
-    //      $sql="eliminarServicio ?";
-    //      $query = $conectar->prepare($sql);
-    //      $query->bindValue(1, $token);
-    //      $query->execute();
-    //  }
+        //Eliminar registros
+    public function mdlEliminarRegistro($token)
+    {
+        $conectar = parent::Conexion();
+        $sql = "eliminarCodigo ?";
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $token);
+        $query->execute();
+    }
+
 
     //Actualizar registros
     public function mdlActualizarRegistro($refaccion, $codigo, $nuevoToken, $token){

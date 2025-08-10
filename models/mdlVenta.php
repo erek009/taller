@@ -15,17 +15,16 @@ class mdlVenta extends Conectar
     }
 
     //Registrar detalles producto 
-    public function mdlRegistroDetalle($categoria, $refaccion, $venta_id, $undmedida, $precioventa, $cantidad)
+    public function mdlRegistroDetalle($refaccion, $venta_id, $undmedida, $precioventa, $cantidad)
     {
         $conectar = parent::Conexion();
-        $sql = "insertarVentaDetalle ?,?,?,?,?,?";
+        $sql = "insertarVentaDetalle ?,?,?,?,?";
         $query = $conectar->prepare($sql);
-        $query->bindValue(1, $categoria);
-        $query->bindValue(2, $refaccion);
-        $query->bindValue(3, $venta_id);
-        $query->bindValue(4, $undmedida);
-        $query->bindValue(5, $precioventa);
-        $query->bindValue(6, $cantidad);
+        $query->bindValue(1, $refaccion);
+        $query->bindValue(2, $venta_id);
+        $query->bindValue(3, $undmedida);
+        $query->bindValue(4, $precioventa);
+        $query->bindValue(5, $cantidad);
         $query->execute();
     }
 

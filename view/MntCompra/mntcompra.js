@@ -10,7 +10,6 @@ var categoria = $("#categoria");
 var producto = $("#producto");
 
 var producto1 = $("#producto1");
-
 var stock = $("#stock");
 var undmedida = $("#und_medida");
 var anaquel = $("#anaquel");
@@ -56,7 +55,6 @@ $(document).on("click", "#btnagregar", function () {
     $.post(
       "../../controller/ctrCompra.php?op=registrardetalleproductos",
       {
-        // categoria: categoria,
         refaccion: refaccion,
         compra_id: compra_id,
         unidadmedida: unidadmedida,
@@ -79,7 +77,13 @@ $(document).on("click", "#btnagregar", function () {
         );
 
         // limpiar campos después de agregar el detalle
+        $('#producto1').val("");
         $("#precio_compra").val("");
+        $("#stock").val("");
+        $("#und_medida").val("");
+        $("#anaquel").val("");
+        $("#nivel").val("");
+        $("#producto_token").val("");
         $("#detc_cant").val("");
 
         // Actualizar listado
@@ -340,40 +344,64 @@ $(proveedor).on("change", function () {
 });
 
 
-// Buscar producto por nombre o código
-$("#busqueda_producto").on("keyup", function (e) {
-  let termino = $(this).val().trim();
+// Inicializar Select2 en el input de búsqueda
+$("#busqueda_producto").select2({
+  placeholder: "Buscar por nombre o código...",
+  allowClear: true,
+  ajax: {
+    url: "../../controller/ctrCompra.php?op=buscar_producto",
+    type: "POST",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        termino: params.term
+      };
+    },
+    processResults: function (data) {
+      if (!data) return { results: [] };
 
-  // Puedes hacer búsqueda cuando haya mínimo 2 caracteres
-  if (termino.length >= 2) {
-    $.ajax({
-      url: "../../controller/ctrCompra.php?op=buscar_producto",
-      type: "POST",
-      data: { termino: termino },
-      dataType: "json",
-      success: function (producto) {
-        if (producto) {
-          // Autocompletar campos como si lo seleccionaras del dropdown
-          $("#producto1").val(producto.nombre);
-          $("#producto_token").val(producto.token);
-          $("#stock").val(producto.stock);
-          $("#und_medida").val(producto.unidadmedida);
-          $("#anaquel").val(producto.anaquelNombre);
-          $("#nivel").val(producto.nivelNombre);
-          $("#precio_compra").val(producto.preciocompra);
-        } else {
-          // Producto no encontrado
-          $("#producto").val("");
-          $("#stock").val("");
-          $("#und_medida").val("");
-          $("#anaquel").val("");
-          $("#nivel").val("");
-          $("#precio_compra").val("");
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error("Error al buscar producto:", error);
-      },
-    });
-  }
+      return {
+        results: data.map(function (producto) {
+          return {
+            id: producto.token,
+            text: `${producto.nombre} (${producto.codigo})`,
+            data: producto
+          };
+        })
+      };
+    },
+    cache: true
+  },
+  minimumInputLength: 2
 });
+
+// Al seleccionar un producto del autocompletado
+$("#busqueda_producto").on("select2:select", function (e) {
+  const producto = e.params.data.data;
+
+  $("#producto1").val(producto.nombre);
+  $("#producto_token").val(producto.token);
+  $("#stock").val(producto.stock);
+  $("#und_medida").val(producto.unidadmedida);
+  $("#anaquel").val(producto.anaquelNombre);
+  $("#nivel").val(producto.nivelNombre);
+  $("#precio_compra").val(producto.preciocompra);
+});
+
+// Opcional: limpiar campos si se limpia el select2
+$("#busqueda_producto").on("select2:clear", function () {
+  $("#producto1").val("");
+  $("#producto_token").val("");
+  $("#stock").val("");
+  $("#und_medida").val("");
+  $("#anaquel").val("");
+  $("#nivel").val("");
+  $("#precio_compra").val("");
+});
+
+
+
+
+
+
