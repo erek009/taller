@@ -244,7 +244,7 @@ $(document).on("click", "#btnguardar", function () {
                 icon: "success",
                 footer: "<a href='../../view/ViewCompra/?c=" + compra_id + "' target='_blank'>Desea ver el Documento?</a>",
               }).then(() => {
-                location.reload(); // Recargar la página
+                location.reload(); // Recargar la página jj
               });
             }
           );
