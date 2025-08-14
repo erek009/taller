@@ -14,7 +14,7 @@ class mdlCliente extends Conectar{
         $query->bindValue(5, $localidad);
         $query->bindValue(6, $observaciones);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        // return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     //Consultar registros

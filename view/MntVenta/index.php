@@ -211,6 +211,18 @@ if (isset($_SESSION["token"])) {
                                                 </tbody>
                                             </table>
 
+
+                                            <div class="mt-3" style="max-width:250px;">
+    <label for="pago_cliente" class="form-label">Pago del cliente</label>
+    <input type="number" class="form-control" id="pago_cliente" step="0.01" placeholder="Ingrese pago">
+
+    <label for="cambio_cliente" class="form-label mt-2">Cambio</label>
+    <input type="text" class="form-control" id="cambio_cliente" readonly>
+</div>
+
+
+
+
                                             <div class="mt-4">
                                                 <label for="comentario" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
                                                 <textarea class="form-control alert alert-info" id="comentario" name="comentario" placeholder="Comentario" rows="4" required=""></textarea>

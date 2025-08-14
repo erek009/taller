@@ -71,20 +71,25 @@ $(document).on("click", "#btnagregar", function () {
         console.log("Detalle registrado:", data);
 
         // Calcular subtotal/iva/total después de cada registro
-        $.post(
-          "../../controller/ctrVenta.php?op=calculo",
-          { venta_id: venta_id },
-          function (data) {
-            data = JSON.parse(data);
-            $("#precio_subtotal").html(data.venta_subtotal);
-            $("#precio_iva").html(data.venta_iva);
-            $("#precio_total").html(data.venta_total);
-          }
-        );
+$.post(
+  "../../controller/ctrVenta.php?op=calculo",
+  { venta_id: venta_id },
+  function (data) {
+    data = JSON.parse(data);
+    $("#precio_subtotal").html(data.venta_subtotal);
+    $("#precio_iva").html(data.venta_iva);
+    $("#precio_total").html(data.venta_total);
+
+    // 🔹 Actualiza el cambio también
+    actualizarCambio();
+  }
+);
+
 
         // // limpiar campos después de agregar el detalle
         $("#producto").val("");
         $("#precio_venta").val("");
+        $("#stock").val("");
         $("#und_medida").val("");
         $("#anaquel").val("");
         $("#nivel").val("");
@@ -176,16 +181,19 @@ function eliminar(detalle_id) {
               icon: "success",
             });
 
-            //Recalcular $$ totales
-            var venta_id = $("#compra_id").val();
+            // Recalcular $$ totales
+            var venta_id = $("#venta_id").val();
             $.post(
-              "../../controller/ctrCompra.php?op=calculo",
+              "../../controller/ctrVenta.php?op=calculo",
               { venta_id: venta_id },
               function (data) {
                 data = JSON.parse(data);
-                $("#precio_subtotal").html(data.compra_subtotal);
-                $("#precio_iva").html(data.compra_iva);
-                $("#precio_total").html(data.compra_total);
+                $("#precio_subtotal").html(data.venta_subtotal);
+                $("#precio_iva").html(data.venta_iva);
+                $("#precio_total").html(data.venta_total);
+
+                // 🔹 Recalcular cambio
+                actualizarCambio();
               }
             );
           }
@@ -193,6 +201,7 @@ function eliminar(detalle_id) {
       }
     });
 }
+
 
 //guarda la venta
 $(document).on("click", "#btnguardar", function () {
@@ -351,7 +360,7 @@ $("#busqueda_producto").on("select2:select", function (e) {
   $("#precio_venta").val(producto.precioventa);
 });
 
-// Opcional: limpiar campos si se limpia el select2
+// Limpia campos
 $("#busqueda_producto").on("select2:clear", function () {
   $("#producto1").val("");
   $("#producto_token").val("");
@@ -360,4 +369,45 @@ $("#busqueda_producto").on("select2:clear", function () {
   $("#anaquel").val("");
   $("#nivel").val("");
   $("#precio_compra").val("");
+});
+
+
+// Escuchar cambios en el input pago_cliente para calcular cambio
+$("#pago_cliente").on("input", function () {
+  // Obtener el total desde el span de precio_total, limpiando cualquier símbolo o coma
+  let totalTexto = $("#precio_total").text().replace(/[^0-9.]/g, "");
+  let total = parseFloat(totalTexto) || 0;
+
+  // Obtener pago ingresado
+  let pago = parseFloat($(this).val()) || 0;
+
+  let cambio = pago - total;
+
+  if (cambio < 0) {
+    $("#cambio_cliente").val("Faltan $" + Math.abs(cambio).toFixed(2));
+  } else {
+    $("#cambio_cliente").val("$" + cambio.toFixed(2));
+  }
+});
+
+
+
+// --- Función para actualizar el cambio ---
+function actualizarCambio() {
+    let totalTexto = $("#precio_total").text().replace(/[^0-9.]/g, "");
+    let total = parseFloat(totalTexto) || 0;
+
+    let pago = parseFloat($("#pago_cliente").val()) || 0;
+    let cambio = pago - total;
+
+    if (cambio < 0) {
+        $("#cambio_cliente").val("Faltan $" + Math.abs(cambio).toFixed(2));
+    } else {
+        $("#cambio_cliente").val("$" + cambio.toFixed(2));
+    }
+}
+
+// --- Evento: cada vez que el cliente escribe el pago ---
+$("#pago_cliente").on("input", function () {
+    actualizarCambio();
 });
